@@ -21,4 +21,9 @@
 export const DEFAULT_LAUNCH_ARGS: readonly string[] = [
   "--mute-audio",
   "--disable-notifications",
+  "--fingerprint-windows-font-metrics",
+  "--fingerprint-webrtc-ip=auto",
+  "--use-gl=swiftshader",
+  "--fingerprint-storage-quota=50000",
+  "--fingerprint-noise=false",
 ];
