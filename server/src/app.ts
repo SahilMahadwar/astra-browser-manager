@@ -351,7 +351,8 @@ export function createApp(mgr: BrowserManager): Hono {
       data.webSocketDebuggerUrl = rewriteBrowserWsUrl(
         c.req.header('host') ?? 'localhost:8080',
         isHttps(c),
-        id
+        id,
+        c.req.query('token')
       );
       return c.json(data);
     } catch (err) {
@@ -373,13 +374,15 @@ export function createApp(mgr: BrowserManager): Hono {
       });
       const data = (await res.json()) as Array<Record<string, unknown>>;
       const host = c.req.header('host') ?? 'localhost:8080';
+      const token = c.req.query('token');
       for (const entry of data) {
         if (typeof entry.webSocketDebuggerUrl === 'string') {
           entry.webSocketDebuggerUrl = rewritePageWsUrl(
             entry.webSocketDebuggerUrl,
             host,
             isHttps(c),
-            id
+            id,
+            token
           );
         }
       }

@@ -250,23 +250,42 @@ export async function proxyCdpWebSocket(
 }
 
 /**
+ * `?token=…` suffix to carry onto a rewritten WebSocket URL, or '' for none.
+ *
+ * Only ever built from a token the caller *already* sent as a query parameter.
+ * A client authenticating by header or cookie will send those again on the
+ * upgrade, so it needs nothing here — and echoing its secret into a URL would
+ * put it in exactly the logs it kept the secret out of.
+ */
+function tokenQuery(token: string | null | undefined): string {
+  return token ? `?token=${encodeURIComponent(token)}` : '';
+}
+
+/**
  * Rewrite a webSocketDebuggerUrl so external clients route back through this
  * server on port 8080 rather than an unreachable container-internal port.
+ *
+ * `token` must be propagated when the caller authenticated by query parameter:
+ * the upgrade this URL triggers is a fresh request that re-runs auth, so
+ * dropping it turns a working /json/version into a 401 on the WebSocket — a
+ * failure that looks like a broken proxy rather than a rejected credential.
  */
 export function rewriteBrowserWsUrl(
   host: string,
   isHttps: boolean,
-  profileId: string
+  profileId: string,
+  token?: string | null
 ): string {
-  return `${isHttps ? 'wss' : 'ws'}://${host}/api/profiles/${profileId}/cdp`;
+  return `${isHttps ? 'wss' : 'ws'}://${host}/api/profiles/${profileId}/cdp${tokenQuery(token)}`;
 }
 
 export function rewritePageWsUrl(
   original: string,
   host: string,
   isHttps: boolean,
-  profileId: string
+  profileId: string,
+  token?: string | null
 ): string {
   const wsPath = original.split('/devtools/').pop() ?? '';
-  return `${isHttps ? 'wss' : 'ws'}://${host}/api/profiles/${profileId}/cdp/devtools/${wsPath}`;
+  return `${isHttps ? 'wss' : 'ws'}://${host}/api/profiles/${profileId}/cdp/devtools/${wsPath}${tokenQuery(token)}`;
 }

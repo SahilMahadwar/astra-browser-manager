@@ -20,6 +20,25 @@ export const AUTH_EXEMPT = new Set([
   '/api/status',
 ]);
 
+/**
+ * Paths that additionally accept the token as a `?token=` query parameter.
+ *
+ * Header and cookie are the normal channels, but a CDP client cannot always use
+ * either. Playwright's `connectOverCDP` takes a `headers` option; Stagehand
+ * exposes only `localBrowserLaunchOptions.cdpUrl`, a bare URL string with
+ * nowhere to hang a header. A query parameter is the one channel every CDP
+ * client can carry.
+ *
+ * Deliberately narrow: tokens in URLs leak into access logs, referrers and
+ * error traces in a way headers do not, so this covers the CDP subtree only —
+ * not /api/profiles itself, and not /mcp.
+ */
+const QUERY_TOKEN_PATH = /^\/api\/profiles\/[^/]+\/cdp(\/|$)/;
+
+export function allowsQueryToken(path: string): boolean {
+  return QUERY_TOKEN_PATH.test(path);
+}
+
 export function getAuthToken(): string | null {
   return process.env.AUTH_TOKEN || null;
 }
@@ -32,7 +51,10 @@ function tokensMatch(a: string, b: string): boolean {
   return timingSafeEqual(bufA, bufB);
 }
 
-/** True when the request carries a valid token in either header or cookie. */
+/**
+ * True when the request carries a valid token in a header, cookie, or — on the
+ * CDP routes only — a `?token=` query parameter. See QUERY_TOKEN_PATH.
+ */
 export function checkAuth(c: Context): boolean {
   const token = getAuthToken();
   if (!token) return true;
@@ -44,6 +66,11 @@ export function checkAuth(c: Context): boolean {
 
   const cookie = getCookie(c, 'auth_token');
   if (cookie && tokensMatch(cookie, token)) return true;
+
+  if (allowsQueryToken(new URL(c.req.url).pathname)) {
+    const query = c.req.query('token');
+    if (query && tokensMatch(query, token)) return true;
+  }
 
   return false;
 }

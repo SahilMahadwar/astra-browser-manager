@@ -309,6 +309,29 @@ describe('auth', () => {
     expect(res.status).toBe(200);
   });
 
+  it('accepts a ?token= query parameter on the CDP routes', async () => {
+    process.env.AUTH_TOKEN = 'secret';
+    const guarded = createApp(mgr);
+    // 404 rather than 401: auth passed, the profile just is not running.
+    const res = await guarded.request('/api/profiles/abc/cdp?token=secret');
+    expect(res.status).toBe(404);
+  });
+
+  it('rejects a wrong ?token= on the CDP routes', async () => {
+    process.env.AUTH_TOKEN = 'secret';
+    const guarded = createApp(mgr);
+    const res = await guarded.request('/api/profiles/abc/cdp?token=wrong');
+    expect(res.status).toBe(401);
+  });
+
+  // The query channel exists for CDP clients that cannot set headers; widening
+  // it to the rest of the API would put the token in logs for no benefit.
+  it('ignores ?token= outside the CDP routes', async () => {
+    process.env.AUTH_TOKEN = 'secret';
+    const guarded = createApp(mgr);
+    expect((await guarded.request('/api/profiles?token=secret')).status).toBe(401);
+  });
+
   it('leaves the exempt endpoints reachable', async () => {
     process.env.AUTH_TOKEN = 'secret';
     const guarded = createApp(mgr);

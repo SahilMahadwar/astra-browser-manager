@@ -222,4 +222,38 @@ describe('URL rewriting', () => {
       )
     ).toBe('ws://localhost:8080/api/profiles/abc/cdp/devtools/page/DEADBEEF');
   });
+
+  // Without this the /json/version fetch succeeds and the upgrade it points at
+  // 401s, because the WebSocket is a fresh request that re-runs auth.
+  it('carries a query token onto the browser WebSocket URL', () => {
+    expect(rewriteBrowserWsUrl('localhost:8080', false, 'abc', 's3cret')).toBe(
+      'ws://localhost:8080/api/profiles/abc/cdp?token=s3cret'
+    );
+  });
+
+  it('carries a query token onto page WebSocket URLs', () => {
+    expect(
+      rewritePageWsUrl(
+        'ws://127.0.0.1:5100/devtools/page/DEADBEEF',
+        'localhost:8080',
+        false,
+        'abc',
+        's3cret'
+      )
+    ).toBe(
+      'ws://localhost:8080/api/profiles/abc/cdp/devtools/page/DEADBEEF?token=s3cret'
+    );
+  });
+
+  it('percent-encodes tokens containing URL metacharacters', () => {
+    expect(rewriteBrowserWsUrl('localhost:8080', false, 'abc', 'a+b/c=d&e')).toBe(
+      'ws://localhost:8080/api/profiles/abc/cdp?token=a%2Bb%2Fc%3Dd%26e'
+    );
+  });
+
+  it('omits the query entirely when there is no token', () => {
+    expect(rewriteBrowserWsUrl('localhost:8080', false, 'abc', undefined)).toBe(
+      'ws://localhost:8080/api/profiles/abc/cdp'
+    );
+  });
 });
