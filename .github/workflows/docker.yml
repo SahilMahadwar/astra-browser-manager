@@ -33,16 +33,6 @@ jobs:
             server/package-lock.json
             frontend/package-lock.json
 
-      # `node-version: 24` currently resolves to 24.18, which bundles npm 12.
-      # npm 12 rejects a lockfile written by npm 11 (it wants @napi-rs/wasm-runtime's
-      # @emnapi/* peers recorded explicitly) — so `npm ci` fails on a lockfile that
-      # works everywhere else. Pin npm 11 to match node:24-slim in the Dockerfile
-      # and the npm developers actually run. npm 11 reads both lockfile styles, so
-      # this tolerates lockfiles from either version. Drop the pin once node:24-slim
-      # ships npm 12.
-      - name: Pin npm to match the Docker base image
-        run: npm i -g npm@11
-
       - name: Install server deps
         working-directory: server
         run: npm ci
