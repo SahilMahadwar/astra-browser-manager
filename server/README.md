@@ -198,7 +198,31 @@ Also worth running:
 - `docker exec <container> pkill -f chrome` mid-session — the client must get a
   clean close, and reconnecting must return 404 rather than hang
 
-### 5. VNC disconnects
+### 5. MCP
+
+The MCP server is mounted at `POST /mcp` (`src/mcp/`). Unit tests cover CRUD and
+auth; what only Docker can prove is the launch path.
+
+```bash
+mcp() {
+  curl -s -X POST http://localhost:8080/mcp \
+    -H 'content-type: application/json' \
+    -H 'accept: application/json, text/event-stream' \
+    ${AUTH_TOKEN:+-H "authorization: Bearer $AUTH_TOKEN"} \
+    -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"$1\",\"arguments\":$2}}"
+}
+
+mcp create_profile '{"name":"mcp-test"}'
+mcp launch_profile '{"id":"<profile-id>"}'   # expect cdp_ready: true + absolute cdp_url
+mcp get_cdp_url    '{"id":"<profile-id>"}'   # expect alive: true
+```
+
+The `cdp_url` from `launch_profile` must be absolute and immediately usable —
+feed it straight into the Playwright script in step 4. The profile must also
+appear and stream in the UI, i.e. an MCP launch is indistinguishable from a UI
+launch. With `AUTH_TOKEN` set, the same call without the header must be a 401.
+
+### 6. VNC disconnects
 
 - **Paste a very large clipboard payload** into the browser view. This is the
   direct regression test: the old filter dropped any RFB message split across
@@ -208,7 +232,7 @@ Also worth running:
 - `docker exec <container> pkill -f Xvnc` — the viewer must show
   `Reconnecting…` and recover, not eject you to the edit screen.
 
-### 6. Restart safety
+### 7. Restart safety
 
 ```bash
 docker compose kill    # ungraceful, on purpose

@@ -59,8 +59,14 @@ export function authMiddleware(): MiddlewareHandler {
 
     const path = new URL(c.req.url).pathname;
 
+    // The default is *open*, so that the static frontend loads. Every route that
+    // does anything must therefore be listed here — /mcp exposes the whole
+    // profile control plane and would otherwise be reachable without a token.
+    const guarded =
+      path.startsWith('/api/') || path === '/mcp' || path.startsWith('/mcp/');
+
     // Static frontend and exempt endpoints are always reachable.
-    if (AUTH_EXEMPT.has(path) || !path.startsWith('/api/')) return next();
+    if (AUTH_EXEMPT.has(path) || !guarded) return next();
 
     if (checkAuth(c)) return next();
 

@@ -17,4 +17,4 @@ services:
       - CLOAKBROWSER_AUTO_UPDATE=${CLOAKBROWSER_AUTO_UPDATE:-true}
     # Chromium needs more than Docker's default 64MB of shared memory or tabs
     # crash on image-heavy pages.
-    shm_size: 1gb
+    shm_size: 3gb

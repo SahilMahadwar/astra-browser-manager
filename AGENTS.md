@@ -32,6 +32,11 @@ Request paths that matter:
   translation → KasmVNC. noVNC 1.4 and KasmVNC 1.3.3 do not speak the same RFB
   dialect; that translation layer is why this works at all.
 - **CDP** — Playwright/Puppeteer → `WS /api/profiles/:id/cdp` → `proxy/cdp.ts` → Chromium.
+- **MCP** — agent (Mastra, Claude Code, …) → `POST /mcp` → `mcp/http.ts` (SDK
+  Streamable HTTP transport) → `mcp/server.ts` → `profiles.ts`. The tools are the
+  control plane only; the agent drives the page itself over the CDP URL they
+  hand back. `BrowserManager` state is in-process, so this cannot be split into a
+  separate server — it would see no running sessions.
 - **Static** — everything not under `/api/` falls through to `frontend/dist` with
   an SPA catch-all, registered last in `index.ts`.
 
@@ -40,7 +45,7 @@ Request paths that matter:
 ```bash
 # Backend
 cd server && npm run dev          # tsx watch, needs CLOAKBROWSER_DATA_DIR + PORT
-cd server && npm test             # vitest, 202 tests
+cd server && npm test             # vitest, 244 tests
 cd server && npm run typecheck    # tsc --noEmit
 cd server && npm run build        # -> dist/
 
@@ -90,6 +95,14 @@ touching the proxy, VNC, or launch paths.
   `missingWindowsFonts()` returns `null` for "can't tell" and `[]` for
   "complete" — conflating them claims a Windows font set that was never
   verified.
+- **`authMiddleware` defaults to *open* outside `/api/`.** That is what lets the
+  static frontend load, which means every new route that does something must be
+  added to the `guarded` check in `auth.ts` — `/mcp` exposes the whole control
+  plane and would otherwise need no token at all. `test/mcp.test.ts` guards this.
+- **Profile composition lives in `profiles.ts`, not in route handlers.** Deleting
+  is stop + row + user-data dir + thumbnail; launching classifies proxy/seed
+  errors as user error. REST and MCP both call those functions so the two cannot
+  drift. Adding a front end means calling them, not re-implementing them.
 - **API keys are `snake_case` on purpose.** The frontend consumes response
   bodies unchanged. Do not camelCase them.
 - **Hono shares one route table between HTTP and WebSocket.** `GET /cdp` must

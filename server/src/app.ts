@@ -7,7 +7,6 @@
 
 import { Hono, type Context } from 'hono';
 import { setCookie, deleteCookie } from 'hono/cookie';
-import { rmSync } from 'node:fs';
 
 import * as db from './db.js';
 import { authMiddleware, checkAuth, getAuthToken, isHttps } from './auth.js';
@@ -21,33 +20,34 @@ import {
   profileUpdateSchema,
   proxyTestRequestSchema,
   type ProfileImportResponse,
-  type ProfileResponse,
-  type ProfileRow,
 } from './schemas.js';
 import { buildExport, readImport, resolveName, slugify } from './transfer.js';
 import { getBinaryStatus, startUpdate } from './binary.js';
 import { testProxy } from './proxy-test.js';
-import { deleteCachedThumb, getScreenshot } from './screenshot.js';
+import { getScreenshot } from './screenshot.js';
+import {
+  createProfileFromInput,
+  deleteProfileFully,
+  launchProfileById,
+  listProfilesWithStatus,
+  withStatus,
+} from './profiles.js';
+import { mountMcp } from './mcp/http.js';
 import { logger } from './logger.js';
 import type { BrowserManager } from './browser.js';
 
 const log = logger('api');
 
-/** Merge live runtime status onto a stored profile row. */
-function withStatus(mgr: BrowserManager, profile: ProfileRow): ProfileResponse {
-  const status = mgr.getStatus(profile.id);
-  return {
-    ...profile,
-    status: status.status,
-    vnc_ws_port: status.vnc_ws_port,
-    cdp_url: status.cdp_url,
-  } as ProfileResponse;
-}
-
 export function createApp(mgr: BrowserManager): Hono {
   const app = new Hono();
 
   app.use('*', authMiddleware());
+
+  // ── MCP ───────────────────────────────────────────────────────────────────
+  // Registered here rather than in index.ts so it lands before the SPA
+  // catch-all, which only exempts /api/*.
+
+  mountMcp(app, mgr);
 
   // ── Authentication ────────────────────────────────────────────────────────
 
@@ -94,17 +94,14 @@ export function createApp(mgr: BrowserManager): Hono {
 
   // ── Profile CRUD ──────────────────────────────────────────────────────────
 
-  app.get('/api/profiles', (c) =>
-    c.json(db.listProfiles().map((p) => withStatus(mgr, p)))
-  );
+  app.get('/api/profiles', (c) => c.json(listProfilesWithStatus(mgr)));
 
   app.post('/api/profiles', async (c) => {
     const parsed = profileCreateSchema.safeParse(await c.req.json().catch(() => ({})));
     if (!parsed.success) {
       return c.json({ detail: parsed.error.issues }, 422);
     }
-    const { tags, ...fields } = parsed.data;
-    const profile = db.createProfile({ ...fields, tags: tags ?? [] } as never);
+    const profile = createProfileFromInput(parsed.data);
     return c.json(withStatus(mgr, profile), 201);
   });
 
@@ -181,17 +178,8 @@ export function createApp(mgr: BrowserManager): Hono {
   });
 
   app.delete('/api/profiles/:id', async (c) => {
-    const id = c.req.param('id');
-    if (mgr.running.has(id)) await mgr.stop(id);
-
-    const profile = db.getProfile(id);
-    if (!profile) return c.json({ detail: 'Profile not found' }, 404);
-
-    // DB first — if this throws, the filesystem is left untouched.
-    db.deleteProfile(id);
-    rmSync(profile.user_data_dir, { recursive: true, force: true });
-    deleteCachedThumb(id);
-
+    const deleted = await deleteProfileFully(mgr, c.req.param('id'));
+    if (!deleted) return c.json({ detail: 'Profile not found' }, 404);
     return c.json({ ok: true });
   });
 
@@ -199,28 +187,25 @@ export function createApp(mgr: BrowserManager): Hono {
 
   app.post('/api/profiles/:id/launch', async (c) => {
     const id = c.req.param('id');
-    const profile = db.getProfile(id);
-    if (!profile) return c.json({ detail: 'Profile not found' }, 404);
-    if (mgr.running.has(id)) return c.json({ detail: 'Profile is already running' }, 409);
+    const result = await launchProfileById(mgr, id);
 
-    try {
-      const running = await mgr.launch(profile);
-      return c.json({
-        profile_id: id,
-        status: 'running',
-        vnc_ws_port: running.wsPort,
-        display: `:${running.display}`,
-        cdp_url: `/api/profiles/${id}/cdp`,
-      });
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      // Proxy validation and seed assertions are user error, not server error.
-      if (/Invalid proxy|missing hostname|missing port|not parseable|fingerprint_seed/.test(msg)) {
-        return c.json({ detail: msg }, 400);
-      }
-      log.error(`Failed to launch profile ${id}: ${msg}`);
+    if (result.ok === 'not_found') return c.json({ detail: 'Profile not found' }, 404);
+    if (result.ok === 'conflict') {
+      return c.json({ detail: 'Profile is already running' }, 409);
+    }
+    if (result.ok === 'bad_request') return c.json({ detail: result.message }, 400);
+    if (result.ok === 'error') {
+      log.error(`Failed to launch profile ${id}: ${result.message}`);
       return c.json({ detail: 'Failed to launch browser' }, 500);
     }
+
+    return c.json({
+      profile_id: id,
+      status: 'running',
+      vnc_ws_port: result.running.wsPort,
+      display: `:${result.running.display}`,
+      cdp_url: `/api/profiles/${id}/cdp`,
+    });
   });
 
   app.post('/api/profiles/:id/stop', async (c) => {

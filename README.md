@@ -3,25 +3,29 @@
 Each profile is an isolated stealth-Chromium instance with its own fingerprint, proxy, cookies, and session data. Profiles persist across restarts. Everything runs in one Docker container.
 
 ```bash
+docker run -d --name astrabrowser-manager \
+  -p 127.0.0.1:8080:8080 \
+  -v ~/.astrabrowser-manager:/data \
+  --shm-size=1g \
+  --restart unless-stopped \
+  ghcr.io/sahilmahadwar/astra-browser-manager:latest
+```
+
+Open [http://localhost:8080](http://localhost:8080) in your browser. Create a profile. Click Launch. Done.
+
+See [Run with Docker](#run-with-docker) for the flags, environment variables, and
+available image tags.
+
+### Build from source instead
+
+```bash
 git clone https://github.com/SahilMahadwar/AstraBrowser-Manager.git
 cd AstraBrowser-Manager
 docker compose up --build
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser. Create a profile. Click Launch. Done.
-
-Or skip the build and pull the prebuilt image:
-
-```bash
-docker run -d --name astrabrowser-manager \
-  -p 127.0.0.1:8080:8080 \
-  -v ~/.astrabrowser-manager:/data \
-  --shm-size=1g \
-  ghcr.io/sahilmahadwar/astra-browser-manager:latest
-```
-
-`--shm-size=1g` is not optional — Chromium crashes on image-heavy pages with
-Docker's default 64 MB `/dev/shm`.
+Takes ~15 minutes — it compiles the frontend and backend, installs KasmVNC and the
+font set, and downloads the browser binary.
 
 > **Early alpha** — this project is under active development. Expect bugs. If you find one, please [open an issue](https://github.com/SahilMahadwar/AstraBrowser-Manager/issues).
 
@@ -77,6 +81,72 @@ The goal is one manager for every stealth browser — pick the engine per profil
 - Docker (20.10+)
 - ~2 GB disk (image + binary)
 - ~512 MB RAM per running profile
+
+## Run with Docker
+
+Images are published to GitHub Container Registry on every push to `main`, built for
+`linux/amd64`.
+
+```bash
+docker pull ghcr.io/sahilmahadwar/astra-browser-manager:latest
+
+docker run -d --name astrabrowser-manager \
+  -p 127.0.0.1:8080:8080 \
+  -v ~/.astrabrowser-manager:/data \
+  --shm-size=1g \
+  --restart unless-stopped \
+  ghcr.io/sahilmahadwar/astra-browser-manager:latest
+```
+
+Why each flag matters:
+
+- `--shm-size=1g` — **not optional.** Chromium crashes on image-heavy pages with
+  Docker's default 64 MB `/dev/shm`.
+- `-v ~/.astrabrowser-manager:/data` — profiles, cookies, sessions, and the SQLite
+  database live here. Without it, everything is lost when the container is removed.
+- `-p 127.0.0.1:8080:8080` — binds to localhost only. Dropping the `127.0.0.1:`
+  exposes an unauthenticated UI to your whole network; set
+  [`AUTH_TOKEN`](#authentication) first, or use an [SSH tunnel](#remote-access).
+
+### Environment variables
+
+| Variable | Default | What it does |
+| --- | --- | --- |
+| `AUTH_TOKEN` | unset | Protects the UI and API with a token. Unset means every route is open. |
+| `PORT` | `8080` | Port the server listens on inside the container. |
+| `LOG_LEVEL` | `INFO` | Set `DEBUG` when diagnosing RFB filtering or CDP keepalive. |
+| `PUBLIC_BASE_URL` | derived from `Host` | The URL agents should use to reach this server, e.g. `https://browsers.example.com`. Only needed behind a reverse proxy that rewrites `Host`; see [MCP Server](#mcp-server). |
+| `CLOAKBROWSER_DATA_DIR` | `/data` | Where profiles and the database are stored. |
+| `CLOAKBROWSER_LICENSE_KEY` | unset | Opts into the Pro browser binary. The free tier needs no key. |
+| `CLOAKBROWSER_AUTO_UPDATE` | `true` | Whether the browser binary self-updates. |
+| `CLOAKBROWSER_VERSION` | unset | Pins a specific browser build instead of the default. |
+
+```bash
+docker run -d --name astrabrowser-manager \
+  -p 127.0.0.1:8080:8080 \
+  -v ~/.astrabrowser-manager:/data \
+  --shm-size=1g \
+  -e AUTH_TOKEN=your-secret-token \
+  -e LOG_LEVEL=DEBUG \
+  ghcr.io/sahilmahadwar/astra-browser-manager:latest
+```
+
+### Image tags
+
+| Tag | Points at |
+| --- | --- |
+| `latest` | Newest build from `main` |
+| `main` | Same as `latest` |
+| `sha-<short>` | A specific commit — use this to pin a known-good build |
+
+### Managing the container
+
+```bash
+docker logs -f astrabrowser-manager     # follow the logs
+docker stop astrabrowser-manager        # stop
+docker start astrabrowser-manager       # start again
+curl -fsS localhost:8080/api/status     # health check (never requires auth)
+```
 
 ## Windows Fonts on Linux
 
@@ -158,6 +228,17 @@ docker compose up --build
 
 ## Updating
 
+Running the prebuilt image:
+
+```bash
+docker pull ghcr.io/sahilmahadwar/astra-browser-manager:latest
+docker rm -f astrabrowser-manager
+```
+
+Then re-run the `docker run` command from [Run with Docker](#run-with-docker).
+
+Building from source:
+
 ```bash
 git pull
 docker compose up --build -d
@@ -198,6 +279,72 @@ await page.goto("https://example.com");
 
 The CDP URL is available in the toolbar (code icon) when a profile is running. The same browser session is accessible both visually through VNC and programmatically through the API.
 
+## MCP Server
+
+The manager also speaks [MCP](https://modelcontextprotocol.io), so an AI agent can manage profiles as tools instead of you writing a client per endpoint. The endpoint is `POST /mcp` on the same port as the UI, using the Streamable HTTP transport.
+
+Twelve tools are exposed, covering the control plane rather than page actions:
+
+| Tool | What it does |
+| --- | --- |
+| `list_profiles`, `get_profile`, `get_profile_status` | Read profiles and their live status |
+| `create_profile`, `update_profile`, `delete_profile` | Manage profiles |
+| `launch_profile`, `stop_profile`, `force_stop_profile` | Lifecycle |
+| `get_cdp_url` | The CDP endpoint of a running profile, as an absolute URL |
+| `take_screenshot` | JPEG of the current page (live if running, else last cached) |
+| `test_proxy` | Check a proxy's reachability and exit IP before assigning it |
+
+Page-level automation is deliberately *not* exposed: the agent gets a CDP URL from `launch_profile` and drives the browser with its own Playwright or Puppeteer client, which is far cheaper and more capable than routing every click through a model.
+
+### Using it from Mastra
+
+```ts
+import { MCPClient } from "@mastra/mcp";
+import { Agent } from "@mastra/core/agent";
+
+const mcp = new MCPClient({
+  servers: {
+    astrabrowser: {
+      url: new URL("http://localhost:8080/mcp"),
+      requestInit: {
+        headers: { Authorization: `Bearer ${process.env.ASTRA_TOKEN}` },
+      },
+    },
+  },
+});
+
+export const browserAgent = new Agent({
+  name: "browser-agent",
+  instructions:
+    "You manage AstraBrowser profiles. Launch one, then drive it over its CDP URL.",
+  model: "anthropic/claude-sonnet-5",
+  tools: await mcp.getTools(),
+});
+```
+
+Drop the `requestInit` block if `AUTH_TOKEN` is unset. Then in your own tool or workflow step, connect to the URL the agent got back:
+
+```ts
+import { chromium } from "playwright";
+
+const browser = await chromium.connectOverCDP(cdpUrl);
+const page = browser.contexts()[0].pages()[0];
+await page.goto("https://example.com");
+```
+
+`launch_profile` waits until the CDP endpoint actually accepts connections before returning (`wait_for_cdp`, default `true`), so this works on the next line without a retry loop.
+
+### Other clients
+
+Any MCP client that speaks Streamable HTTP works — point it at `http://<host>:8080/mcp` with an `Authorization: Bearer` header. For Claude Code:
+
+```bash
+claude mcp add --transport http astrabrowser http://localhost:8080/mcp \
+  --header "Authorization: Bearer your-secret-token"
+```
+
+Note that `/mcp` requires the token when `AUTH_TOKEN` is set, and returns the CDP URL built from the request's `Host` header. Behind a reverse proxy that rewrites `Host`, or when agents reach the container by a different name, set `PUBLIC_BASE_URL` so the URLs handed to agents are the ones they can actually connect to.
+
 ## Remote Access
 
 The container binds to localhost only. To access from a remote server:
@@ -223,10 +370,21 @@ Or pass it inline:
 AUTH_TOKEN=your-secret-token docker compose up -d
 ```
 
+With plain Docker, pass it as an environment variable:
+
+```bash
+docker run -d --name astrabrowser-manager \
+  -p 127.0.0.1:8080:8080 \
+  -v ~/.astrabrowser-manager:/data \
+  --shm-size=1g \
+  -e AUTH_TOKEN=your-secret-token \
+  ghcr.io/sahilmahadwar/astra-browser-manager:latest
+```
+
 When `AUTH_TOKEN` is set:
 
 - The web UI shows a login page. Enter the token to unlock.
-- API consumers pass the token via `Authorization: Bearer <token>` header.
+- API consumers pass the token via `Authorization: Bearer <token>` header. This includes the [MCP endpoint](#mcp-server).
 - VNC WebSocket connections are authenticated via the login cookie.
 - The `/api/status` endpoint remains unauthenticated (for Docker healthcheck).
 
