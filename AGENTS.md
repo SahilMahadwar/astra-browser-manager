@@ -73,6 +73,13 @@ touching the proxy, VNC, or launch paths.
   pings the *client* leg only (`proxy/vnc.ts`), while the CDP proxy pings both.
   There is a test asserting the asymmetry (`test/vnc-proxy.test.ts`) — do not
   "fix" it.
+- **CI pins npm 11; do not remove that step.** npm 12 refuses to `npm ci` a
+  lockfile written by npm 11 — it wants `@napi-rs/wasm-runtime`'s `@emnapi/*`
+  peers recorded explicitly, and npm 11 omits them. The `node:24-slim` builder
+  stages and most dev machines run npm 11, so `.github/workflows/docker.yml`
+  pins npm 11 too rather than making every `npm install` produce a lockfile that
+  only npm 12 accepts. npm 11 reads either style. Drop the pin only once
+  `node:24-slim` itself ships npm 12.
 - **The three timeout-zeroing lines in `index.ts` are not redundant.** Node 18+
   reaps *upgraded* WebSockets at ~60s because `headersTimeout` is not cleared on
   upgrade. `headersTimeout = 0`, `requestTimeout = 0`, and `socket.setTimeout(0)`
