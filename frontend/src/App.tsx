@@ -6,6 +6,7 @@ import { useConfirm } from "./hooks/useConfirm";
 import { useHotkeys } from "./hooks/useHotkeys";
 import { useHashRoute } from "./hooks/useHashRoute";
 import { useSystemStatus } from "./hooks/useSystemStatus";
+import { useBinaryStatus } from "./hooks/useBinaryStatus";
 import { api, setOnUnauthorized, type ProfileCreateData } from "./lib/api";
 import { Dashboard } from "./components/Dashboard";
 import { ProfileForm } from "./components/ProfileForm";
@@ -108,6 +109,7 @@ function AppContent({ authRequired, onLogout }: AppContentProps) {
     stop,
   } = useProfiles();
   const systemStatus = useSystemStatus();
+  const binaryStatus = useBinaryStatus();
   const toast = useToast();
   const { request: confirmRequest, confirm, onConfirm, onCancel } = useConfirm();
   const { route, navigate } = useHashRoute();
@@ -131,6 +133,32 @@ function AppContent({ authRequired, onLogout }: AppContentProps) {
   const onDirtyChange = useCallback((dirty: boolean) => {
     dirtyRef.current = dirty;
   }, []);
+
+  // The binary download runs in the background, so the menu that started it is
+  // usually long closed by the time it lands. Report the transition out of
+  // "running", not the state itself, or every poll would re-toast.
+  const binaryUpdate = binaryStatus.binary?.update;
+  const prevUpdateState = useRef(binaryUpdate?.state);
+  useEffect(() => {
+    const previous = prevUpdateState.current;
+    prevUpdateState.current = binaryUpdate?.state;
+    if (previous !== "running") return;
+    if (binaryUpdate?.state === "done") {
+      toast.success(
+        binaryUpdate.version
+          ? `Chromium ${binaryUpdate.version} installed — applies on next launch`
+          : "Chromium is already up to date",
+      );
+    } else if (binaryUpdate?.state === "error") {
+      toast.error(binaryUpdate.error ?? "Chromium update failed");
+    }
+  }, [binaryUpdate, toast]);
+
+  const handleUpdateBinary = useCallback(async () => {
+    const error = await binaryStatus.startUpdate();
+    if (error) toast.error(error);
+    else toast.info("Downloading the latest Chromium…");
+  }, [binaryStatus, toast]);
 
   // A profile that vanished (deleted elsewhere, or a stale bookmark) must not
   // leave the app pointing at nothing.
@@ -423,6 +451,8 @@ function AppContent({ authRequired, onLogout }: AppContentProps) {
           <Dashboard
             profiles={profiles}
             status={systemStatus}
+            binary={binaryStatus.binary}
+            onUpdateBinary={handleUpdateBinary}
             authRequired={authRequired}
             onOpen={handleSelect}
             onNew={handleNew}

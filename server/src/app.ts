@@ -25,6 +25,7 @@ import {
   type ProfileRow,
 } from './schemas.js';
 import { buildExport, readImport, resolveName, slugify } from './transfer.js';
+import { getBinaryStatus, startUpdate } from './binary.js';
 import { testProxy } from './proxy-test.js';
 import { deleteCachedThumb, getScreenshot } from './screenshot.js';
 import { logger } from './logger.js';
@@ -293,6 +294,27 @@ export function createApp(mgr: BrowserManager): Hono {
       binary_version: binaryVersion,
       profiles_total: db.listProfiles().length,
     });
+  });
+
+  // ── Chromium binary ───────────────────────────────────────────────────────
+
+  app.get('/api/binary', async (c) => c.json(await getBinaryStatus()));
+
+  app.post('/api/binary/update', async (c) => {
+    const status = await getBinaryStatus();
+    if (!status.updatable) {
+      return c.json(
+        {
+          detail:
+            status.tier === 'pro'
+              ? 'Pro builds are downloaded from cloakbrowser.dev with your licence key, not from GitHub. Run `cloakbrowser update` in the container.'
+              : 'CLOAKBROWSER_BINARY_PATH is set — this install uses your own binary.',
+        },
+        409
+      );
+    }
+    // Returns as soon as the download starts; the UI polls GET /api/binary.
+    return c.json(startUpdate(), 202);
   });
 
   // ── Clipboard relay ───────────────────────────────────────────────────────

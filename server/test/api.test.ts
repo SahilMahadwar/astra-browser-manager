@@ -187,6 +187,44 @@ describe('system status', () => {
   });
 });
 
+describe('chromium binary', () => {
+  // A local override is the only branch that reaches no network: every other
+  // one asks GitHub for the newest release.
+  const OVERRIDE = '/usr/local/bin/chrome';
+
+  beforeEach(() => {
+    process.env.CLOAKBROWSER_BINARY_PATH = OVERRIDE;
+  });
+
+  afterEach(() => {
+    delete process.env.CLOAKBROWSER_BINARY_PATH;
+  });
+
+  it('reports an operator-supplied binary as not ours to update', async () => {
+    const b = await body(await app.request('/api/binary'));
+    expect(b.tier).toBe('override');
+    expect(b.updatable).toBe(false);
+    expect(b.binary_path).toBe(OVERRIDE);
+    expect(b.update_available).toBe(false);
+    expect(b.update.state).toBe('idle');
+  });
+
+  it('409s an update it cannot perform, rather than starting a doomed download', async () => {
+    const res = await app.request('/api/binary/update', { method: 'POST' });
+    expect(res.status).toBe(409);
+    expect((await body(res)).detail).toMatch(/CLOAKBROWSER_BINARY_PATH/);
+  });
+
+  it('requires auth, unlike /api/status', async () => {
+    process.env.AUTH_TOKEN = 'secret';
+    const guarded = createApp(mgr);
+    expect((await guarded.request('/api/binary')).status).toBe(401);
+    expect(
+      (await guarded.request('/api/binary/update', { method: 'POST' })).status
+    ).toBe(401);
+  });
+});
+
 describe('clipboard', () => {
   it('404s when the profile is not running', async () => {
     expect((await app.request('/api/profiles/nope/clipboard')).status).toBe(404);

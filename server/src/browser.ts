@@ -92,6 +92,25 @@ export function validateProxy(url: string): void {
 }
 
 /**
+ * Describe a proxy for the log without leaking the password.
+ *
+ * Whether credentials survived normalization decides which auth path
+ * cloakbrowser takes — inline `--proxy-server` creds, or Playwright's CDP auth
+ * interceptor, which prompts on some proxies. When a session unexpectedly asks
+ * for proxy credentials, this line is what says which one was in play.
+ */
+export function describeProxy(url: string): string {
+  try {
+    const parsed = new URL(url);
+    const port = parsed.port || extractPort(url) || '?';
+    const creds = parsed.username ? 'with credentials' : 'no credentials';
+    return `${parsed.protocol}//${parsed.hostname}:${port} (${creds})`;
+  } catch {
+    return '(unparseable)';
+  }
+}
+
+/**
  * Injected into every page so GET /clipboard can read what the user copied.
  * Chrome under KasmVNC never writes to the X11 clipboard, so xclip can't see it.
  */
@@ -231,7 +250,10 @@ export class BrowserManager {
 
       const rawProxy = profile.proxy || null;
       const proxy = rawProxy ? normalizeProxy(rawProxy) : undefined;
-      if (proxy) validateProxy(proxy);
+      if (proxy) {
+        validateProxy(proxy);
+        log.debug(`Profile ${profileId} proxy: ${describeProxy(proxy)}`);
+      }
 
       await this.vnc.startVnc(display, wsPort, profile.screen_width, profile.screen_height);
 

@@ -4,10 +4,11 @@ import {
   Lock,
   MoreHorizontal,
   Plus,
+  RefreshCw,
   Upload,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Profile, SystemStatus } from "../lib/api";
+import type { BinaryStatus, Profile, SystemStatus } from "../lib/api";
 import { ProfileCard } from "./ProfileCard";
 import { Tag } from "./Tag";
 
@@ -23,6 +24,8 @@ const SORT_LABELS: Record<SortKey, string> = {
 interface DashboardProps {
   profiles: Profile[];
   status: SystemStatus | null;
+  binary: BinaryStatus | null;
+  onUpdateBinary: () => void;
   authRequired: boolean;
   onOpen: (id: string) => void;
   onNew: () => void;
@@ -38,6 +41,8 @@ interface DashboardProps {
 export function Dashboard({
   profiles,
   status,
+  binary,
+  onUpdateBinary,
   authRequired,
   onOpen,
   onNew,
@@ -193,15 +198,23 @@ export function Dashboard({
                 />
               )}
               {status && (
-                <p
-                  className="px-3 pt-2 mt-1 border-t border-border text-[11px] text-ink-faint"
-                  title={`Chromium ${status.binary_version}`}
-                >
-                  Chromium {status.binary_version}
-                  <br />
-                  {status.running_count} running · {status.profiles_total}{" "}
-                  {status.profiles_total === 1 ? "profile" : "profiles"}
-                </p>
+                <div className="px-3 pt-2 mt-1 border-t border-border text-[11px] text-ink-faint">
+                  <BinaryLine status={status} binary={binary} />
+                  <p>
+                    {status.running_count} running · {status.profiles_total}{" "}
+                    {status.profiles_total === 1 ? "profile" : "profiles"}
+                  </p>
+                  {binary?.updatable && (
+                    <BinaryUpdate
+                      binary={binary}
+                      blocked={running.length > 0}
+                      onUpdate={() => {
+                        setMenuOpen(false);
+                        onUpdateBinary();
+                      }}
+                    />
+                  )}
+                </div>
               )}
             </div>
           )}
@@ -353,6 +366,85 @@ export function Dashboard({
           ))
         )}
       </div>
+    </div>
+  );
+}
+
+/**
+ * The installed Chromium, which is not the same thing as the version the server
+ * was built against — `/api/status` reports the latter. Falls back to it only
+ * until the binary status has loaded.
+ */
+function BinaryLine({
+  status,
+  binary,
+}: {
+  status: SystemStatus;
+  binary: BinaryStatus | null;
+}) {
+  if (binary?.tier === "override") {
+    // The version of an operator-mounted binary is unknowable, so claiming one
+    // would be worse than saying nothing.
+    return <p title={binary.binary_path ?? undefined}>Chromium (custom binary)</p>;
+  }
+  const version = binary?.version ?? status.binary_version;
+  return (
+    <p title={binary?.binary_path ?? `Chromium ${version}`}>
+      Chromium {version}
+      {binary?.tier === "pro" ? " · pro" : ""}
+    </p>
+  );
+}
+
+/**
+ * Update affordance. Only rendered for a GitHub-sourced free install — Pro
+ * builds come from cloakbrowser.dev behind a licence, and a
+ * CLOAKBROWSER_BINARY_PATH override is the operator's own binary.
+ */
+function BinaryUpdate({
+  binary,
+  blocked,
+  onUpdate,
+}: {
+  binary: BinaryStatus;
+  blocked: boolean;
+  onUpdate: () => void;
+}) {
+  if (binary.update.state === "running") {
+    return (
+      <p className="mt-1.5 flex items-center gap-1.5 text-accent">
+        <RefreshCw className="h-3 w-3 animate-spin" />
+        Downloading Chromium…
+      </p>
+    );
+  }
+
+  if (!binary.update_available) {
+    return (
+      <p className="mt-1.5">
+        {binary.latest_version ? "Up to date" : "Could not check for updates"}
+      </p>
+    );
+  }
+
+  return (
+    <div className="mt-1.5">
+      <p className="text-ink-muted">Update available → {binary.latest_version}</p>
+      <button
+        onClick={onUpdate}
+        disabled={blocked}
+        // A new binary is only picked up when a profile next launches, so
+        // updating under a live session would be silently ineffective.
+        title={
+          blocked
+            ? "Stop all running profiles first — a new binary applies on next launch"
+            : undefined
+        }
+        className="mt-1 flex items-center gap-1.5 text-[11px] text-accent hover:underline disabled:opacity-40 disabled:no-underline"
+      >
+        <RefreshCw className="h-3 w-3" />
+        Update now
+      </button>
     </div>
   );
 }

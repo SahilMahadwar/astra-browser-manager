@@ -95,6 +95,24 @@ export interface ImportResult {
   renamed: { from: string; to: string }[];
 }
 
+/** State of the CloakBrowser Chromium binary — see server/src/binary.ts. */
+export interface BinaryStatus {
+  version: string | null;
+  bundled_version: string;
+  tier: "free" | "pro" | "override";
+  installed: boolean;
+  platform: string;
+  binary_path: string | null;
+  latest_version: string | null;
+  update_available: boolean;
+  updatable: boolean;
+  update: {
+    state: "idle" | "running" | "done" | "error";
+    version: string | null;
+    error: string | null;
+  };
+}
+
 export interface ProxyTestResult {
   ok: boolean;
   exit_ip: string | null;
@@ -201,6 +219,15 @@ export const api = {
     request<{ ok: boolean }>(`/api/profiles/${id}/stop`, { method: "POST" }),
 
   getStatus: () => request<SystemStatus>("/api/status"),
+
+  getBinary: () => request<BinaryStatus>("/api/binary"),
+
+  /**
+   * Starts the download and returns immediately — the archive is ~70MB. Poll
+   * `getBinary()` for the outcome.
+   */
+  updateBinary: () =>
+    request<BinaryStatus["update"]>("/api/binary/update", { method: "POST" }),
 
   setClipboard: (id: string, text: string) =>
     request<{ ok: boolean }>(`/api/profiles/${id}/clipboard`, {

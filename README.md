@@ -1,25 +1,5 @@
 <h1 align="center">AstraBrowser Manager</h1>
 
-<h3 align="center">Browser profile manager for stealth Chromium</h3>
-
-<p align="center">
-Create, manage, and launch isolated browser profiles with unique fingerprints.<br>
-Free, self-hosted alternative to Multilogin, GoLogin, and AdsPower.
-</p>
-
-<p align="center">
-<a href="https://github.com/SahilMahadwar/AstraBrowser-Manager/stargazers"><img src="https://img.shields.io/github/stars/SahilMahadwar/AstraBrowser-Manager?label=stars" alt="Stars"></a>
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License"></a>
-</p>
-
----
-
-<p align="center">
-<img src="https://i.imgur.com/twdX81Q.png" width="800" alt="AstraBrowser Manager — Browser View">
-<br>
-<img src="https://i.imgur.com/XFYn1qY.png" width="800" alt="AstraBrowser Manager — Profile Settings">
-</p>
-
 Each profile is an isolated stealth-Chromium instance with its own fingerprint, proxy, cookies, and session data. Profiles persist across restarts. Everything runs in one Docker container.
 
 ```bash
@@ -51,20 +31,20 @@ A VPN only changes your IP. Incognito only clears cookies. Chrome profiles share
 
 Each profile here generates a completely different device identity. To the website, each profile looks like a different computer.
 
-| Solution | What it changes | Accounts linked? |
-|----------|----------------|-----------------|
-| VPN | IP address only | Yes — same fingerprint |
-| Incognito | Clears cookies | Yes — same fingerprint |
-| Chrome profiles | Separate bookmarks/cookies | Yes — same hardware fingerprint |
-| **AstraBrowser Manager** | **Everything — full device identity per profile** | **No** |
+| Solution                 | What it changes                                   | Accounts linked?                |
+| ------------------------ | ------------------------------------------------- | ------------------------------- |
+| VPN                      | IP address only                                   | Yes — same fingerprint          |
+| Incognito                | Clears cookies                                    | Yes — same fingerprint          |
+| Chrome profiles          | Separate bookmarks/cookies                        | Yes — same hardware fingerprint |
+| **AstraBrowser Manager** | **Everything — full device identity per profile** | **No**                          |
 
 ## Browser Engines
 
-| Engine | Status |
-|---|---|
+| Engine                                                                     | Status          |
+| -------------------------------------------------------------------------- | --------------- |
 | [CloakBrowser](https://github.com/CloakHQ/CloakBrowser) (stealth Chromium) | Supported today |
-| [Camoufox](https://github.com/daijro/camoufox) (stealth Firefox) | Coming soon |
-| Additional stealth engines | Coming soon |
+| [Camoufox](https://github.com/daijro/camoufox) (stealth Firefox)           | Coming soon     |
+| Additional stealth engines                                                 | Coming soon     |
 
 The goal is one manager for every stealth browser — pick the engine per profile, keep the same UI, proxies, and automation API.
 
@@ -77,6 +57,7 @@ The goal is one manager for every stealth browser — pick the engine per profil
 - **In-browser viewing** — interact with launched browsers via noVNC, directly in the web GUI
 - **Live previews** — optional thumbnails of every running profile, and a last-seen image for stopped ones
 - **Proxy testing** — check a proxy and see its exit IP before you launch, instead of after it fails
+- **Browser updates** — see the installed stealth Chromium and pull the newest published build without rebuilding the image
 - **Export & import** — move profile configurations between machines as JSON
 - **Search, filter, and tags** — filter by status or tag, sort by name or date, with keyboard shortcuts
 - **Playwright/Puppeteer API** — connect to any running profile programmatically via CDP, while still watching it live in the browser
@@ -99,7 +80,7 @@ The goal is one manager for every stealth browser — pick the engine per profil
 
 ## Windows Fonts on Linux
 
-Profiles default to `platform: windows`, but fonts come from the *host* OS. A
+Profiles default to `platform: windows`, but fonts come from the _host_ OS. A
 Linux container claiming Windows while enumerating only Liberation fonts is a
 contradiction that font-fingerprinting anti-bot systems flag
 ([CloakBrowser#395](https://github.com/CloakHQ/CloakBrowser/issues/395)).
@@ -209,7 +190,7 @@ async with async_playwright() as pw:
 const { chromium } = require("playwright");
 
 const browser = await chromium.connectOverCDP(
-  "http://localhost:8080/api/profiles/<profile-id>/cdp"
+  "http://localhost:8080/api/profiles/<profile-id>/cdp",
 );
 const page = browser.contexts()[0].pages()[0];
 await page.goto("https://example.com");
