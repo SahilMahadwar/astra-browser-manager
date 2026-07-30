@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Node
+node_modules/
+frontend/dist/
+server/dist/
+frontend/tsconfig.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+
+# Local env (holds AUTH_TOKEN — never commit)
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# Deploy
+deploy.sh
+
+# Claude Code
+.claude/
+CLAUDE.md
+publish-docker.sh
+.beads
+debug
+
+# Design scratch / mockups
+CloakBrowser Dashboard Redesign/
+archive/

@@ -1,0 +1,26 @@
+# Build context exclusions. The builder stages run their own npm install, so
+# copying host node_modules/dist in would clobber those layers (and break the
+# build outright from a non-Linux host).
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+
+.git
+.gitignore
+.gitattributes
+
+# Secrets — .env carries AUTH_TOKEN
+.env
+.env.*
+
+# Not part of the image
+archive/
+CloakBrowser Dashboard Redesign/
+.claude/
+.beads/
+CLAUDE.md
+AGENTS.md
+README.md
+BINARY-LICENSE.md
+docker-compose.yml
+.github/

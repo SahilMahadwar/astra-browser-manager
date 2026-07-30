@@ -1,0 +1,18 @@
+services:
+  manager:
+    # `docker compose up` pulls this; `up --build` builds from source instead.
+    image: ghcr.io/sahilmahadwar/astra-browser-manager:latest
+    build: .
+    ports:
+      - "127.0.0.1:${PORT:-8080}:8080"
+    volumes:
+      - ~/.astrabrowser-manager:/data
+    environment:
+      - AUTH_TOKEN=${AUTH_TOKEN:-}
+      # Raise to DEBUG when diagnosing RFB filtering or CDP keepalive.
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      # Optional: opt into the Pro binary. Free tier needs no key.
+      - CLOAKBROWSER_LICENSE_KEY=${CLOAKBROWSER_LICENSE_KEY:-}
+    # Chromium needs more than Docker's default 64MB of shared memory or tabs
+    # crash on image-heavy pages.
+    shm_size: 1gb

@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #21252e;
+    border: 2px solid #0a0b0d;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2a303c;
+  }
+
+  /* Hide number input spinners */
+  input[type="number"].no-spin::-webkit-inner-spin-button,
+  input[type="number"].no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"].no-spin {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-[15px] py-[9px] rounded-ctl font-display text-[13.5px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50;
+  }
+  /* The mockup's primary action is white-on-dark; green is reserved for launching. */
+  .btn-primary {
+    @apply btn bg-[#f2f3f5] text-surface-0 hover:bg-white;
+  }
+  .btn-launch {
+    @apply btn bg-accent text-accent-fg font-bold hover:bg-accent-hover;
+  }
+  .btn-secondary {
+    @apply btn bg-[#16191f] border border-[#262b34] text-[#c3c9d3] hover:border-[#3a414d] hover:text-white;
+  }
+  .btn-danger {
+    @apply btn bg-danger/10 border border-danger/30 text-danger hover:bg-danger/[0.16];
+  }
+  .icon-btn {
+    @apply inline-grid place-items-center h-[38px] w-[38px] flex-shrink-0 rounded-ctl bg-surface-2 border border-border-strong text-ink-muted transition-colors hover:border-border-hover hover:text-ink focus:outline-none focus:ring-2 focus:ring-accent/50;
+  }
+  .input {
+    @apply w-full h-9 bg-surface-1 border border-border-strong rounded-field px-3 py-2 text-sm text-ink placeholder-ink-faint focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50;
+  }
+  textarea.input {
+    @apply h-auto;
+  }
+  .label {
+    @apply block text-xs font-medium text-ink-faint mb-1;
+  }
+}

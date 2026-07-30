@@ -1,0 +1,38 @@
+{
+  "name": "astrabrowser-manager-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "//": "node:sqlite (src/db.ts) was added in Node 22.5 — Node 20 fails at runtime with ERR_UNKNOWN_BUILTIN_MODULE.",
+    "node": ">=22.5.0"
+  },
+  "//dependencies": "mmdb-lib and socks-proxy-agent are cloakbrowser's OPTIONAL peer deps. The Python backend got them via the cloakbrowser[geoip] extra (geoip2 + socksio). Without mmdb-lib a profile with geoip:true fails to launch; without socks-proxy-agent a socks5:// proxy fails. https-proxy-agent is ours: POST /api/proxy/test needs a per-request agent for http/https proxies, which global fetch cannot take without depending on undici directly.",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.0",
+    "@hono/node-ws": "^1.3.1",
+    "cloakbrowser": "^0.5.2",
+    "hono": "^4.12.0",
+    "https-proxy-agent": "^9.1.0",
+    "mmdb-lib": "^2.0.0",
+    "playwright-core": "^1.53.0",
+    "socks-proxy-agent": "^10.0.0",
+    "ws": "^8.21.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.0",
+    "typescript": "~5.7.0",
+    "vitest": "^4.1.0"
+  }
+}
