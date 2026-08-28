@@ -1,9 +1,10 @@
 # Agent Instructions
 
-AstraBrowser Manager runs isolated stealth-Chromium profiles, each with its own
+AstraBrowser Manager runs isolated stealth-browser profiles, each with its own
 fingerprint and proxy, and streams them into the web UI over VNC. It is a fork of
-CloakHQ's CloakBrowser Manager; the browser engine is still upstream's
-`cloakbrowser` npm package.
+CloakHQ's CloakBrowser Manager. Two engines are supported: upstream's
+`cloakbrowser` npm package (Chromium) and Camoufox (Firefox), selected per profile
+by the `engine` column and dispatched through `server/src/engines/`.
 
 **The `CLOAKBROWSER_` prefix is deliberate.** `CLOAKBROWSER_DATA_DIR`,
 `CLOAKBROWSER_LICENSE_KEY`, the `cloakbrowser` dependency, and the
@@ -23,8 +24,9 @@ volume: `profiles.db` plus a `profiles/<id>/` directory per profile.
 | `archive/python-backend/` | The retired FastAPI implementation. **Reference only — never edit.** See its README. |
 
 Per running profile: an `Xvnc` display (KasmVNC, from `:100` up), a websockify
-port (from `6100`), a Chromium CDP port (from `5100`), and a Playwright
-`BrowserContext`. `server/src/browser.ts` owns all of it via `BrowserManager`.
+port (from `6100`), an automation port (from `5100`), and a Playwright
+`BrowserContext`. `server/src/browser.ts` owns all of it via `BrowserManager`,
+which delegates the launch itself to an engine driver in `server/src/engines/`.
 
 Request paths that matter:
 
@@ -32,11 +34,16 @@ Request paths that matter:
   translation → KasmVNC. noVNC 1.4 and KasmVNC 1.3.3 do not speak the same RFB
   dialect; that translation layer is why this works at all.
 - **CDP** — Playwright/Puppeteer → `WS /api/profiles/:id/cdp` → `proxy/cdp.ts` → Chromium.
+- **Playwright protocol** — Playwright → `WS /api/profiles/:id/pw` → the same
+  passthrough in `proxy/cdp.ts` → Camoufox. Firefox has no CDP, so this is a
+  separate path, not a variant of the one above.
 - **MCP** — agent (Mastra, Claude Code, …) → `POST /mcp` → `mcp/http.ts` (SDK
   Streamable HTTP transport) → `mcp/server.ts` → `profiles.ts`. The tools are the
-  control plane only; the agent drives the page itself over the CDP URL they
-  hand back. `BrowserManager` state is in-process, so this cannot be split into a
-  separate server — it would see no running sessions.
+  control plane only; for **Chromium** the agent drives the page itself over the
+  CDP URL they hand back. **Camoufox is managed but not driven through MCP** — it
+  has no CDP endpoint, and MCP deliberately does not expose its Playwright one
+  (`test/mcp.test.ts` asserts that). `BrowserManager` state is in-process, so this
+  cannot be split into a separate server — it would see no running sessions.
 - **Static** — everything not under `/api/` falls through to `frontend/dist` with
   an SPA catch-all, registered last in `index.ts`.
 
@@ -45,7 +52,7 @@ Request paths that matter:
 ```bash
 # Backend
 cd server && npm run dev          # tsx watch, needs CLOAKBROWSER_DATA_DIR + PORT
-cd server && npm test             # vitest, 244 tests
+cd server && npm test             # vitest, 292 tests
 cd server && npm run typecheck    # tsc --noEmit
 cd server && npm run build        # -> dist/
 
@@ -58,7 +65,7 @@ cd frontend && npm run build      # tsc -b && vite build
 docker compose up --build         # http://localhost:8080
 ```
 
-Profile *launching* needs `Xvnc` and the CloakBrowser binary, so it only works
+Profile *launching* needs `Xvnc` and the engine's binary, so it only works
 inside Docker (or on a host with KasmVNC installed). CRUD, auth, and the UI all
 work locally. Local dev recipe and the full manual acceptance procedure are in
 `server/README.md`.
@@ -122,7 +129,53 @@ touching the proxy, VNC, or launch paths.
   because a fast relaunch keeps colliding with ports in `TIME_WAIT`.
 - **Proxy ports: don't trust `URL.port`.** It normalizes away a scheme's default
   port, so `http://host:80` reports `''` — which rejected every proxy on :80.
-  Use `extractPort()` (`browser.ts`).
+  Use `extractPort()` (`proxy-config.ts`, re-exported from `browser.ts`).
+- **Camoufox has no CDP, and never will.** Firefox deleted its CDP
+  implementation in 141; Camoufox is 152. `connectOverCDP` throws
+  "CDP connections are only supported by Chromium". Do not add a `--remote-debugging-port`,
+  a shim, or a "CDP-compatible" endpoint for it — the only transport is the
+  Playwright protocol over `/pw`. `cdp_url` is null for those profiles on purpose:
+  handing an existing CDP client a URL that cannot work fails far less clearly.
+- **The Camoufox driver depends on two UNDOCUMENTED playwright-core options.**
+  `launchServer({ _userDataDir, _sharedBrowser })` is what makes a persistent
+  profile *and* a remote endpoint possible at once — `_userDataDir` routes the
+  launch through `launchPersistentContext`, and `_sharedBrowser` sets
+  `isolateContexts: false` so a connecting client can actually see that context.
+  Drop `_sharedBrowser` and clients silently get a blank browser; drop
+  `_userDataDir` and every Camoufox profile silently becomes a throwaway one.
+  Neither failure is loud, so `test/engines-camoufox.test.ts` asserts both are
+  still present in the installed bundle. If it fails, do not delete it — verify
+  the mechanism by hand against the new version first.
+- **`playwright-core` is pinned to `~1.60`** because `camoufox-js` peer-requires
+  `<1.61.0`. cloakbrowser's peer range is `>=1.53.0`, so Chromium is unaffected.
+- **The server stage's `npm ci --ignore-scripts` is load-bearing.** camoufox-js
+  pulls in `better-sqlite3`, which carries a `binding.gyp`, so npm runs
+  `node-gyp rebuild` on it implicitly — and the image has no Python or compiler
+  by design. The compile is pointless anyway: better-sqlite3 ships N-API
+  prebuilds in its own tarball and loads those at runtime. Drop the flag and the
+  image build fails with `gyp ERR! find Python`. **Do not "fix" it by adding
+  build-essential** — that is the constraint the whole image is built around.
+  The *frontend* stage must not get the flag; Vite needs esbuild's binary.
+  Note also that `better-sqlite3` is not dead weight: camoufox-js samples a WebGL
+  fingerprint from a bundled sqlite DB on every `launchOptions()` call unless
+  `block_webgl` is set, so it is on the main launch path. The Dockerfile
+  smoke-checks exactly that after installing.
+- **Use the wsEndpoint Playwright reports, verbatim.** With no `host` it binds
+  IPv6 loopback and reports `ws://[::1]:PORT/...`; rebuilding that as
+  `127.0.0.1` is a connection failure that reads like a dead browser. The driver
+  passes `host: '127.0.0.1'` and still stores what it is handed back.
+- **Firefox lock files are `.parentlock` and `lock`,** not Chromium's
+  `Singleton*` set. Both the driver and `entrypoint.sh` clear them; miss one and
+  a crashed container leaves the profile permanently unlaunchable.
+- **`engine` is immutable after creation.** The user-data directory is written in
+  the engine's own format, so switching would point a browser at a directory it
+  cannot read. It is absent from `profileUpdateSchema` and from `UPDATABLE_COLS`,
+  and `test/db.test.ts` asserts an update cannot change it.
+- **Engine config is deliberately not shared.** Chromium reads the flat
+  fingerprint columns; Camoufox reads `engine_config` and ignores them. Do not
+  "unify" a field across both — the two engines spoof different surfaces, and one
+  control that means two things is how a Camoufox change breaks a Chromium
+  profile.
 
 ## Conventions
 

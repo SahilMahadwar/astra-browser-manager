@@ -19,6 +19,7 @@ import { cleanupClipboard } from './clipboard.js';
 import { logFontStatus } from './fonts.js';
 import {
   getCdpWebSocketUrl,
+  probeAutomationPort,
   probeCdp,
   proxyCdpWebSocket,
   type EarlyMessage,
@@ -99,6 +100,13 @@ app.get(
         const { id, running } = guard;
         const raw = ws.raw as unknown as WsSocket;
 
+        // A Camoufox profile has no CDP at all. Say so rather than letting the
+        // client hang on a socket that will never answer a CDP command.
+        if (running.cdpPort === null) {
+          ws.close(4006, `Profile uses ${running.engine}, which has no CDP — connect to /pw instead`);
+          return;
+        }
+
         // Capture anything sent while we probe. Playwright fires its first
         // commands the instant the socket opens; without this they are dropped
         // and the client hangs waiting for a reply.
@@ -152,11 +160,67 @@ app.get(
           ws.close(guard.error === 'origin' ? 4403 : 4004, guard.error);
           return;
         }
+        if (guard.running.cdpPort === null) {
+          ws.close(4006, 'Profile has no CDP');
+          return;
+        }
         const target = `ws://127.0.0.1:${guard.running.cdpPort}/devtools/${suffix}`;
         await proxyCdpWebSocket(
           ws.raw as never,
           target,
           `CDP page proxy [${guard.id}]`
+        );
+      },
+    };
+  })
+);
+
+// ── Playwright-protocol WebSocket proxy (Camoufox) ──────────────────────────
+//
+// Same passthrough as CDP — the proxy never inspects payloads — but there is no
+// discovery step: Playwright clients connect straight to this URL with
+// `firefox.connect()`, so there is no /json/version to fetch a target from.
+
+app.get(
+  '/api/profiles/:id/pw',
+  upgradeWebSocket((c) => {
+    const guard = wsGuard(c);
+    return {
+      async onOpen(_evt, ws) {
+        if ('error' in guard) {
+          ws.close(guard.error === 'origin' ? 4403 : 4004, guard.error);
+          return;
+        }
+        const { id, running } = guard;
+        const raw = ws.raw as unknown as WsSocket;
+
+        if (running.protocol !== 'playwright-firefox') {
+          ws.close(4006, `Profile uses ${running.engine} over CDP — connect to /cdp instead`);
+          return;
+        }
+
+        // Playwright's client sends its handshake the instant the socket opens,
+        // exactly as CDP clients do, so the same early-capture applies.
+        const early: EarlyMessage[] = [];
+        const collect = (data: RawData, isBinary: boolean) =>
+          early.push({ data, isBinary });
+        raw.on('message', collect);
+
+        if (!(await probeAutomationPort(running.automationPort))) {
+          log.warn(`PW proxy [${id}]: Camoufox not answering — evicting stale entry`);
+          raw.off('message', collect);
+          mgr.evict(id);
+          ws.close(4005, 'Automation endpoint not available');
+          return;
+        }
+
+        raw.off('message', collect);
+        await proxyCdpWebSocket(
+          raw as never,
+          running.automationUrl,
+          `PW proxy [${id}]`,
+          {},
+          early
         );
       },
     };

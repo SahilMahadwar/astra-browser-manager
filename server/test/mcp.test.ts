@@ -8,7 +8,7 @@ import type { Hono } from 'hono';
 
 import { createApp } from '../src/app.js';
 import { BrowserManager } from '../src/browser.js';
-import { closeDb, initDb } from '../src/db.js';
+import { closeDb, createProfile, initDb } from '../src/db.js';
 
 let dir: string;
 let app: Hono;
@@ -252,5 +252,75 @@ describe('proxy testing', () => {
     );
     expect(result.ok).toBe(false);
     expect(result.error).toBeTruthy();
+  });
+});
+
+describe('MCP is a control plane, not a Camoufox automation surface', () => {
+  /** Stand in for a launched profile of either engine. */
+  function fakeRunning(id: string, engine: 'chromium' | 'camoufox') {
+    const isCdp = engine === 'chromium';
+    mgr.running.set(id, {
+      profileId: id,
+      engine,
+      context: {} as never,
+      display: 100,
+      wsPort: 6100,
+      automationPort: 5100,
+      protocol: isCdp ? 'cdp' : 'playwright-firefox',
+      automationUrl: isCdp ? 'http://127.0.0.1:5100' : 'ws://127.0.0.1:5100/pw/' + id,
+      cdpPort: isCdp ? 5100 : null,
+      session: {} as never,
+    });
+  }
+
+  it('does not expose a get_automation_url tool', async () => {
+    const names = (await body(await rpc('tools/list'))).result.tools.map(
+      (t: { name: string }) => t.name
+    );
+    expect(names).not.toContain('get_automation_url');
+  });
+
+  it('withholds the automation endpoint from get_profile_status for camoufox', async () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    fakeRunning(p.id, 'camoufox');
+
+    const status = payload(await call('get_profile_status', { id: p.id }));
+    expect(status.engine).toBe('camoufox');
+    expect(status.cdp_url).toBeNull();
+    // The whole point: driving a Camoufox profile is not offered here.
+    expect(status).not.toHaveProperty('automation_url');
+    expect(status).not.toHaveProperty('automation_protocol');
+  });
+
+  it('withholds it from get_profile_status for chromium too', async () => {
+    // Chromium is drivable, but through cdp_url — the automation_* pair was an
+    // addition that MCP no longer carries for either engine.
+    const p = createProfile({ name: 'Chrome' });
+    fakeRunning(p.id, 'chromium');
+
+    const status = payload(await call('get_profile_status', { id: p.id }));
+    expect(status.cdp_url).toContain(`/api/profiles/${p.id}/cdp`);
+    expect(status).not.toHaveProperty('automation_url');
+    expect(status).not.toHaveProperty('automation_protocol');
+  });
+
+  it('fails get_cdp_url on camoufox without naming a tool that no longer exists', async () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    fakeRunning(p.id, 'camoufox');
+
+    const result = await call('get_cdp_url', { id: p.id });
+    expect(result.isError).toBe(true);
+    const text = result.content[0].text as string;
+    expect(text).toMatch(/no CDP endpoint/);
+    expect(text).not.toContain('get_automation_url');
+  });
+
+  it('keeps get_cdp_url working for chromium — the cloak path is unchanged', async () => {
+    const p = createProfile({ name: 'Chrome' });
+    fakeRunning(p.id, 'chromium');
+
+    const out = payload(await call('get_cdp_url', { id: p.id }));
+    expect(out.cdp_url).toContain(`/api/profiles/${p.id}/cdp`);
+    expect(out.usage).toContain('connectOverCDP');
   });
 });

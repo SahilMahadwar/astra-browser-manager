@@ -1,15 +1,52 @@
 import { useCallback, useEffect, useState } from "react";
 import { Check, Copy, ExternalLink, RefreshCw, X } from "lucide-react";
-import { api, type CdpTarget } from "../lib/api";
+import { api, type AutomationProtocol, type CdpTarget } from "../lib/api";
 
 interface CdpPanelProps {
   profileId: string;
-  /** Relative CDP path from the profile, e.g. /api/profiles/<id>/cdp */
+  /** Relative automation path, e.g. /api/profiles/<id>/cdp or .../pw */
   cdpUrl: string;
+  protocol: AutomationProtocol;
   onClose: () => void;
 }
 
-function snippets(endpoint: string) {
+/**
+ * Snippets differ per engine because the protocols do. Camoufox is Firefox and
+ * has no CDP at all (Firefox removed it in 141), so connectOverCDP there does
+ * not merely underperform — it throws. Showing the wrong snippet would send
+ * someone down a long debugging hole, so this branches rather than generalises.
+ */
+function snippets(endpoint: string, protocol: AutomationProtocol) {
+  if (protocol === "playwright-firefox") {
+    return [
+      {
+        label: "Python",
+        code: `from playwright.sync_api import sync_playwright
+
+with sync_playwright() as pw:
+    browser = pw.firefox.connect("${endpoint}")
+    # contexts[0] is the profile's persistent context - the same window you
+    # are watching in the live view. Do not call new_context().
+    context = browser.contexts[0]
+    page = context.pages[0] if context.pages else context.new_page()
+    page.goto("https://example.com")
+    print(page.title())`,
+      },
+      {
+        label: "JavaScript",
+        code: `const { firefox } = require("playwright");
+
+const browser = await firefox.connect("${endpoint}");
+// contexts()[0] is the profile's persistent context - the same window you
+// are watching in the live view. Do not call newContext().
+const context = browser.contexts()[0];
+const page = context.pages()[0] ?? (await context.newPage());
+await page.goto("https://example.com");
+console.log(await page.title());`,
+      },
+    ];
+  }
+
   return [
     {
       label: "Python",
@@ -72,14 +109,24 @@ function CopyButton({ value, label }: { value: string; label: string }) {
  * page WebSocket URLs already rewritten to route through the proxy) and was never
  * called by the UI.
  */
-export function CdpPanel({ profileId, cdpUrl, onClose }: CdpPanelProps) {
-  const endpoint = `${window.location.protocol}//${window.location.host}${cdpUrl}`;
+export function CdpPanel({ profileId, cdpUrl, protocol, onClose }: CdpPanelProps) {
+  const isCdp = protocol === "cdp";
+  // firefox.connect() takes a ws:// URL; connectOverCDP() takes the http base
+  // and discovers the socket itself. Handing either the other's form fails.
+  const scheme = isCdp
+    ? window.location.protocol
+    : window.location.protocol === "https:"
+      ? "wss:"
+      : "ws:";
+  const endpoint = `${scheme}//${window.location.host}${cdpUrl}`;
   const [lang, setLang] = useState(0);
   const [targets, setTargets] = useState<CdpTarget[] | null>(null);
   const [targetsError, setTargetsError] = useState<string | null>(null);
   const [loadingTargets, setLoadingTargets] = useState(false);
 
   const loadTargets = useCallback(async () => {
+    // Firefox has no /json/list — there is no target list to fetch.
+    if (!isCdp) return;
     setLoadingTargets(true);
     try {
       const list = await api.cdpTargets(profileId);
@@ -90,7 +137,7 @@ export function CdpPanel({ profileId, cdpUrl, onClose }: CdpPanelProps) {
     } finally {
       setLoadingTargets(false);
     }
-  }, [profileId]);
+  }, [profileId, isCdp]);
 
   useEffect(() => {
     loadTargets();
@@ -107,7 +154,7 @@ export function CdpPanel({ profileId, cdpUrl, onClose }: CdpPanelProps) {
     return () => document.removeEventListener("keydown", onKeyDown, true);
   }, [onClose]);
 
-  const langs = snippets(endpoint);
+  const langs = snippets(endpoint, protocol);
   const active = langs[lang]!;
 
   return (
@@ -128,7 +175,9 @@ export function CdpPanel({ profileId, cdpUrl, onClose }: CdpPanelProps) {
               Automation endpoint
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              Drive this profile with Playwright or Puppeteer while watching it live.
+              {isCdp
+                ? "Drive this profile with Playwright or Puppeteer while watching it live."
+                : "Drive this profile with Playwright while watching it live. This engine is Firefox-based and speaks the Playwright protocol, not CDP."}
             </p>
           </div>
           <button
@@ -143,8 +192,10 @@ export function CdpPanel({ profileId, cdpUrl, onClose }: CdpPanelProps) {
         {/* Endpoint URL */}
         <div className="mb-4">
           <div className="flex items-center justify-between mb-1">
-            <span className="label mb-0">CDP URL</span>
-            <CopyButton value={endpoint} label="Copy CDP URL" />
+            <span className="label mb-0">
+              {isCdp ? "CDP URL" : "Playwright WebSocket URL"}
+            </span>
+            <CopyButton value={endpoint} label="Copy automation URL" />
           </div>
           <code className="block bg-surface-2 border border-border rounded-md px-3 py-2 text-xs font-mono text-gray-300 break-all">
             {endpoint}
@@ -178,8 +229,18 @@ export function CdpPanel({ profileId, cdpUrl, onClose }: CdpPanelProps) {
           </pre>
         </div>
 
-        {/* Live tab list */}
-        <div>
+        {!isCdp && (
+          <p className="mb-4 text-xs text-amber-400/90 bg-amber-400/10 border border-amber-400/20 rounded-md px-3 py-2">
+            Your <code className="font-mono">playwright</code> major.minor must match this
+            server&rsquo;s. A mismatch is <strong>not</strong> rejected when you connect &mdash;
+            it shows up later as{" "}
+            <code className="font-mono">timeout: expected float, got undefined</code> on
+            calls like <code className="font-mono">goto</code>.
+          </p>
+        )}
+
+        {/* Live tab list — Chromium only; Firefox exposes no target list. */}
+        <div className={isCdp ? undefined : "hidden"}>
           <div className="flex items-center justify-between mb-1.5">
             <span className="label mb-0">
               Open tabs{targets ? ` (${targets.length})` : ""}

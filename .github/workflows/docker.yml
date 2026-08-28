@@ -37,6 +37,16 @@ jobs:
         working-directory: server
         run: npm ci
 
+      # The Camoufox driver's integration test needs a Firefox binary and skips
+      # without one. Skipping it in CI would leave the undocumented
+      # launchServer options (_userDataDir / _sharedBrowser) unexercised, which
+      # is the one failure mode that is silent and severe — profiles would
+      # quietly stop persisting. Playwright's Firefox stands in for the 630MB
+      # Camoufox build; the driver resolves it via CAMOUFOX_BINARY_PATH.
+      - name: Install Firefox for the engine integration test
+        working-directory: server
+        run: npx playwright-core install --with-deps firefox
+
       - name: Typecheck server
         working-directory: server
         run: npm run typecheck

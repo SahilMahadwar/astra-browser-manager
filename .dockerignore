@@ -23,4 +23,8 @@ AGENTS.md
 README.md
 BINARY-LICENSE.md
 docker-compose.yml
+railway.json
 .github/
+
+# Test scripts — not needed in the image, and its node_modules is large.
+examples

@@ -1,0 +1,3697 @@
+{
+  "data": {
+    "details": {
+      "isHomeloanApproved": false,
+      "verificationStatus": null,
+      "permitNumber": null,
+      "societyAmenities": [],
+      "flatAmenities": [],
+      "parentChildData": {
+        "parentId": null,
+        "childIds": ["355363"],
+        "parentUrl": null,
+        "parentName": null,
+        "multiReraDetails": [
+          {
+            "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+            "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails"
+          }
+        ],
+        "siblingIds": [],
+        "otherPhasesInfo": [
+          {
+            "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+            "phaseListingId": "355363",
+            "areaText": "1197 - 1758 sq.ft.",
+            "bhkText": "2, 3 BHK",
+            "buildingCountText": "2 Buildings",
+            "name": "Ishtika Anahata Phase II",
+            "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli",
+            "possessionText": "Possession Jul, 2029",
+            "isActivelySelling": false
+          }
+        ],
+        "inventoryConfigs": [
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "2 BHK",
+            "selectedAreaInUnit": 1197,
+            "apartmentTypeId": 3
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1511,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1531,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1540,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1556,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1591,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1670,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1690,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1692,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1710,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1721,
+            "apartmentTypeId": 4
+          },
+          {
+            "projectAttributes": {
+              "id": 355363,
+              "possessionDate": "2029-07-31T00:00:00.000+00:00",
+              "currentStatus": "Under Construction",
+              "reraRegId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+              "buildingCount": 2,
+              "activelySelling": 0,
+              "name": "Ishtika Anahata Phase II",
+              "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+            },
+            "appartmentGroupName": "3 BHK",
+            "selectedAreaInUnit": 1758,
+            "apartmentTypeId": 4
+          }
+        ]
+      },
+      "reviewRating": null,
+      "projectReviewVideo": false,
+      "showPerSqftRate": true,
+      "streetInfo": "Whitefiled",
+      "isPinMoved": null,
+      "landmark": "Samethanahalli, Bengaluru",
+      "creditScore": "0",
+      "polygonsHash": {
+        "h_district": {
+          "name": "Bangalore Rural District",
+          "uuid": "0515368df4fd63243c31",
+          "url_name": "bangalore_rural_1",
+          "display_name": ["Bangalore Rural District", "Karnataka"],
+          "is_proxy": null
+        },
+        "city": {
+          "name": "Bengaluru",
+          "uuid": "747be13fe47cb8ae14c3",
+          "url_name": "bangalore",
+          "display_name": ["Bengaluru", "Karnataka"],
+          "is_proxy": true
+        },
+        "hotspot": {
+          "name": null,
+          "uuid": null,
+          "url_name": null,
+          "display_name": null,
+          "is_proxy": null
+        },
+        "neighbourhood": {
+          "name": null,
+          "uuid": null,
+          "url_name": null,
+          "display_name": null,
+          "is_proxy": null
+        },
+        "housing_region": {
+          "name": "Bangalore East",
+          "uuid": "930ce5ab47471eba4bf7",
+          "url_name": "east_bangalore",
+          "display_name": ["Bangalore East", "Bengaluru"],
+          "is_proxy": null
+        },
+        "locality": {
+          "name": "Samethanahalli",
+          "uuid": "943b999fa35a67487e08",
+          "url_name": "samethanahalli",
+          "display_name": ["Samethanahalli", "Bengaluru"],
+          "is_proxy": null
+        },
+        "sublocality": {
+          "name": null,
+          "uuid": null,
+          "url_name": null,
+          "display_name": null,
+          "is_proxy": null
+        },
+        "state": {
+          "name": "Karnataka",
+          "uuid": "d078570df0e00884d815",
+          "url_name": "karnataka",
+          "display_name": ["Karnataka", "India"],
+          "is_proxy": null
+        },
+        "region": {
+          "name": null,
+          "uuid": null,
+          "url_name": null,
+          "display_name": null,
+          "is_proxy": null
+        },
+        "housing_state": {
+          "name": null,
+          "uuid": null,
+          "url_name": null,
+          "display_name": null,
+          "is_proxy": null
+        }
+      },
+      "currentPossessionStatus": "Under Construction",
+      "priceOnRequest": true,
+      "thumbImageUrl": null,
+      "inventoryAmenities": {
+        "has_cupboards": false,
+        "has_biometric_access": false,
+        "has_ac": false,
+        "has_power_backup": false,
+        "has_video_intercom": false,
+        "has_gas_line": false,
+        "has_home_automation": false,
+        "has_private_swimming_pool": false,
+        "has_fireplace": false,
+        "has_parking": false,
+        "has_loft_attic": false,
+        "has_jacuzzi": false,
+        "has_walk_in_closets": false,
+        "has_video_door_phone": false,
+        "has_washing_machine_area": false,
+        "has_vastu_compliant": false,
+        "has_modular_kitchen": false,
+        "has_terrace": false,
+        "has_intercom": false
+      },
+      "hasVerifiedFlats": false,
+      "clubhouse": {
+        "id": 345621,
+        "highlights": [],
+        "amenities_hash": {
+          "Amphitheater": "amphitheater",
+          "Cricket Pitch": "cricketPitch",
+          "Spa": "spa",
+          "Gazebo": "gazebo",
+          "Skating Rink": "skatingRink",
+          "Table Tennis": "tableTennis",
+          "Mini Theatre": "miniTheatre",
+          "Electrification(Transformer, Solar Energy etc)": "electrification",
+          "24X7 Water Supply": "waterSupply",
+          "Car Parking": "parking",
+          "Street Lighting": "streetLight",
+          "Senior Citizen Siteout": "seniorCitizen",
+          "Indoor Games": "IndoorGames",
+          "Cycling & Jogging Track": "jogging",
+          "Piped Gas Connection": "gasPipeline",
+          "Party Lawn": "partyHall",
+          "Sewage Treatment Plant": "npSewage",
+          "Children's Play Area": "playArea",
+          "Salon": "salon",
+          "Solid Waste Management And Disposal": "wasteManagement",
+          "Party Hall": "partyHall",
+          "EV Charging Point": "evChargingPoint",
+          "Sports Complex": "sportsComplex",
+          "24x7 CCTV Surveillance": "infoBlack",
+          "Community Hall": "communityHall",
+          "Beach Volley Ball Court": "volleyball",
+          "Storm Water Drains": "infoBlack",
+          "Library": "library",
+          "24x7 Security": "security",
+          "Electrical meter Room": "infoBlack",
+          "Cafeteria": "foodCourt",
+          "Waiting Lounge": "lounge",
+          "Tennis Court": "lawnTennis",
+          "Swimming Pool": "pool",
+          "Pet Grooming": "petGrooming",
+          "Landscaping & Tree Planting": "garden",
+          "Water Conservation, Rain water Harvesting": "waterConservation",
+          "Gymnasium": "gym",
+          "Fire Fighting System": "npFireResist",
+          "Jogging Track": "jogging",
+          "Gated Community": "gated",
+          "Club House": "clubHouse",
+          "Yoga / Meditation Area": "npYoga",
+          "Security Cabin": "guard",
+          "Football Field": "football",
+          "Lift(s)": "lift",
+          "Creche/Day Care": "dayCare",
+          "Badminton Court": "badmintonCourt",
+          "Aerobics Room": "aerobicsRoom",
+          "Sun Deck": "sunDeck",
+          "Basketball Court": "basketBall",
+          "Paved Compound": "pavedCompound",
+          "Internal Roads & Footpaths": "infoBlack",
+          "Energy management": "energyManagement",
+          "Power Backup": "powerBackup",
+          "Billiards / Snooker Table": "snooker"
+        }
+      },
+      "videoKey": "NSktXsz9bpM",
+      "possessionDate": "Jul, 2029",
+      "initiationDateSeconds": "2025-07-31T18:30:00.000Z",
+      "addedOn": null,
+      "displayNeighbourhood": null,
+      "polygonDetails": {
+        "primaryPolygonName": "Samethanahalli",
+        "parentPolygon": "Bengaluru"
+      },
+      "price": null,
+      "status": "ACTIVE",
+      "developerInformation": [
+        {
+          "description": "\"Ishtika,\" Sanskrit for \"brick,\" represents our focus on earthy elegance. With 12+ years of experience, we are a trusted Bangalore developer, known for delivering quality and completing around 800,000 square feet.</p>\r\n\r\nOur vision is to lead in real estate excellence and be the market's top choice. We deliver cost-effective, eco-friendly homes with exceptional service and cutting-edge technology, guided by the highest professional standards is our mission.",
+          "name": "Ishtika Homes",
+          "profile_picture_url": "https://is1-2.housingcdn.com/0b8ad14c/154d33fac09b5ce68d2522976267b185/v0/version.jpg",
+          "profile_url": "ishtika-homes-bid-5109013",
+          "profile_uuid": "fd32cc45-3615-4e88-b11f-8e87cc6845b9",
+          "total_projects": 7,
+          "year_of_establishment": "2025",
+          "posession": {
+            "ready_to_move": 2,
+            "in_three_years": 3,
+            "beyond_three_years": 3
+          },
+          "canonical": "/buy-projects-by-ishtika-homes-bid-5109013-Am88co7kolziguu18tkfdxk0qh"
+        }
+      ],
+      "name": "Ishtika Anahata",
+      "minSelectedArea": 1197,
+      "unitOfArea": "sq.ft.",
+      "addressDetails": ["Samethanahalli", "Bengaluru"],
+      "selectedAreaInUnits": 1197,
+      "videoConnectAvailable": false,
+      "listingId": "345914",
+      "originalListingId": "345914",
+      "inventoryCanonicalUrl": "/in/buy/projects/page/345914-ishtika-anahata-by-ishtika-homes-in-samethanahalli",
+      "propertyInformation": {
+        "bedrooms": 2,
+        "parking": null,
+        "area": "1197 sq.ft",
+        "price": null
+      },
+      "label": null,
+      "isMostContacted": true,
+      "isRecentlyAdded": true,
+      "developerPocPartialValue": "70905.....",
+      "rateOfInterest": "7.5",
+      "videoTour": null,
+      "updatedAt": "2026-07-24T12:02:27.000Z",
+      "listingCountUpdatedAt": "2026-06-24T04:01:57.000Z",
+      "reviewRatingUpdatedAt": null,
+      "builtUpArea": {
+        "value": 1197,
+        "unit": "sq.ft"
+      },
+      "title": "Ishtika Anahata",
+      "galleryTitle": "Ishtika Anahata",
+      "tracking": {
+        "ad_deficit": 0,
+        "per_satisfaction": 0,
+        "monetization_factor": 0
+      },
+      "tags": ["rera_verified", "price_on_request"],
+      "subtitle": "2, 3 BHK Apartments",
+      "propertyType": "project",
+      "furnishingType": null,
+      "features": [
+        {
+          "label": "Configurations",
+          "meta": null,
+          "id": "configs",
+          "description": "2, 3 BHK Apartments",
+          "position": 8,
+          "icon": "configs"
+        },
+        {
+          "label": "Possession Starts",
+          "meta": null,
+          "id": "possession",
+          "description": "Jul, 2029",
+          "position": 7,
+          "icon": "possession"
+        },
+        {
+          "label": "Avg. Price",
+          "meta": null,
+          "id": "avgPrice",
+          "description": "Price on request",
+          "position": 6,
+          "icon": "avgPrice"
+        },
+        {
+          "label": "Formatted per unit price",
+          "meta": null,
+          "id": "formattedPerUnitPrice",
+          "description": "₹7.85k/sq.ft.",
+          "position": null,
+          "icon": "formattedPerUnitPrice"
+        },
+        {
+          "label": "Sizes",
+          "meta": "Super Builtup Area",
+          "id": "sizeConfig",
+          "description": "1197 - 1758 sq.ft.",
+          "position": 2,
+          "icon": "sizeConfig"
+        }
+      ],
+      "featureAndConfig": [
+        {
+          "id": "projectUnits",
+          "description": "442",
+          "label": "Project Units"
+        },
+        {
+          "id": "projectArea",
+          "description": "5 Acres",
+          "label": "Project Area"
+        },
+        {
+          "id": "launchDate",
+          "description": "Aug, 2025",
+          "label": "Launch Date"
+        },
+        {
+          "id": "areaUnit",
+          "description": "sq.ft.",
+          "label": "Area Unit"
+        },
+        {
+          "id": "avgPrice",
+          "description": "Price on request",
+          "label": "Avg. Price"
+        },
+        {
+          "id": "sizeConfig",
+          "description": "1197 - 1758 sq.ft.",
+          "label": "Sizes"
+        },
+        {
+          "id": "possession",
+          "description": "Jul, 2029",
+          "label": "Possession Starts"
+        }
+      ],
+      "npCleanupFeatures": [
+        {
+          "label": "Configuration",
+          "meta": null,
+          "id": "configs",
+          "description": "2, 3 BHK Apartments",
+          "position": 8,
+          "icon": "configs"
+        },
+        {
+          "label": "Possession Starts",
+          "meta": null,
+          "id": "possession",
+          "description": "Jul, 2029",
+          "position": 7,
+          "icon": "possession"
+        },
+        {
+          "label": "Avg. Price",
+          "meta": null,
+          "id": "avgPrice",
+          "description": "Price on request",
+          "position": 6,
+          "icon": "avgPrice"
+        },
+        {
+          "label": "Avg. Price",
+          "meta": null,
+          "id": "avgPrice",
+          "description": "₹0k/sq.ft.",
+          "position": 6,
+          "icon": "avgPrice"
+        },
+        {
+          "label": "Sizes",
+          "meta": "Super Builtup Area",
+          "id": "sizeConfig",
+          "description": "1197 - 1758 sq.ft.",
+          "position": 2,
+          "icon": "sizeConfig"
+        }
+      ],
+      "promotions": ["No EMI Till Possession"],
+      "brands": [
+        {
+          "id": "fd32cc45-3615-4e88-b11f-8e87cc6845b9",
+          "name": "Ishtika Homes",
+          "url": "/buy-projects-by-ishtika-homes-bid-5109013-Am88co7kolziguu18tkfdxk0qh",
+          "stats": [
+            {
+              "label": "Year estd.",
+              "description": "2025"
+            },
+            {
+              "label": "Projects",
+              "description": "7"
+            }
+          ],
+          "firmImage": null,
+          "brandDescription": "\"Ishtika,\" Sanskrit for \"brick,\" represents our focus on earthy elegance. With 12+ years of experience, we are a trusted Bangalore developer, known for delivering quality and completing around 800,000 square feet.</p>\r\n\r\nOur vision is to lead in real estate excellence and be the market's top choice. We deliver cost-effective, eco-friendly homes with exceptional service and cutting-edge technology, guided by the highest professional standards is our mission.",
+          "image": "https://is1-2.housingcdn.com/0b8ad14c/154d33fac09b5ce68d2522976267b185/v0/version.jpg",
+          "experience": "2025"
+        }
+      ],
+      "address": {
+        "address": "Whitefiled, Bangalore East, Bengaluru",
+        "subAddress": "Samethanahalli, Bengaluru",
+        "detailedPropertyAddress": null
+      },
+      "socialUrgency": {
+        "msg": "15 people interested in this property"
+      },
+      "isActiveProperty": true,
+      "isUc": true,
+      "emi": null,
+      "description": {
+        "overviewDescription": "<div>For those looking to buy a residential property, here comes one of the choicest offerings in Bangalore East, at Samethanahalli. Brought to you by Ishtika Vibranium, Anahata is among the newest addresses for homebuyers. There are apartments for sale in Anahata Samethanahalli, Near Whitefield, Bangalore. This is a new launch project right now, and is expected to be delivered by Mar, 2028.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Anahata Bangalore East is a RERA-registered housing society, which means all projects details are also available on state RERA website for end-users and investors. The RERA registration number of this project is PRM/KA/RERA/1250/304/PR/290425/007702.</div><br />\r\n<br /><br />\r\n<div>Ishtika Vibranium is one of the known real estate brands in Bangalore East.The builder has delivered 1 project so far. Around 1 project is upcoming. There is 1 project of this builder, which is currently under-construction.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Read on to know more about must-know features, Anahata Photos, Floor Plans, Brochure download procedure and other exciting facts about the project.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Features & Amenities</div><br />\r\n<br /> <br /><br /><br />\r\n<div>The project is spread over an area of 5 acres.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>There are around 440 units on offer.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Anahata Samethanahalli, Near Whitefield, Bangalore housing society has 5 towers with 12 floors.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Anahata Bangalore East has some great amenities to offer such as Swimming Pool, Gymnasium and Club House.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Whitefield railway station is a popular landmark in Samethanahalli, Near Whitefield, Bangalore</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Some popular transit points closest to Anahata Samethanahalli, Near Whitefield, Bangalore are Whitefield railway station, Whitefield metro station and Channasandra metro station. Out of this, Whitefield railway station is the nearest from this location.</div><br />\r\n<br /> <br /> <br /><br /><br /><br />\r\n<div>Anahata Floor Plans and Price List</div><br />\r\n<br /> <br /><br /><br />\r\n<div>This housing society has the following property options available in different configurations. Take a look at Anahata Floor Plans and Price List:</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Configuration Size Price</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Anahata 2BHK Apartment1,178 sq.ft.Rs. 82.45 L onwards</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Anahata 3BHK Apartment1,500 sq.ft.Rs. 1.05 Cr onwards</div><br />\r\n<br /> <br /><br /><br />\r\n<div>How to get Anahata Brochure?</div><br />\r\n<br /> <br /><br /><br />\r\n<div>View and download Anahata Official Brochure to take a comprehensive look at this upcoming housing society. It is a detailed prospectus about the societyâs offerings, amenities, features, payment plans and a lot more. Click the âdownloadâ icon on the main page to get the brochure in one click.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Where to find Anahata Photos & Videos?</div><br />\r\n<br /> <br /><br /><br />\r\n<div>View interiors and exterior images of residential properties for sale in Anahata Samethanahalli to check out 6 picture(s) of outdoors, 6 picture(s) of facilities in Anahata housing society.</div><br />\r\n<br /><br />\r\n<div>What is Anahata Address?</div><br />\r\n<br /><br />\r\n<div>Whitefield, Bangalore EastÂ </div><br />\r\n<br /> <br /><br /><br />\r\n<div>Get directions to reach this location.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>How is Samethanahalli, Near Whitefield, Bangalore for buying a home?</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Samethanahalli is a mid locality to buy an apartment, as compared to other areas in the surrounding areas. This locality ranks #77 in Top 100 in Bangalore East.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>The existing residents of Samethanahalli gave it an average rating of 3.5, out of 5.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>How is Samethanahalli for investment?</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Samethanahalli presents a reasonable opportunity for those considering property investments, as it offers a mid investment option compared to nearby areas. There are expected infrastructural developments in nearby areas, which may impact real estate prices in this specific locality as well. Moreover, Anahata is a newly launched project where you can invest in the most preferred property options at a lesser cost and get higher returns, with easy payment plans.</div><br />\r\n<br /> <br /><br /><br />\r\n<div>How is Ishtika Vibranium track record?</div><br />\r\n<br /> <br /><br /><br />\r\n<div>Ishtika Vibranium stands out with a proven track record in the industry. Ishtika Vibranium has successfully delivered 1 projects, and currently has 3 ongoing project in its portfolio. Catering to 2 cities across India, it has carved a niche for itself.</div>",
+        "highlights": null
+      },
+      "displayPrice": {
+        "value": [],
+        "displayValue": "Price on Request",
+        "description": null,
+        "unit": null,
+        "maxPrice": null,
+        "displayMaintenance": null,
+        "displayParkingCharges": null,
+        "displayPaintingCharges": null,
+        "lockInPeriod": null,
+        "displayBrokerage": null,
+        "displayDeposit": null,
+        "depositDuration": null,
+        "brokerageDuration": null,
+        "paintingDuration": null,
+        "isBrokerageNegotiable": null
+      },
+      "priceUpdateLabel": null,
+      "coverImage": {
+        "src": "https://is1-2.housingcdn.com/4f2250e8/0124ddb19b7cbc029409caa238824ac2/v0/version/ishtika_anahata-samethanahalli-bengaluru-ishtika_homes.jpeg",
+        "alt": "Gallery Cover Pic of Ishtika Anahata",
+        "videoUrl": null
+      },
+      "featuredVideoUrl": null,
+      "featuredVideoThumbnailUrl": null,
+      "imageCount": 45,
+      "sellers": [
+        {
+          "name": "Ishtika Homes",
+          "id": "fd32cc45-3615-4e88-b11f-8e87cc6845b9",
+          "image": "https://is1-2.housingcdn.com/0b8ad14c/154d33fac09b5ce68d2522976267b185/v0/version.jpg",
+          "type": "Developer",
+          "isPrime": false,
+          "isPaid": false,
+          "sellerBadge": null,
+          "designation": "Developer",
+          "url": "/buy-projects-by-ishtika-homes-bid-5109013-Am88co7kolziguu18tkfdxk0qh",
+          "meta": {
+            "primaryTags": [],
+            "secondaryTags": [],
+            "paid": false,
+            "adDeficit": 0,
+            "priceRange": "₹ 91.36 L - 1.25 Cr"
+          },
+          "isFeaturedAgent": null,
+          "phone": {
+            "partialValue": "99020....."
+          },
+          "isCertifiedAgent": null,
+          "contactPersonId": 3
+        }
+      ],
+      "insights": [
+        {
+          "id": "possession",
+          "value": "Under Construction"
+        },
+        {
+          "id": "apartments",
+          "value": "2, 3 BHK Apartments"
+        },
+        {
+          "id": "possessionDate",
+          "value": "Possession: Jul, 2029"
+        }
+      ],
+      "highlights": [],
+      "newHighlightsDataSource": false,
+      "digitour": {
+        "url": ""
+      },
+      "eventIds": [],
+      "coords": ["12.981385", "77.793564"],
+      "project": {
+        "id": "345914",
+        "name": "Ishtika Anahata"
+      },
+      "coverImageUrl": "https://is1-2.housingcdn.com/4f2250e8/0124ddb19b7cbc029409caa238824ac2/v0/version/ishtika_anahata-samethanahalli-bengaluru-ishtika_homes.jpeg",
+      "locationVisibilityScale": null,
+      "details": {
+        "averagePrice": "Price on request",
+        "avgPriceValue": null,
+        "config": {
+          "propertyConfig": [
+            {
+              "key": "3",
+              "label": "2 BHK Apartment",
+              "labelWithoutPropertyType": "2 BHK",
+              "propertyTypeName": "Apartment",
+              "propertyTypeId": 1,
+              "range": null,
+              "areaSizeRange": "1197 sq.ft",
+              "areaSizeRangeUnit": "sq.ft",
+              "data": [
+                {
+                  "id": "1536397",
+                  "title": "2 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1197,
+                        "unit": "sq.ft",
+                        "displayArea": "1197"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-3.housingcdn.com/91aba65c/127e8ff371f336caee0a07cdfeaf9f58/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "2 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "2",
+                      "label": "Bedroom"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "4",
+              "label": "3 BHK Apartment",
+              "labelWithoutPropertyType": "3 BHK",
+              "propertyTypeName": "Apartment",
+              "propertyTypeId": 1,
+              "range": null,
+              "areaSizeRange": "1511 - 1758 sq.ft",
+              "areaSizeRangeUnit": "sq.ft",
+              "data": [
+                {
+                  "id": "1536398",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1511,
+                        "unit": "sq.ft",
+                        "displayArea": "1511"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/bf520f37155fc5ef77f37cdd28ac963b/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536399",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1531,
+                        "unit": "sq.ft",
+                        "displayArea": "1531"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/3aed5672d589a76ab149d7898f489823/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536400",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1540,
+                        "unit": "sq.ft",
+                        "displayArea": "1540"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/d91f3166fe21b7df7e6f0e8a27d65bd9/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536401",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1556,
+                        "unit": "sq.ft",
+                        "displayArea": "1556"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/26d0c6de3393f6a5fce3e130d690cfc1/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536402",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1591,
+                        "unit": "sq.ft",
+                        "displayArea": "1591"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/c9db1b5da8cea36ccc157c5e581bff17/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536403",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1670,
+                        "unit": "sq.ft",
+                        "displayArea": "1670"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-3.housingcdn.com/91aba65c/7e41b0bafebd9aceaa58321d87c368d0/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536404",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1690,
+                        "unit": "sq.ft",
+                        "displayArea": "1690"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-3.housingcdn.com/91aba65c/eb20aef4d58786df1567e306d217638f/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536405",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1692,
+                        "unit": "sq.ft",
+                        "displayArea": "1692"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/1b0ba82858d1111b04a7f8f5cdfcb1a0/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536406",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1710,
+                        "unit": "sq.ft",
+                        "displayArea": "1710"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-3.housingcdn.com/91aba65c/f99fc93ab0ded91c60fd5a59a4a663a9/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536407",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1721,
+                        "unit": "sq.ft",
+                        "displayArea": "1721"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/4ced26b293519b89876681d59568e3c0/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                },
+                {
+                  "id": "1536408",
+                  "title": "3 BHK Apartment",
+                  "price": {
+                    "value": null,
+                    "displayValue": "Price on Request",
+                    "unit": null,
+                    "deposit": null,
+                    "description": null
+                  },
+                  "unitsAvailable": null,
+                  "areaConfig": [
+                    {
+                      "name": "Super Builtup Area",
+                      "areaInfo": {
+                        "value": 1758,
+                        "unit": "sq.ft",
+                        "displayArea": "1758"
+                      }
+                    }
+                  ],
+                  "emi": null,
+                  "averagePrice": "Price on request",
+                  "floorPlan": [
+                    {
+                      "src": "https://is1-2.housingcdn.com/91aba65c/5f7b64c7c2599e7d9fe80d9c3483854a/v0/version.png",
+                      "alt": null,
+                      "tag": "2D",
+                      "floor": null,
+                      "caption": "3 BHK Apartment, undefined sq.ft",
+                      "type": null
+                    }
+                  ],
+                  "derivedFloorPlan": null,
+                  "derivedFloorPlanWithTags": null,
+                  "projectAttributes": {
+                    "name": "Ishtika Anahata Phase II",
+                    "status": "Under Construction",
+                    "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                    "childIds": [355363],
+                    "reraSiteUrl": "https://rera.karnataka.gov.in/projectViewDetails",
+                    "modifiedReraId": "PRM/KA/RERA/1250/304/PR/290425/007702",
+                    "reraIdStatus": "Rera",
+                    "qrImage": null,
+                    "possessionDate": "2029-07-31T00:00:00.000+00:00",
+                    "isReraVerified": true,
+                    "projectId": 355363,
+                    "url": "/in/buy/projects/page/355363-ishtika-anahata-phase-ii-by-ishtika-homes-in-samethanahalli"
+                  },
+                  "features": null,
+                  "additionalFields": [
+                    {
+                      "id": "bedroom",
+                      "value": "3",
+                      "label": "Bedroom"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "displayAreaType": "Super Builtup Area",
+          "type": "nestedTabs"
+        },
+        "loanOffers": null,
+        "detailedTitle": "Ishtika Anahata",
+        "furnishings": [
+          {
+            "type": "floorings",
+            "label": "floorings",
+            "data": [
+              "Living/Dining: Vitrified Tiles",
+              "Master Bedroom: Vitrified Tiles",
+              "Other Bedroom: Vitrified Tiles",
+              "Kitchen: Vitrified Tiles",
+              "Toilets: Anti Skid Ceramic Tiles"
+            ],
+            "additionalData": null
+          },
+          {
+            "type": "fittings",
+            "label": "fittings",
+            "data": [
+              "Toilets: Branded CP Fittings and Sanitary Ware",
+              "Kitchen: Granite platform with stainless steel sink",
+              "Doors: Teak Veneered / Laminated Flush Door"
+            ],
+            "additionalData": null
+          },
+          {
+            "type": "walls",
+            "label": "walls",
+            "data": ["Interior: Emulsion Paint", "Exterior: Putty Finish"],
+            "additionalData": null
+          }
+        ],
+        "meta": {
+          "showDisclaimer": false,
+          "primaryTags": [],
+          "secondaryTags": [208776],
+          "showSimilarProjects": true,
+          "buyersServed": 315,
+          "linkedProjectId": false,
+          "linkedProjectName": false,
+          "isValidLinkedProject": false,
+          "linkedProjectDescription": false,
+          "linkedProjectUrl": false
+        },
+        "amenities": [
+          {
+            "type": "Highlights",
+            "label": "Highlights",
+            "data": [
+              "Residences designed following Vaastu principles to enhance well-being and positive energy, promoting a harmonious living environment",
+              "27,000 sq ft clubhouse featuring a mini theatre, indoor badminton court, and spa/salon for diverse recreational options",
+              "Experience 80% open space with better air circulation, less noise pollution, and greater access to nature for a serene lifestyle",
+              "High-performance gym with Technogym equipment, boxing ring, and personalized coaching pods for tailored fitness experiences",
+              "Rainwater harvesting system and recycled treated water for toilet flushes, emphasizing sustainability and resource efficiency",
+              "Hopfarm Metro Station nearby for convenient commuting and easy access to city amenities",
+              "Project includes a mini football court, basketball half-court, and sand volleyball court for diverse sports activities",
+              "Seismic Zone II compliant RCC-framed structure for enhanced safety and structural integrity"
+            ],
+            "additionalData": null
+          },
+          {
+            "type": "Amenities",
+            "label": "Amenities",
+            "data": [
+              "Swimming Pool",
+              "Children Play Area",
+              "Gym",
+              "Gated Community",
+              "Power Backup",
+              "Badminton Court",
+              "Basketball Court",
+              "Football Field",
+              "Sewage Treatment Plant",
+              "Cricket Pitch",
+              "Tennis Court",
+              "Skating Rink",
+              "Library",
+              "Cycling & Jogging Track",
+              "Community Hall",
+              "Aerobics Room",
+              "24x7 Security"
+            ],
+            "additionalData": [
+              {
+                "label": "Amphitheater",
+                "value": "amphitheater"
+              },
+              {
+                "label": "Cricket Pitch",
+                "value": "cricketPitch"
+              },
+              {
+                "label": "Spa",
+                "value": "spa"
+              },
+              {
+                "label": "Gazebo",
+                "value": "gazebo"
+              },
+              {
+                "label": "Skating Rink",
+                "value": "skatingRink"
+              },
+              {
+                "label": "Table Tennis",
+                "value": "tableTennis"
+              },
+              {
+                "label": "Mini Theatre",
+                "value": "miniTheatre"
+              },
+              {
+                "label": "Electrification(Transformer, Solar Energy etc)",
+                "value": "electrification"
+              },
+              {
+                "label": "24X7 Water Supply",
+                "value": "waterSupply"
+              },
+              {
+                "label": "Car Parking",
+                "value": "parking"
+              },
+              {
+                "label": "Street Lighting",
+                "value": "streetLight"
+              },
+              {
+                "label": "Senior Citizen Siteout",
+                "value": "seniorCitizen"
+              },
+              {
+                "label": "Indoor Games",
+                "value": "IndoorGames"
+              },
+              {
+                "label": "Cycling & Jogging Track",
+                "value": "jogging"
+              },
+              {
+                "label": "Piped Gas Connection",
+                "value": "gasPipeline"
+              },
+              {
+                "label": "Party Lawn",
+                "value": "partyHall"
+              },
+              {
+                "label": "Sewage Treatment Plant",
+                "value": "npSewage"
+              },
+              {
+                "label": "Children's Play Area",
+                "value": "playArea"
+              },
+              {
+                "label": "Salon",
+                "value": "salon"
+              },
+              {
+                "label": "Solid Waste Management And Disposal",
+                "value": "wasteManagement"
+              },
+              {
+                "label": "Party Hall",
+                "value": "partyHall"
+              },
+              {
+                "label": "EV Charging Point",
+                "value": "evChargingPoint"
+              },
+              {
+                "label": "Sports Complex",
+                "value": "sportsComplex"
+              },
+              {
+                "label": "24x7 CCTV Surveillance",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Community Hall",
+                "value": "communityHall"
+              },
+              {
+                "label": "Beach Volley Ball Court",
+                "value": "volleyball"
+              },
+              {
+                "label": "Storm Water Drains",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Library",
+                "value": "library"
+              },
+              {
+                "label": "24x7 Security",
+                "value": "security"
+              },
+              {
+                "label": "Electrical meter Room",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Cafeteria",
+                "value": "foodCourt"
+              },
+              {
+                "label": "Waiting Lounge",
+                "value": "lounge"
+              },
+              {
+                "label": "Tennis Court",
+                "value": "lawnTennis"
+              },
+              {
+                "label": "Swimming Pool",
+                "value": "pool"
+              },
+              {
+                "label": "Pet Grooming",
+                "value": "petGrooming"
+              },
+              {
+                "label": "Landscaping & Tree Planting",
+                "value": "garden"
+              },
+              {
+                "label": "Water Conservation, Rain water Harvesting",
+                "value": "waterConservation"
+              },
+              {
+                "label": "Gymnasium",
+                "value": "gym"
+              },
+              {
+                "label": "Fire Fighting System",
+                "value": "npFireResist"
+              },
+              {
+                "label": "Jogging Track",
+                "value": "jogging"
+              },
+              {
+                "label": "Gated Community",
+                "value": "gated"
+              },
+              {
+                "label": "Club House",
+                "value": "clubHouse"
+              },
+              {
+                "label": "Yoga / Meditation Area",
+                "value": "npYoga"
+              },
+              {
+                "label": "Security Cabin",
+                "value": "guard"
+              },
+              {
+                "label": "Football Field",
+                "value": "football"
+              },
+              {
+                "label": "Lift(s)",
+                "value": "lift"
+              },
+              {
+                "label": "Creche/Day Care",
+                "value": "dayCare"
+              },
+              {
+                "label": "Badminton Court",
+                "value": "badmintonCourt"
+              },
+              {
+                "label": "Aerobics Room",
+                "value": "aerobicsRoom"
+              },
+              {
+                "label": "Sun Deck",
+                "value": "sunDeck"
+              },
+              {
+                "label": "Basketball Court",
+                "value": "basketBall"
+              },
+              {
+                "label": "Paved Compound",
+                "value": "pavedCompound"
+              },
+              {
+                "label": "Internal Roads & Footpaths",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Energy management",
+                "value": "energyManagement"
+              },
+              {
+                "label": "Power Backup",
+                "value": "powerBackup"
+              },
+              {
+                "label": "Billiards / Snooker Table",
+                "value": "snooker"
+              }
+            ]
+          },
+          {
+            "type": "Furnishings",
+            "label": "Furnishings",
+            "data": null,
+            "additionalData": []
+          },
+          {
+            "type": "Society Amenities",
+            "label": "Society Amenities",
+            "data": null,
+            "additionalData": [
+              {
+                "label": "Amphitheater",
+                "value": "amphitheater"
+              },
+              {
+                "label": "Cricket Pitch",
+                "value": "cricketPitch"
+              },
+              {
+                "label": "Spa",
+                "value": "spa"
+              },
+              {
+                "label": "Gazebo",
+                "value": "gazebo"
+              },
+              {
+                "label": "Skating Rink",
+                "value": "skatingRink"
+              },
+              {
+                "label": "Table Tennis",
+                "value": "tableTennis"
+              },
+              {
+                "label": "Mini Theatre",
+                "value": "miniTheatre"
+              },
+              {
+                "label": "Electrification(Transformer, Solar Energy etc)",
+                "value": "electrification"
+              },
+              {
+                "label": "24X7 Water Supply",
+                "value": "waterSupply"
+              },
+              {
+                "label": "Car Parking",
+                "value": "parking"
+              },
+              {
+                "label": "Street Lighting",
+                "value": "streetLight"
+              },
+              {
+                "label": "Senior Citizen Siteout",
+                "value": "seniorCitizen"
+              },
+              {
+                "label": "Indoor Games",
+                "value": "IndoorGames"
+              },
+              {
+                "label": "Cycling & Jogging Track",
+                "value": "jogging"
+              },
+              {
+                "label": "Piped Gas Connection",
+                "value": "gasPipeline"
+              },
+              {
+                "label": "Party Lawn",
+                "value": "partyHall"
+              },
+              {
+                "label": "Sewage Treatment Plant",
+                "value": "npSewage"
+              },
+              {
+                "label": "Children's Play Area",
+                "value": "playArea"
+              },
+              {
+                "label": "Salon",
+                "value": "salon"
+              },
+              {
+                "label": "Solid Waste Management And Disposal",
+                "value": "wasteManagement"
+              },
+              {
+                "label": "Party Hall",
+                "value": "partyHall"
+              },
+              {
+                "label": "EV Charging Point",
+                "value": "evChargingPoint"
+              },
+              {
+                "label": "Sports Complex",
+                "value": "sportsComplex"
+              },
+              {
+                "label": "24x7 CCTV Surveillance",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Community Hall",
+                "value": "communityHall"
+              },
+              {
+                "label": "Beach Volley Ball Court",
+                "value": "volleyball"
+              },
+              {
+                "label": "Storm Water Drains",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Library",
+                "value": "library"
+              },
+              {
+                "label": "24x7 Security",
+                "value": "security"
+              },
+              {
+                "label": "Electrical meter Room",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Cafeteria",
+                "value": "foodCourt"
+              },
+              {
+                "label": "Waiting Lounge",
+                "value": "lounge"
+              },
+              {
+                "label": "Tennis Court",
+                "value": "lawnTennis"
+              },
+              {
+                "label": "Swimming Pool",
+                "value": "pool"
+              },
+              {
+                "label": "Pet Grooming",
+                "value": "petGrooming"
+              },
+              {
+                "label": "Landscaping & Tree Planting",
+                "value": "garden"
+              },
+              {
+                "label": "Water Conservation, Rain water Harvesting",
+                "value": "waterConservation"
+              },
+              {
+                "label": "Gymnasium",
+                "value": "gym"
+              },
+              {
+                "label": "Fire Fighting System",
+                "value": "npFireResist"
+              },
+              {
+                "label": "Jogging Track",
+                "value": "jogging"
+              },
+              {
+                "label": "Gated Community",
+                "value": "gated"
+              },
+              {
+                "label": "Club House",
+                "value": "clubHouse"
+              },
+              {
+                "label": "Yoga / Meditation Area",
+                "value": "npYoga"
+              },
+              {
+                "label": "Security Cabin",
+                "value": "guard"
+              },
+              {
+                "label": "Football Field",
+                "value": "football"
+              },
+              {
+                "label": "Lift(s)",
+                "value": "lift"
+              },
+              {
+                "label": "Creche/Day Care",
+                "value": "dayCare"
+              },
+              {
+                "label": "Badminton Court",
+                "value": "badmintonCourt"
+              },
+              {
+                "label": "Aerobics Room",
+                "value": "aerobicsRoom"
+              },
+              {
+                "label": "Sun Deck",
+                "value": "sunDeck"
+              },
+              {
+                "label": "Basketball Court",
+                "value": "basketBall"
+              },
+              {
+                "label": "Paved Compound",
+                "value": "pavedCompound"
+              },
+              {
+                "label": "Internal Roads & Footpaths",
+                "value": "infoBlack"
+              },
+              {
+                "label": "Energy management",
+                "value": "energyManagement"
+              },
+              {
+                "label": "Power Backup",
+                "value": "powerBackup"
+              },
+              {
+                "label": "Billiards / Snooker Table",
+                "value": "snooker"
+              }
+            ]
+          }
+        ],
+        "priceOMeter": {
+          "minValue": null,
+          "maxValue": null,
+          "prediction": null
+        },
+        "brochure": {
+          "images": {
+            "type": "brochure",
+            "images": [
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/b49e4548f8ca69986a42603f46b9c5c8/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/7d08c192076e5d4661b213e97bf14b84/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/b1544388240bcc27130272658cdcace4/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/15d8f654df204a9d53d85417321d8296/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/590ef375da224c976608b0f1d8f0e93b/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/ce04b6d2beb425bb34ffac4ed0428acc/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/ff08aa51ed986588f46b15a5765a5dcb/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/74bbb756935c78c10156d65ca1209a0c/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/4c2d96383e1fecee961f371e09660e02/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/48d2bf5ebc913a9b7457f634f4073145/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/274ef7a6919ce423ab9b7f606588c76e/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/a16953b7501fc67bf7f897dd13823e92/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/d9dd8fcc/18b6104d1dba30a19ea950ea69eb2169/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/e85cd018a1d6c1196d8d87a7af9fd74a/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/2b75b4cd78ece2880f14dfc91e6d0c3a/v0/version.jpg",
+                "category": "Brochure Images"
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/d9dd8fcc/0aaffc05a1f383dd3ac60d2c74b9238f/v0/version.jpg",
+                "category": "Brochure Images"
+              }
+            ]
+          },
+          "pdf": "https://housing-is-01.s3.ap-southeast-1.amazonaws.com/6a32315a/c9358cdbaf11f7d01065435be653692a/original.pdf",
+          "name": "Ishtika Anahata Brochure",
+          "hasBrochure": null
+        },
+        "images": [
+          {
+            "type": "property",
+            "images": [
+              {
+                "src": "https://img.youtube.com/vi/NSktXsz9bpM/hqdefault.jpg",
+                "alt": "Project Tour 1",
+                "caption": "Project Tour",
+                "tag": null,
+                "type": "video",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": "https://www.youtube.com/embed/NSktXsz9bpM"
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/6cb239427c12e5bf1e9ca5be21c9eef4/v0/version.jpeg",
+                "alt": "Elevation 2",
+                "caption": "Elevation",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/7789d2137d124427262c5575f8804e5c/v0/version.jpeg",
+                "alt": "Elevation 3",
+                "caption": "Elevation",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/a268bf96bbd3e3b55e9657e44f020db9/v0/version.jpeg",
+                "alt": "Elevation 4",
+                "caption": "Elevation",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/cc92c1568342f4f0044541fbb40688b4/v0/version.jpeg",
+                "alt": "Elevation 5",
+                "caption": "Elevation",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/f1748a759e199a70839bf03c942cc54f/v0/version.jpeg",
+                "alt": "Elevation 6",
+                "caption": "Elevation",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/e054103c4ff8fef48267de7a8d107458/v0/version.jpeg",
+                "alt": "Bedroom 7",
+                "caption": "Bedroom",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/20b7e999243110a310154b85f03ba5c1/v0/version.jpeg",
+                "alt": "Kitchen 8",
+                "caption": "Kitchen",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/6533ac75e21130ae6ca53a7475dd7676/v0/version.jpeg",
+                "alt": "Living Area 9",
+                "caption": "Living Area",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/a2ce9ca531ec0b39ece08562964e9d59/v0/version.jpeg",
+                "alt": "Living Area 10",
+                "caption": "Living Area",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/f9f80f5998a8fc27333a5a914081fb35/v0/version.jpeg",
+                "alt": "Living Area 11",
+                "caption": "Living Area",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/84efec4db7bb65b1bcf4d5e6b61b03cc/v0/version.jpeg",
+                "alt": "Dining Area 12",
+                "caption": "Dining Area",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/269745d07fcca74f0204cf63568e71de/v0/version.jpeg",
+                "alt": "Football Field 13",
+                "caption": "Football Field",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/2e05f4829778e1c9cb5ea6f916517803/v0/version.jpeg",
+                "alt": "Pergola 14",
+                "caption": "Pergola",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/46358844217301e988b84e9b0c8fae68/v0/version.jpeg",
+                "alt": "Amenities 15",
+                "caption": "Amenities",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/6301f64097920fe5e5b4e51b5f117cef/v0/version.jpeg",
+                "alt": "Children's play area 16",
+                "caption": "Children's play area",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/665cceb870e62977aadaa8e6be337438/v0/version.jpeg",
+                "alt": "Multipurpose Hall 17",
+                "caption": "Multipurpose Hall",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/92625f89b7732c19b9696969afb517d4/v0/version.jpeg",
+                "alt": "Gymnasium 18",
+                "caption": "Gymnasium",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/a20f9348cd302a4a246997f6c7de30c0/v0/version.jpeg",
+                "alt": "Amenities 19",
+                "caption": "Amenities",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/a88887b3fee81853b179e87aef85f701/v0/version.jpeg",
+                "alt": "Lift(s) 20",
+                "caption": "Lift(s)",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/b51743bf3aa6566ededcf1cb08210077/v0/version.jpeg",
+                "alt": "Badminton Court 21",
+                "caption": "Badminton Court",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/b89a45a160666525b826cdacde1c8814/v0/version.jpeg",
+                "alt": "Yoga/ Meditation Area 22",
+                "caption": "Yoga/ Meditation Area",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/d0a2d26445006db7c44a9415054014c5/v0/version.jpeg",
+                "alt": "Mini Theatre 23",
+                "caption": "Mini Theatre",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/da278c1c5038dfd713d98e14546e370e/v0/version.jpeg",
+                "alt": "Cricket Pitch 24",
+                "caption": "Cricket Pitch",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/e0c027b8e230cf7c1fef12cc53cbfda1/v0/version.jpeg",
+                "alt": "Amenities 25",
+                "caption": "Amenities",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/eb5d48e1462f634d06d7e7133245550b/v0/version.jpeg",
+                "alt": "Indoor Games 26",
+                "caption": "Indoor Games",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/f8d09484293f168197901f318e6a0d44/v0/version.jpeg",
+                "alt": "Basketball Court 27",
+                "caption": "Basketball Court",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/127e8ff371f336caee0a07cdfeaf9f58/v0/version.png",
+                "alt": "2D 28",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/bf520f37155fc5ef77f37cdd28ac963b/v0/version.png",
+                "alt": "2D 29",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/3aed5672d589a76ab149d7898f489823/v0/version.png",
+                "alt": "2D 30",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/d91f3166fe21b7df7e6f0e8a27d65bd9/v0/version.png",
+                "alt": "2D 31",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/26d0c6de3393f6a5fce3e130d690cfc1/v0/version.png",
+                "alt": "2D 32",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/c9db1b5da8cea36ccc157c5e581bff17/v0/version.png",
+                "alt": "2D 33",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/7e41b0bafebd9aceaa58321d87c368d0/v0/version.png",
+                "alt": "2D 34",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/eb20aef4d58786df1567e306d217638f/v0/version.png",
+                "alt": "2D 35",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/1b0ba82858d1111b04a7f8f5cdfcb1a0/v0/version.png",
+                "alt": "2D 36",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/f99fc93ab0ded91c60fd5a59a4a663a9/v0/version.png",
+                "alt": "2D 37",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/4ced26b293519b89876681d59568e3c0/v0/version.png",
+                "alt": "2D 38",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/5f7b64c7c2599e7d9fe80d9c3483854a/v0/version.png",
+                "alt": "2D 39",
+                "caption": "2D",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/329eedfe0aa169e62d1ba63bfd40ebdf/v0/version.png",
+                "alt": "Location Plan 40",
+                "caption": "Location Plan",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/012c1500/027e951564d75821fa86b7320e80499c/v0/version.jpeg",
+                "alt": "Tower C Cluster Plan from 1st to 13th Floor 41",
+                "caption": "Tower C Cluster Plan from 1st to 13th Floor",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/a388509e30071a4e728555a3aa023d82/v0/version.jpeg",
+                "alt": "Tower E Cluster Plan from 1st to 13th Floor 42",
+                "caption": "Tower E Cluster Plan from 1st to 13th Floor",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/e8af3e7401cbb0f6c1bcc260eedc0076/v0/version.jpeg",
+                "alt": "Tower A+B Cluster Plan from 1st to 13th Floor 43",
+                "caption": "Tower A+B Cluster Plan from 1st to 13th Floor",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/012c1500/9dd3fec24d130cff441cf647da9743cb/v0/version.png",
+                "alt": "Construction Linked Payment (CLP) 44",
+                "caption": "Construction Linked Payment (CLP)",
+                "tag": null,
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/4f2250e8/0124ddb19b7cbc029409caa238824ac2/v0/version/ishtika_anahata-samethanahalli-bengaluru-ishtika_homes.jpeg",
+                "alt": "More Images 45",
+                "caption": "More Images",
+                "tag": null,
+                "type": "coverImage",
+                "videoUrl": null,
+                "isSvOrDcVerified": false,
+                "category": "More Images",
+                "digilink": null,
+                "apartmentTypeId": "",
+                "url": null
+              }
+            ]
+          },
+          {
+            "type": "locality",
+            "images": []
+          },
+          {
+            "type": "floorPlan",
+            "images": [
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/127e8ff371f336caee0a07cdfeaf9f58/v0/version.png",
+                "alt": "Ishtika Anahata 2D 1",
+                "caption": "2D",
+                "tag": "2 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/bf520f37155fc5ef77f37cdd28ac963b/v0/version.png",
+                "alt": "Ishtika Anahata 2D 2",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/3aed5672d589a76ab149d7898f489823/v0/version.png",
+                "alt": "Ishtika Anahata 2D 3",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/d91f3166fe21b7df7e6f0e8a27d65bd9/v0/version.png",
+                "alt": "Ishtika Anahata 2D 4",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/26d0c6de3393f6a5fce3e130d690cfc1/v0/version.png",
+                "alt": "Ishtika Anahata 2D 5",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/c9db1b5da8cea36ccc157c5e581bff17/v0/version.png",
+                "alt": "Ishtika Anahata 2D 6",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/7e41b0bafebd9aceaa58321d87c368d0/v0/version.png",
+                "alt": "Ishtika Anahata 2D 7",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/eb20aef4d58786df1567e306d217638f/v0/version.png",
+                "alt": "Ishtika Anahata 2D 8",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/1b0ba82858d1111b04a7f8f5cdfcb1a0/v0/version.png",
+                "alt": "Ishtika Anahata 2D 9",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-3.housingcdn.com/91aba65c/f99fc93ab0ded91c60fd5a59a4a663a9/v0/version.png",
+                "alt": "Ishtika Anahata 2D 10",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/4ced26b293519b89876681d59568e3c0/v0/version.png",
+                "alt": "Ishtika Anahata 2D 11",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              },
+              {
+                "src": "https://is1-2.housingcdn.com/91aba65c/5f7b64c7c2599e7d9fe80d9c3483854a/v0/version.png",
+                "alt": "Ishtika Anahata 2D 12",
+                "caption": "2D",
+                "tag": "3 BHK, ",
+                "type": "image",
+                "videoUrl": null,
+                "isSvOrDcVerified": null,
+                "category": "Floor Plan",
+                "digilink": null,
+                "apartmentTypeId": null,
+                "url": null
+              }
+            ]
+          }
+        ],
+        "paymentPlanImages": {
+          "type": "paymentPlan",
+          "images": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/9dd3fec24d130cff441cf647da9743cb/v0/version.png",
+              "category": "Payment Plan and Price list"
+            }
+          ]
+        },
+        "houseRules": null,
+        "services": null,
+        "roomsAccessible": null,
+        "showPriceTrends": true,
+        "localityInfo": {
+          "priceTrendsUrl": "/price-trends/property-rates-for-buy-in-samethanahalli_bengaluru-P447cl9c1hkiysjyg",
+          "polygonOverviewUrl": "/samethanahalli-bengaluru-overview-P447cl9c1hkiysjyg",
+          "entity": {
+            "id": "943b999fa35a67487e08",
+            "name": "Samethanahalli"
+          },
+          "avgRate": {
+            "value": 7675
+          },
+          "growthRate": {
+            "value": 12.03,
+            "unit": "years"
+          },
+          "priceTrends": [
+            ["Year", "Price"],
+            [1680307200000, 7199],
+            [1688169600000, 7199],
+            [1696118400000, 7199],
+            [1704067200000, 7199],
+            [1711929600000, 6539],
+            [1719792000000, 6143],
+            [1727740800000, 6082],
+            [1735689600000, 6082],
+            [1743465600000, 6082],
+            [1751328000000, 6851],
+            [1759276800000, 7675],
+            [1767225600000, 7675],
+            [1775001600000, 7675],
+            [1782864000000, 7675],
+            [1790812800000, 7675],
+            [1798761600000, 7675]
+          ],
+          "description": null,
+          "numberOfYears": 1,
+          "percentGrowth": 12.03,
+          "trend": [
+            {
+              "year": 1680307200000,
+              "price": 7199
+            },
+            {
+              "year": 1688169600000,
+              "price": 7199
+            },
+            {
+              "year": 1696118400000,
+              "price": 7199
+            },
+            {
+              "year": 1704067200000,
+              "price": 7199
+            },
+            {
+              "year": 1711929600000,
+              "price": 6539
+            },
+            {
+              "year": 1719792000000,
+              "price": 6143
+            },
+            {
+              "year": 1727740800000,
+              "price": 6082
+            },
+            {
+              "year": 1735689600000,
+              "price": 6082
+            },
+            {
+              "year": 1743465600000,
+              "price": 6082
+            },
+            {
+              "year": 1751328000000,
+              "price": 6851
+            },
+            {
+              "year": 1759276800000,
+              "price": 7675
+            },
+            {
+              "year": 1767225600000,
+              "price": 7675
+            },
+            {
+              "year": 1775001600000,
+              "price": 7675
+            },
+            {
+              "year": 1782864000000,
+              "price": 7675
+            }
+          ]
+        },
+        "overviewPoints": [
+          {
+            "id": "projectSize",
+            "label": "Project Size",
+            "description": "5 Buildings - 442 units",
+            "meta": null,
+            "position": 4,
+            "icon": null,
+            "formattedDescription": null
+          },
+          {
+            "id": "projectUnits",
+            "label": "Project Units",
+            "description": "442",
+            "meta": null,
+            "position": null,
+            "icon": null,
+            "formattedDescription": null
+          },
+          {
+            "id": "areaUnit",
+            "label": "Area Unit",
+            "description": "sq.ft.",
+            "meta": null,
+            "position": null,
+            "icon": null,
+            "formattedDescription": null
+          },
+          {
+            "id": "projectArea",
+            "label": "Project Area",
+            "description": "5 Acres",
+            "meta": null,
+            "position": 1,
+            "icon": null,
+            "formattedDescription": null
+          },
+          {
+            "id": "launchDate",
+            "label": "Launch Date",
+            "description": "Aug, 2025",
+            "meta": {
+              "date": 1753986600000
+            },
+            "position": 5,
+            "icon": null,
+            "formattedDescription": null
+          },
+          {
+            "id": "reraId",
+            "label": "Rera Id",
+            "description": "PRM/KA/RERA/1250/304/PR/050725/007898",
+            "meta": {
+              "url": "https://rera.karnataka.gov.in/projectViewDetails",
+              "multiRera": [
+                {
+                  "reraId": "PRM/KA/RERA/1250/304/PR/050725/007898",
+                  "url": "https://rera.karnataka.gov.in/projectViewDetails",
+                  "name": "Ishtika Anahata Phase II"
+                }
+              ]
+            },
+            "position": 9,
+            "icon": null,
+            "formattedDescription": null
+          }
+        ],
+        "polygonVideoLinks": null,
+        "allImagesData": {
+          "mainImage": [
+            {
+              "src": "https://is1-2.housingcdn.com/4f2250e8/0124ddb19b7cbc029409caa238824ac2/v0/version/ishtika_anahata-samethanahalli-bengaluru-ishtika_homes.jpeg",
+              "alt": "Ishtika Anahata More Images 1",
+              "caption": "More Images",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "coverImage",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            }
+          ],
+          "videos": [
+            {
+              "src": "https://img.youtube.com/vi/NSktXsz9bpM/hqdefault.jpg",
+              "alt": "Ishtika Anahata Project Tour 1",
+              "caption": "Project Tour",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "video",
+              "url": "https://www.youtube.com/embed/NSktXsz9bpM",
+              "category": "More Images",
+              "apartmentTypeId": ""
+            }
+          ],
+          "highlights": null,
+          "elevation": [
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/6cb239427c12e5bf1e9ca5be21c9eef4/v0/version.jpeg",
+              "alt": "Ishtika Anahata Elevation 1",
+              "caption": "Elevation",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Elevation",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/7789d2137d124427262c5575f8804e5c/v0/version.jpeg",
+              "alt": "Ishtika Anahata Elevation 2",
+              "caption": "Elevation",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Elevation",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/a268bf96bbd3e3b55e9657e44f020db9/v0/version.jpeg",
+              "alt": "Ishtika Anahata Elevation 3",
+              "caption": "Elevation",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Elevation",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/cc92c1568342f4f0044541fbb40688b4/v0/version.jpeg",
+              "alt": "Ishtika Anahata Elevation 4",
+              "caption": "Elevation",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Elevation",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/f1748a759e199a70839bf03c942cc54f/v0/version.jpeg",
+              "alt": "Ishtika Anahata Elevation 5",
+              "caption": "Elevation",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Elevation",
+              "apartmentTypeId": ""
+            }
+          ],
+          "projectImages": null,
+          "verifiedImages": null,
+          "brochureImages": null,
+          "building": null,
+          "bedroom": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/e054103c4ff8fef48267de7a8d107458/v0/version.jpeg",
+              "alt": "Ishtika Anahata Bedroom 1",
+              "caption": "Bedroom",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Bedroom",
+              "apartmentTypeId": ""
+            }
+          ],
+          "kitchen": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/20b7e999243110a310154b85f03ba5c1/v0/version.jpeg",
+              "alt": "Ishtika Anahata Kitchen 1",
+              "caption": "Kitchen",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Kitchen",
+              "apartmentTypeId": ""
+            }
+          ],
+          "livingArea": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/6533ac75e21130ae6ca53a7475dd7676/v0/version.jpeg",
+              "alt": "Ishtika Anahata Living Area 1",
+              "caption": "Living Area",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Living Area",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/a2ce9ca531ec0b39ece08562964e9d59/v0/version.jpeg",
+              "alt": "Ishtika Anahata Living Area 2",
+              "caption": "Living Area",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Living Area",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/f9f80f5998a8fc27333a5a914081fb35/v0/version.jpeg",
+              "alt": "Ishtika Anahata Living Area 3",
+              "caption": "Living Area",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Living Area",
+              "apartmentTypeId": ""
+            }
+          ],
+          "diningArea": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/84efec4db7bb65b1bcf4d5e6b61b03cc/v0/version.jpeg",
+              "alt": "Ishtika Anahata Dining Area 1",
+              "caption": "Dining Area",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Dining Area",
+              "apartmentTypeId": ""
+            }
+          ],
+          "bathroom": null,
+          "balcony": null,
+          "lobby": null,
+          "amenities": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/269745d07fcca74f0204cf63568e71de/v0/version.jpeg",
+              "alt": "Ishtika Anahata Football Field 1",
+              "caption": "Football Field",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/2e05f4829778e1c9cb5ea6f916517803/v0/version.jpeg",
+              "alt": "Ishtika Anahata Pergola 2",
+              "caption": "Pergola",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/46358844217301e988b84e9b0c8fae68/v0/version.jpeg",
+              "alt": "Ishtika Anahata Amenities 3",
+              "caption": "Amenities",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/6301f64097920fe5e5b4e51b5f117cef/v0/version.jpeg",
+              "alt": "Ishtika Anahata Children's play area 4",
+              "caption": "Children's play area",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/665cceb870e62977aadaa8e6be337438/v0/version.jpeg",
+              "alt": "Ishtika Anahata Multipurpose Hall 5",
+              "caption": "Multipurpose Hall",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/92625f89b7732c19b9696969afb517d4/v0/version.jpeg",
+              "alt": "Ishtika Anahata Gymnasium 6",
+              "caption": "Gymnasium",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/a20f9348cd302a4a246997f6c7de30c0/v0/version.jpeg",
+              "alt": "Ishtika Anahata Amenities 7",
+              "caption": "Amenities",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/a88887b3fee81853b179e87aef85f701/v0/version.jpeg",
+              "alt": "Ishtika Anahata Lift(s) 8",
+              "caption": "Lift(s)",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/b51743bf3aa6566ededcf1cb08210077/v0/version.jpeg",
+              "alt": "Ishtika Anahata Badminton Court 9",
+              "caption": "Badminton Court",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/b89a45a160666525b826cdacde1c8814/v0/version.jpeg",
+              "alt": "Ishtika Anahata Yoga/ Meditation Area 10",
+              "caption": "Yoga/ Meditation Area",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/d0a2d26445006db7c44a9415054014c5/v0/version.jpeg",
+              "alt": "Ishtika Anahata Mini Theatre 11",
+              "caption": "Mini Theatre",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/da278c1c5038dfd713d98e14546e370e/v0/version.jpeg",
+              "alt": "Ishtika Anahata Cricket Pitch 12",
+              "caption": "Cricket Pitch",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/e0c027b8e230cf7c1fef12cc53cbfda1/v0/version.jpeg",
+              "alt": "Ishtika Anahata Amenities 13",
+              "caption": "Amenities",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/eb5d48e1462f634d06d7e7133245550b/v0/version.jpeg",
+              "alt": "Ishtika Anahata Indoor Games 14",
+              "caption": "Indoor Games",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/f8d09484293f168197901f318e6a0d44/v0/version.jpeg",
+              "alt": "Ishtika Anahata Basketball Court 15",
+              "caption": "Basketball Court",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Amenities",
+              "apartmentTypeId": ""
+            }
+          ],
+          "floorPlan": [
+            {
+              "src": "https://is1-3.housingcdn.com/91aba65c/127e8ff371f336caee0a07cdfeaf9f58/v0/version.png",
+              "alt": "Ishtika Anahata 2D 1",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/bf520f37155fc5ef77f37cdd28ac963b/v0/version.png",
+              "alt": "Ishtika Anahata 2D 2",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/3aed5672d589a76ab149d7898f489823/v0/version.png",
+              "alt": "Ishtika Anahata 2D 3",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/d91f3166fe21b7df7e6f0e8a27d65bd9/v0/version.png",
+              "alt": "Ishtika Anahata 2D 4",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/26d0c6de3393f6a5fce3e130d690cfc1/v0/version.png",
+              "alt": "Ishtika Anahata 2D 5",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/c9db1b5da8cea36ccc157c5e581bff17/v0/version.png",
+              "alt": "Ishtika Anahata 2D 6",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/91aba65c/7e41b0bafebd9aceaa58321d87c368d0/v0/version.png",
+              "alt": "Ishtika Anahata 2D 7",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/91aba65c/eb20aef4d58786df1567e306d217638f/v0/version.png",
+              "alt": "Ishtika Anahata 2D 8",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/1b0ba82858d1111b04a7f8f5cdfcb1a0/v0/version.png",
+              "alt": "Ishtika Anahata 2D 9",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/91aba65c/f99fc93ab0ded91c60fd5a59a4a663a9/v0/version.png",
+              "alt": "Ishtika Anahata 2D 10",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/4ced26b293519b89876681d59568e3c0/v0/version.png",
+              "alt": "Ishtika Anahata 2D 11",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-2.housingcdn.com/91aba65c/5f7b64c7c2599e7d9fe80d9c3483854a/v0/version.png",
+              "alt": "Ishtika Anahata 2D 12",
+              "caption": "2D",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            }
+          ],
+          "masterPlan": null,
+          "layoutPlan": null,
+          "sitePlan": null,
+          "locationPlan": [
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/329eedfe0aa169e62d1ba63bfd40ebdf/v0/version.png",
+              "alt": "Ishtika Anahata Location Plan 1",
+              "caption": "Location Plan",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Location Plan",
+              "apartmentTypeId": ""
+            }
+          ],
+          "clusterPlan": [
+            {
+              "src": "https://is1-2.housingcdn.com/012c1500/027e951564d75821fa86b7320e80499c/v0/version.jpeg",
+              "alt": "Ishtika Anahata Tower C Cluster Plan from 1st to 13th Floor 1",
+              "caption": "Tower C Cluster Plan from 1st to 13th Floor",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Cluster Plan",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/a388509e30071a4e728555a3aa023d82/v0/version.jpeg",
+              "alt": "Ishtika Anahata Tower E Cluster Plan from 1st to 13th Floor 2",
+              "caption": "Tower E Cluster Plan from 1st to 13th Floor",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Cluster Plan",
+              "apartmentTypeId": ""
+            },
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/e8af3e7401cbb0f6c1bcc260eedc0076/v0/version.jpeg",
+              "alt": "Ishtika Anahata Tower A+B Cluster Plan from 1st to 13th Floor 3",
+              "caption": "Tower A+B Cluster Plan from 1st to 13th Floor",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "Cluster Plan",
+              "apartmentTypeId": ""
+            }
+          ],
+          "paymentPlan": [
+            {
+              "src": "https://is1-3.housingcdn.com/012c1500/9dd3fec24d130cff441cf647da9743cb/v0/version.png",
+              "alt": "Ishtika Anahata Construction Linked Payment (CLP) 1",
+              "caption": "Construction Linked Payment (CLP)",
+              "tag": null,
+              "isSvOrDcVerified": false,
+              "type": "image",
+              "url": null,
+              "category": "More Images",
+              "apartmentTypeId": ""
+            }
+          ],
+          "constructionStatus": null,
+          "plot": null,
+          "others": null,
+          "moreImages": null,
+          "projectLogo": null,
+          "entryRoad": null,
+          "internalRoad": null,
+          "gate": null,
+          "topView": null,
+          "receptionArea": null,
+          "poojaRoom": null,
+          "kidsBedroom": null,
+          "terrace": null,
+          "studyRoom": null,
+          "servantRoom": null
+        },
+        "legalApprovals": [],
+        "prosCons": {
+          "pros": null,
+          "cons": null,
+          "isProsPresent": false,
+          "isConsPresent": false
+        },
+        "showProsCons": false,
+        "sliceViewUrl": ""
+      },
+      "photoUnderReview": null,
+      "addedOnDate": null,
+      "meta": {
+        "paid": false,
+        "polygon": {
+          "id": "943b999fa35a67487e08",
+          "name": "Samethanahalli",
+          "type": "polygon",
+          "subType": "locality",
+          "displayType": "locality"
+        },
+        "selectedCity": {
+          "name": "Bengaluru",
+          "id": "d94a0854185332e78d1b",
+          "cityId": "747be13fe47cb8ae14c3",
+          "url": "bangalore",
+          "isTierTwo": false,
+          "products": [
+            "buy",
+            "plots",
+            "commercial",
+            "flatmate",
+            "paying_guest",
+            "rent"
+          ]
+        },
+        "nonReraPyr": false,
+        "paymentPlanBreakup": {
+          "isAdditionalDataFetched": false,
+          "data": [
+            {
+              "id": "1536397",
+              "area_information": 1197,
+              "apartment_group_name": "2 BHK"
+            },
+            {
+              "id": "1536398",
+              "area_information": 1511,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536399",
+              "area_information": 1531,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536400",
+              "area_information": 1540,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536401",
+              "area_information": 1556,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536402",
+              "area_information": 1591,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536403",
+              "area_information": 1670,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536404",
+              "area_information": 1690,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536405",
+              "area_information": 1692,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536406",
+              "area_information": 1710,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536407",
+              "area_information": 1721,
+              "apartment_group_name": "3 BHK"
+            },
+            {
+              "id": "1536408",
+              "area_information": 1758,
+              "apartment_group_name": "3 BHK"
+            }
+          ]
+        },
+        "status": 200
+      },
+      "showDeveloper": true,
+      "certifiedDetails": {
+        "isVerifiedProperty": null,
+        "isCertifiedProperty": null
+      },
+      "isTitanium": false,
+      "boostedAs": null,
+      "eventBoothURL": "",
+      "eventBoothImagePreviewURL": "",
+      "isAuctionFlat": null,
+      "isBrokerageChargeable": null,
+      "showNewLaunch": false,
+      "nearbyLocalityUuids": [
+        "d01e974295e3f00da86c",
+        "d765eb24f670d294a8e5",
+        "d87089cfce00f02ca56f",
+        "8690284d42a6842923a7",
+        "274674f97fd51f24d1f6",
+        "d92b7c5356fdca789593",
+        "d21b3dc0fa92e01279b1",
+        "fc79f732e1db5acb4afe",
+        "ed0a1e2bdd7248de3e15",
+        "585fecb03367193615e5",
+        "d5aeece1e94acff36698",
+        "69b8a25ea522b9ac9d91",
+        "52cc5bdbc8f67512d115",
+        "2ef0997e8aef56a16c5c",
+        "d9935e8470e8d76a6918"
+      ],
+      "nearByPlaces": [
+        {
+          "name": "Whitefield Global School",
+          "distance": 3.95241078251055,
+          "establishmentType": "school",
+          "displayEstablishmentType": null,
+          "travelDistance": null,
+          "duration": null
+        },
+        {
+          "name": "Dodda Dunnasandra Cross Bus Stop",
+          "distance": 2.970036220601253,
+          "establishmentType": "bus_station",
+          "displayEstablishmentType": null,
+          "travelDistance": null,
+          "duration": null
+        },
+        {
+          "name": "Sri Sathya Sai Super Speciality Hospital",
+          "distance": 4.68433923695073,
+          "establishmentType": "hospital",
+          "displayEstablishmentType": null,
+          "travelDistance": null,
+          "duration": null
+        },
+        {
+          "name": "Mooch Marod",
+          "distance": 2.8875378148320303,
+          "establishmentType": "restaurant",
+          "displayEstablishmentType": null,
+          "travelDistance": null,
+          "duration": null
+        }
+      ],
+      "hasTransaction": false,
+      "verifiedAt": null,
+      "transactionDetails": {},
+      "emiTenureYears": 30,
+      "relatedProjectEMI": null,
+      "porDetails": []
+    }
+  }
+}

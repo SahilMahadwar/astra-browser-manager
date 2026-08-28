@@ -82,9 +82,17 @@ Override the host port with `PORT=8090 docker compose up`.
 
 ### Option B — local dev, two terminals
 
-The browser needs `Xvnc` and the CloakBrowser binary, so profile *launching*
-only works inside Docker (or on a host with KasmVNC installed). Everything else
-— CRUD, auth, the UI — works locally.
+The browser needs `Xvnc` and the engine's binary, so profile *launching* only
+works inside Docker (or on a host with KasmVNC installed). Everything else —
+CRUD, auth, the UI — works locally.
+
+The engine driver itself can be exercised locally without either: install a
+Firefox (`npx playwright-core install firefox`) and
+`test/engines-camoufox.integration.test.ts` will run instead of skipping. It
+stands that Firefox in for the 630MB Camoufox build via `CAMOUFOX_BINARY_PATH`
+and covers everything this repo owns — option assembly, the endpoint, and the
+guarantee that an external client attaches to the profile's persistent context
+rather than a fresh one.
 
 ```bash
 # terminal 1
@@ -156,9 +164,14 @@ Chromium inside the page. Then check, in order:
 - open a **Detection Tests** bookmark and confirm a non-default fingerprint
 - relaunch the profile — the fingerprint must be identical (seed is stable)
 
-### 4. CDP — the acceptance gate
+### 4. Automation — the acceptance gate
 
 This is the priority. Get the profile ID from the UI (or `/api/profiles`).
+
+The snippet below is for a **Chromium** profile. A Camoufox profile has no CDP
+endpoint at all — read `automation_protocol` off the profile and connect with
+`pw.firefox.connect(automation_url)`, then use `browser.contexts[0]`, which is
+the profile's persistent context.
 
 ```bash
 pip install playwright

@@ -15,7 +15,7 @@
 import { rmSync } from 'node:fs';
 
 import * as db from './db.js';
-import { probeCdp } from './proxy/cdp.js';
+import { probeAutomationPort, probeCdp } from './proxy/cdp.js';
 import { deleteCachedThumb } from './screenshot.js';
 import type { BrowserManager, RunningProfile } from './browser.js';
 import type { ProfileCreate, ProfileResponse, ProfileRow } from './schemas.js';
@@ -28,6 +28,8 @@ export function withStatus(mgr: BrowserManager, profile: ProfileRow): ProfileRes
     status: status.status,
     vnc_ws_port: status.vnc_ws_port,
     cdp_url: status.cdp_url,
+    automation_url: status.automation_url,
+    automation_protocol: status.automation_protocol,
   } as ProfileResponse;
 }
 
@@ -80,23 +82,40 @@ const USER_ERROR =
 const CDP_POLL_INTERVAL_MS = 250;
 
 /**
- * Wait until Chromium's CDP endpoint answers.
+ * Wait until a launched profile's automation endpoint answers.
  *
- * `mgr.launch()` resolves once Playwright has a BrowserContext, which is not
- * quite the same as the DevTools HTTP endpoint being ready to accept a fresh
- * `connectOverCDP`. An agent that reads the CDP URL out of a launch result and
- * connects immediately would otherwise need its own retry loop.
+ * `mgr.launch()` resolves once the driver has a BrowserContext, which is not
+ * quite the same as the endpoint being ready to accept a fresh connection. An
+ * agent that reads the URL out of a launch result and connects immediately
+ * would otherwise need its own retry loop.
+ *
+ * Chromium is polled with the real DevTools probe. Camoufox has no HTTP
+ * surface, so its port is polled instead — but it is also already proven live
+ * by then, because the driver connects to its own endpoint during launch.
  */
+export async function waitForAutomationReady(
+  running: Pick<RunningProfile, 'cdpPort' | 'automationPort'>,
+  timeoutMs = 15_000
+): Promise<boolean> {
+  const probe = () =>
+    running.cdpPort !== null
+      ? probeCdp(running.cdpPort)
+      : probeAutomationPort(running.automationPort);
+
+  const deadline = Date.now() + timeoutMs;
+  for (;;) {
+    if (await probe()) return true;
+    if (Date.now() >= deadline) return false;
+    await new Promise((resolve) => setTimeout(resolve, CDP_POLL_INTERVAL_MS));
+  }
+}
+
+/** @deprecated Kept for the existing CDP-only callers and tests. */
 export async function waitForCdpReady(
   cdpPort: number,
   timeoutMs = 15_000
 ): Promise<boolean> {
-  const deadline = Date.now() + timeoutMs;
-  for (;;) {
-    if (await probeCdp(cdpPort)) return true;
-    if (Date.now() >= deadline) return false;
-    await new Promise((resolve) => setTimeout(resolve, CDP_POLL_INTERVAL_MS));
-  }
+  return waitForAutomationReady({ cdpPort, automationPort: cdpPort }, timeoutMs);
 }
 
 export type LaunchResult =
@@ -125,7 +144,7 @@ export async function launchProfileById(
   }
 
   const cdpReady = opts.waitForCdp
-    ? await waitForCdpReady(running.cdpPort, opts.timeoutMs)
+    ? await waitForAutomationReady(running, opts.timeoutMs)
     : false;
 
   return { ok: true, running, cdpReady };

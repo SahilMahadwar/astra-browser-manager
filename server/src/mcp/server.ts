@@ -59,9 +59,18 @@ function fail(message: string) {
   return { isError: true, content: [{ type: 'text' as const, text: message }] };
 }
 
-/** Status plus an absolute, directly connectable CDP URL. */
+/**
+ * Status plus an absolute, directly connectable CDP URL.
+ *
+ * `automation_url` and `automation_protocol` are deliberately dropped. MCP is the
+ * control plane; driving a Camoufox profile happens over Playwright outside it,
+ * so this surface does not hand out its endpoint. They must be stripped
+ * explicitly — `mgr.getStatus()` returns them, so a bare `...status` spread
+ * would put them straight back.
+ */
 function statusWithCdp(mgr: BrowserManager, ctx: McpContext, id: string) {
-  const status = mgr.getStatus(id);
+  const { automation_url: _url, automation_protocol: _protocol, ...status } =
+    mgr.getStatus(id);
   return {
     ...status,
     cdp_url: status.cdp_url ? absoluteCdpUrl(ctx.baseUrl, id) : null,
@@ -73,12 +82,18 @@ export function buildMcpServer(mgr: BrowserManager, ctx: McpContext): McpServer 
     { name: MCP_SERVER_NAME, version: MCP_SERVER_VERSION },
     {
       instructions:
-        'Manage AstraBrowser stealth-Chromium profiles. Each profile is an isolated ' +
-        'browser identity with its own fingerprint, proxy and user-data directory. ' +
-        'Typical flow: create_profile (or list_profiles) -> launch_profile -> connect ' +
-        'your own Playwright/Puppeteer client to the returned cdp_url with ' +
-        'chromium.connectOverCDP(cdp_url) -> stop_profile when done. Page-level ' +
-        'actions (navigate, click, type) are performed over CDP, not through these tools.',
+        'Manage AstraBrowser stealth browser profiles. Each profile is an isolated ' +
+        'browser identity with its own fingerprint, proxy and user-data directory, ' +
+        'running on one of two engines. These tools are the control plane: create, ' +
+        'launch, stop and inspect profiles. ' +
+        'engine="chromium" (CloakBrowser) profiles can also be DRIVEN from here — ' +
+        'launch_profile returns a cdp_url for chromium.connectOverCDP(cdp_url), and ' +
+        'page-level actions (navigate, click, type) happen over that connection ' +
+        'rather than through these tools. ' +
+        'engine="camoufox" profiles can be managed here but NOT driven from here: ' +
+        'they are Firefox-based, have no CDP endpoint, and are automated over ' +
+        'Playwright outside MCP. Their cdp_url is always null; do not treat that as ' +
+        'an error or retry the launch.',
     }
   );
 
@@ -134,10 +149,10 @@ export function buildMcpServer(mgr: BrowserManager, ctx: McpContext): McpServer 
     {
       title: 'Get CDP URL',
       description:
-        'Chrome DevTools Protocol endpoint for a running profile. Connect to it with ' +
-        'playwright chromium.connectOverCDP(cdp_url) or puppeteer.connect({ ' +
-        'browserURL: cdp_url }) to drive the browser. Fails if the profile is not ' +
-        'running — call launch_profile first.',
+        'Chrome DevTools Protocol endpoint for a running CHROMIUM profile. Connect ' +
+        'with playwright chromium.connectOverCDP(cdp_url) or puppeteer.connect({ ' +
+        'browserURL: cdp_url }). Fails for camoufox profiles, which have no CDP ' +
+        'endpoint at all. Fails if the profile is not running.',
       inputSchema: idSchema,
     },
     async ({ id }) => {
@@ -145,6 +160,13 @@ export function buildMcpServer(mgr: BrowserManager, ctx: McpContext): McpServer 
       if (!running) {
         return fail(
           `Profile ${id} is not running. Call launch_profile first, then retry.`
+        );
+      }
+      if (running.cdpPort === null) {
+        return fail(
+          `Profile ${id} runs ${running.engine}, which has no CDP endpoint ` +
+            `(Firefox removed CDP in v141). It is automated over Playwright ` +
+            `outside MCP — see docs/CAMOUFOX.md. There is no MCP tool for this.`
         );
       }
       const alive = await probeCdp(running.cdpPort);
@@ -220,8 +242,10 @@ export function buildMcpServer(mgr: BrowserManager, ctx: McpContext): McpServer 
       description:
         'Start the browser for a profile and return its absolute CDP URL, ready for ' +
         'chromium.connectOverCDP(). By default this waits until the DevTools ' +
-        'endpoint answers, so you can connect immediately on success. Requires the ' +
-        'CloakBrowser binary and an X server, so it only works in the Docker image.',
+        'endpoint answers, so you can connect immediately on success. Chromium ' +
+        'profiles return a cdp_url you can drive; camoufox profiles return none ' +
+        'and are automated outside MCP. Requires the engine binary and an X ' +
+        'server, so it only works in the Docker image.',
       inputSchema: {
         ...idSchema,
         wait_for_cdp: z
@@ -256,14 +280,27 @@ export function buildMcpServer(mgr: BrowserManager, ctx: McpContext): McpServer 
           return fail(`Failed to launch profile ${id}: ${result.message}`);
       }
 
+      const { running } = result;
+      const isCdp = running.cdpPort !== null;
+      const cdpUrl = isCdp ? absoluteCdpUrl(ctx.baseUrl, id) : null;
       return ok({
         profile_id: id,
         status: 'running',
-        cdp_url: absoluteCdpUrl(ctx.baseUrl, id),
+        engine: running.engine,
+        cdp_url: cdpUrl,
         cdp_ready: wait_for_cdp ? result.cdpReady : null,
-        vnc_ws_port: result.running.wsPort,
-        display: `:${result.running.display}`,
-        usage: `chromium.connectOverCDP('${absoluteCdpUrl(ctx.baseUrl, id)}')`,
+        vnc_ws_port: running.wsPort,
+        display: `:${running.display}`,
+        ...(isCdp
+          ? { usage: `chromium.connectOverCDP('${cdpUrl}')` }
+          : {
+              // Say why there is no endpoint rather than returning a bare null,
+              // which reads as a failed launch and invites a retry.
+              note:
+                `Launched. ${running.engine} has no CDP endpoint and is not ` +
+                `drivable through MCP; it is automated over Playwright outside ` +
+                `MCP — see docs/CAMOUFOX.md.`,
+            }),
       });
     }
   );

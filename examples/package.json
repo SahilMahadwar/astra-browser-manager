@@ -1,0 +1,22 @@
+{
+  "name": "astrabrowser-manager-examples",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "//": "Stagehand v3.7.2 requires Node >= 20; the server itself needs >= 22.5.",
+    "node": ">=22.5.0"
+  },
+  "//stagehand": "Pinned to the 3.x line deliberately. Stagehand v4 attaches by loading a Chrome extension over the CDP Extensions.loadUnpacked domain, which needs the target Chrome started with --enable-unsafe-extension-debugging; CloakBrowser is not, so v4 cannot attach to a manager profile. v4 also dropped agent(), and its browser.close() sends CDP Browser.close, which would kill the profile rather than just disconnect. v3 connects with plain connectOverCDP, which is exactly what this server proxies.",
+  "//playwright-core": "Must match the SERVER's major.minor. Camoufox is driven over Playwright's own protocol, which rejects a mismatched client with HTTP 428.",
+  "scripts": {
+    "test": "node test-profiles.mjs",
+    "test:chromium": "node test-profiles.mjs --engine=chromium",
+    "test:camoufox": "node test-profiles.mjs --engine=camoufox"
+  },
+  "dependencies": {
+    "@browserbasehq/stagehand": "^3.7.2",
+    "playwright-core": "~1.60.0",
+    "zod": "^3.24.0"
+  }
+}

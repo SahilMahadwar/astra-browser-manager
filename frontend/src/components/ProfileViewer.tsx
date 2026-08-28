@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { AlertTriangle, ClipboardCopy, Code2, Maximize2, Minimize2, X } from "lucide-react";
-import { api } from "../lib/api";
+import { api, type AutomationProtocol } from "../lib/api";
 import { CdpPanel } from "./CdpPanel";
 import { useCdpAlive } from "../hooks/useCdpAlive";
 
 interface ProfileViewerProps {
   profileId: string;
-  cdpUrl: string | null;
+  /**
+   * Endpoint for whichever protocol this profile's engine speaks. Not cdp_url:
+   * that is null for Camoufox, so keying the panel off it would hide the
+   * automation endpoint for every Firefox profile.
+   */
+  automationUrl: string | null;
+  automationProtocol: AutomationProtocol | null;
   clipboardSync: boolean;
   onDisconnect: () => void;
   /** Force-kills a wedged session (Chrome gone, manager still tracking it). */
@@ -50,7 +56,8 @@ const debug = import.meta.env.DEV
 
 export function ProfileViewer({
   profileId,
-  cdpUrl,
+  automationUrl,
+  automationProtocol,
   clipboardSync: initialClipboardSync,
   onDisconnect,
   onForceStop,
@@ -67,7 +74,7 @@ export function ProfileViewer({
   const [cdpPanelOpen, setCdpPanelOpen] = useState(false);
 
   // Only meaningful once the profile claims to be running with a CDP endpoint.
-  const wedged = useCdpAlive(profileId, cdpUrl !== null);
+  const wedged = useCdpAlive(profileId, automationUrl !== null);
 
   useEffect(() => {
     let cancelled = false;
@@ -387,11 +394,15 @@ export function ProfileViewer({
           </span>
         </div>
         <div className="flex items-center gap-1">
-          {cdpUrl && (
+          {automationUrl && (
             <button
               onClick={() => setCdpPanelOpen(true)}
               className="text-gray-500 hover:text-gray-300 p-1"
-              title="Automation endpoint (CDP)"
+              title={
+                automationProtocol === "cdp"
+                  ? "Automation endpoint (CDP)"
+                  : "Automation endpoint (Playwright)"
+              }
               aria-label="Show automation endpoint"
             >
               <Code2 className="h-3.5 w-3.5" />
@@ -472,10 +483,11 @@ export function ProfileViewer({
         style={{ minHeight: 0 }}
       />
 
-      {cdpPanelOpen && cdpUrl && (
+      {cdpPanelOpen && automationUrl && automationProtocol && (
         <CdpPanel
           profileId={profileId}
-          cdpUrl={cdpUrl}
+          cdpUrl={automationUrl}
+          protocol={automationProtocol}
           onClose={() => setCdpPanelOpen(false)}
         />
       )}

@@ -61,6 +61,8 @@ export function initDb(dir?: string): void {
         geoip BOOLEAN DEFAULT 0,
         clipboard_sync BOOLEAN DEFAULT 1,
         auto_launch BOOLEAN DEFAULT 0,
+        engine TEXT DEFAULT 'chromium',
+        engine_config TEXT DEFAULT '{}',
         color_scheme TEXT,
         notes TEXT,
         user_data_dir TEXT NOT NULL,
@@ -91,6 +93,14 @@ export function initDb(dir?: string): void {
   if (!cols.has('auto_launch')) {
     db.exec('ALTER TABLE profiles ADD COLUMN auto_launch BOOLEAN DEFAULT 0');
   }
+  // Multi-engine support. Both default so every pre-existing row keeps meaning
+  // exactly what it meant before: a Chromium profile with no extra config.
+  if (!cols.has('engine')) {
+    db.exec("ALTER TABLE profiles ADD COLUMN engine TEXT DEFAULT 'chromium'");
+  }
+  if (!cols.has('engine_config')) {
+    db.exec("ALTER TABLE profiles ADD COLUMN engine_config TEXT DEFAULT '{}'");
+  }
 }
 
 export function closeDb(): void {
@@ -108,12 +118,29 @@ function toBool(v: unknown, fallback = false): boolean {
   return Boolean(v);
 }
 
+/**
+ * `engine_config` is JSON in a TEXT column, like `launch_args`. A row written by
+ * a newer version — or hand-edited — must not take the whole listing down, so a
+ * unparseable value reads as "no config" rather than throwing.
+ */
+function parseJsonObject(v: unknown): Record<string, unknown> {
+  if (typeof v !== 'string' || v === '') return {};
+  try {
+    const parsed = JSON.parse(v);
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
 type RawRow = Record<string, unknown>;
 
 function rowToProfile(row: RawRow, tags: TagResponse[]): ProfileRow {
   return {
     id: row.id as string,
     name: row.name as string,
+    engine: ((row.engine as string) || 'chromium') as ProfileRow['engine'],
+    engine_config: parseJsonObject(row.engine_config),
     fingerprint_seed: row.fingerprint_seed as number,
     proxy: (row.proxy as string) ?? null,
     timezone: (row.timezone as string) ?? null,
@@ -162,16 +189,18 @@ export function createProfile(
   conn()
     .prepare(
       `INSERT INTO profiles (
-        id, name, fingerprint_seed, proxy, timezone, locale, platform,
-        user_agent, screen_width, screen_height, gpu_vendor, gpu_renderer,
-        hardware_concurrency, humanize, human_preset, headless, geoip,
-        clipboard_sync, auto_launch, color_scheme, launch_args, notes,
+        id, name, engine, engine_config, fingerprint_seed, proxy, timezone,
+        locale, platform, user_agent, screen_width, screen_height, gpu_vendor,
+        gpu_renderer, hardware_concurrency, humanize, human_preset, headless,
+        geoip, clipboard_sync, auto_launch, color_scheme, launch_args, notes,
         user_data_dir, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .run(
       profileId,
       fields.name,
+      fields.engine ?? 'chromium',
+      JSON.stringify(fields.engine_config ?? {}),
       seed,
       fields.proxy ?? null,
       fields.timezone ?? null,
@@ -222,7 +251,7 @@ export function listProfiles(): ProfileRow[] {
 
 /** Columns updatable via PUT, in the same order as the Python implementation. */
 const UPDATABLE_COLS = [
-  'name', 'fingerprint_seed', 'proxy', 'timezone', 'locale', 'platform',
+  'name', 'engine_config', 'fingerprint_seed', 'proxy', 'timezone', 'locale', 'platform',
   'user_agent', 'screen_width', 'screen_height', 'gpu_vendor', 'gpu_renderer',
   'hardware_concurrency', 'humanize', 'human_preset', 'headless', 'geoip',
   'clipboard_sync', 'auto_launch', 'color_scheme', 'launch_args', 'notes',
@@ -247,6 +276,7 @@ export function updateProfile(
     if (!(col in rest)) continue;
     let value = rest[col];
     if (col === 'launch_args') value = JSON.stringify(value ?? []);
+    else if (col === 'engine_config') value = JSON.stringify(value ?? {});
     else if (BOOL_COLS.has(col)) value = value === null ? null : Number(value);
     setClauses.push(`${col} = ?`);
     values.push(value ?? null);

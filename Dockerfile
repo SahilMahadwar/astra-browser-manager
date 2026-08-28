@@ -16,7 +16,17 @@ RUN npm run build
 FROM node:24-slim AS server-builder
 WORKDIR /build
 COPY server/package.json server/package-lock.json ./
-RUN npm ci
+# --ignore-scripts is load-bearing, not a hardening flourish. camoufox-js depends
+# on better-sqlite3, which carries a binding.gyp, so npm runs `node-gyp rebuild`
+# on it implicitly — and this image deliberately has no Python or compiler. The
+# rebuild is pointless anyway: better-sqlite3 ships N-API prebuilds in its own
+# tarball (prebuilds/linux-x64.node) and loads those at runtime. Skipping scripts
+# skips the doomed compile and keeps the working prebuild.
+#
+# Nothing else in the server tree declares an install script (esbuild does, but
+# it is a dev dependency, unused by `tsc`, and pruned below). The frontend stage
+# above must NOT get this flag — Vite genuinely needs esbuild's binary.
+RUN npm ci --ignore-scripts
 COPY server/ ./
 RUN npm run build && npm prune --omit=dev
 
@@ -34,6 +44,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgdk-pixbuf-2.0-0 libxss1 libxtst6 fonts-liberation \
     libgl1-mesa-dri libegl-mesa0 \
     procps wget ca-certificates xclip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Camoufox (Firefox) system deps that the Chromium set above does not cover.
+# libdbus-glib-1-2 and libxt6 are the ones Firefox will not start without; the
+# rest are needed for a real WebGL context, whose absence is itself a bot signal.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libdbus-glib-1-2 libxt6 libxcursor1 libxi6 libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Baseline font coverage upstream recommends for Linux hosts: emoji, CJK, and
@@ -73,6 +90,29 @@ COPY --from=frontend-builder /build/dist /app/frontend/dist
 # Pre-download the CloakBrowser binary so first launch is instant.
 # The free tier needs no license key; CLOAKBROWSER_LICENSE_KEY opts into Pro.
 RUN cd /app/server && npx cloakbrowser install
+
+# Pre-download Camoufox for the same reason. This is the big one — the Linux
+# archive is ~630 MB compressed — so it is deliberately its own layer, kept
+# after the Chromium install so a change to either does not re-pull both.
+#
+# `fetch` takes no version argument: it resolves the newest release that the
+# installed camoufox-js accepts (its CONSTRAINTS range is effectively open), so
+# the Camoufox build is pinned by the camoufox-js version in package.json and
+# NOT by this line. Two builds of this image on different days can therefore
+# ship different Camoufox versions — check GET /api/binary/camoufox to see what
+# a running container actually has.
+#
+# CAMOUFOX_INSTALL_DIR must stay set at runtime too: src/camoufox-binary.ts and
+# camoufox-js both resolve the binary through it, and without it the lookup
+# falls back to root's ~/.cache.
+ENV CAMOUFOX_INSTALL_DIR=/opt/camoufox
+RUN cd /app/server && npx camoufox-js fetch
+
+# Smoke-check the Camoufox launch path at build time. launchOptions() samples a
+# WebGL fingerprint out of a bundled sqlite database, so it is the one thing that
+# would break if better-sqlite3's prebuild ever stopped loading — and it would
+# otherwise surface as a failed profile launch in production instead of here.
+RUN cd /app/server && node -e "import('camoufox-js').then(m=>m.launchOptions({headless:true,os:'windows'})).then(o=>{if(!o.executablePath||!Object.keys(o.env||{}).some(k=>k.startsWith('CAMOU_CONFIG')))throw new Error('camoufox-js produced no fingerprint config');console.log('camoufox launch options OK')}).catch(e=>{console.error(e);process.exit(1)})"
 
 EXPOSE 8080
 

@@ -1,5 +1,12 @@
 /**
- * CDP (Chrome DevTools Protocol) WebSocket proxy.
+ * Automation WebSocket proxy.
+ *
+ * `proxyCdpWebSocket` is a pure bidirectional passthrough and is deliberately
+ * protocol-agnostic: it carries Chromium's CDP and Camoufox's Playwright-server
+ * protocol equally, because it never inspects a payload. Everything below it in
+ * this file that DOES understand the payload — probeCdp, getCdpWebSocketUrl,
+ * rewriteBrowserWsUrl, rewritePageWsUrl — is Chromium-only and has no Firefox
+ * analogue. Firefox has no /json/version, no /json/list and no target list.
  *
  * CDP is plain JSON over WebSocket, so unlike the VNC proxy there is no
  * protocol translation — but stability requirements are much higher, because
@@ -18,6 +25,7 @@
  *     in `running`, so connects hung instead of returning 404.
  */
 
+import { Socket } from 'node:net';
 import { WebSocket, type RawData } from 'ws';
 
 import { logger } from '../logger.js';
@@ -52,6 +60,10 @@ export interface ClientSocket {
   readyState: number;
 }
 
+// ── Chromium-only below ─────────────────────────────────────────────────────
+// None of this applies to Camoufox; see probeAutomationPort() for the engine-
+// agnostic liveness check.
+
 /**
  * Ask Chrome whether it is actually answering on its CDP port.
  *
@@ -68,6 +80,30 @@ export async function probeCdp(cdpPort: number): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+/**
+ * Engine-agnostic liveness check: can anything still accept a TCP connection on
+ * this session's automation port?
+ *
+ * Chromium gets the stronger probeCdp() (which proves DevTools itself answers).
+ * Camoufox has no HTTP surface to poll — the Playwright server speaks only
+ * WebSocket — so "the port is still held" is the strongest cheap signal there
+ * is, and it is enough to tell a live session from one whose process is gone.
+ */
+export function probeAutomationPort(port: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    const socket = new Socket();
+    const done = (alive: boolean) => {
+      socket.destroy();
+      resolve(alive);
+    };
+    socket.setTimeout(PROBE_TIMEOUT_MS);
+    socket.once('connect', () => done(true));
+    socket.once('timeout', () => done(false));
+    socket.once('error', () => done(false));
+    socket.connect(port, '127.0.0.1');
+  });
 }
 
 /** Fetch Chrome's browser-level CDP WebSocket URL. */

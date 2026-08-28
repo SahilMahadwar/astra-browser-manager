@@ -19,7 +19,7 @@ import type { ProfileRow } from '../src/schemas.js';
 
 function profile(overrides: Partial<ProfileRow> = {}): ProfileRow {
   return {
-    id: 'p1', name: 'Test', fingerprint_seed: 12345,
+    id: 'p1', name: 'Test', engine: 'chromium', engine_config: {}, fingerprint_seed: 12345,
     proxy: null, timezone: null, locale: null, platform: 'windows',
     user_agent: null, screen_width: 1920, screen_height: 1080,
     gpu_vendor: null, gpu_renderer: null, hardware_concurrency: null,
@@ -274,9 +274,12 @@ describe('getStatus', () => {
   it('reports stopped for an unknown profile', () => {
     expect(new BrowserManager().getStatus('nope')).toEqual({
       status: 'stopped',
+      engine: null,
       vnc_ws_port: null,
       display: null,
       cdp_url: null,
+      automation_url: null,
+      automation_protocol: null,
     });
   });
 
@@ -284,16 +287,24 @@ describe('getStatus', () => {
     const mgr = new BrowserManager();
     mgr.running.set('p1', {
       profileId: 'p1',
+      engine: 'chromium',
       context: {} as never,
+      automationPort: 5100,
+      protocol: 'cdp',
+      automationUrl: 'http://127.0.0.1:5100',
+      session: {} as never,
       display: 100,
       wsPort: 6100,
       cdpPort: 5100,
     });
     expect(mgr.getStatus('p1')).toEqual({
       status: 'running',
+      engine: 'chromium',
       vnc_ws_port: 6100,
       display: ':100',
       cdp_url: '/api/profiles/p1/cdp',
+      automation_url: '/api/profiles/p1/cdp',
+      automation_protocol: 'cdp',
     });
   });
 });

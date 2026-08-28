@@ -11,7 +11,12 @@ import { setCookie, deleteCookie } from 'hono/cookie';
 import * as db from './db.js';
 import { authMiddleware, checkAuth, getAuthToken, isHttps } from './auth.js';
 import { getClipboard, setClipboard } from './clipboard.js';
-import { probeCdp, rewriteBrowserWsUrl, rewritePageWsUrl } from './proxy/cdp.js';
+import {
+  probeAutomationPort,
+  probeCdp,
+  rewriteBrowserWsUrl,
+  rewritePageWsUrl,
+} from './proxy/cdp.js';
 import {
   clipboardRequestSchema,
   loginRequestSchema,
@@ -23,6 +28,7 @@ import {
 } from './schemas.js';
 import { buildExport, readImport, resolveName, slugify } from './transfer.js';
 import { getBinaryStatus, startUpdate } from './binary.js';
+import { getCamoufoxBinaryStatus } from './camoufox-binary.js';
 import { testProxy } from './proxy-test.js';
 import { getScreenshot } from './screenshot.js';
 import {
@@ -37,6 +43,11 @@ import { logger } from './logger.js';
 import type { BrowserManager } from './browser.js';
 
 const log = logger('api');
+
+/** Returned by the Chromium-only DevTools discovery routes for a Firefox engine. */
+const NO_CDP =
+  'This profile does not run a CDP-capable engine. Use its automation_url with ' +
+  'playwright firefox.connect() instead.';
 
 export function createApp(mgr: BrowserManager): Hono {
   const app = new Hono();
@@ -199,12 +210,16 @@ export function createApp(mgr: BrowserManager): Hono {
       return c.json({ detail: 'Failed to launch browser' }, 500);
     }
 
+    const status = mgr.getStatus(id);
     return c.json({
       profile_id: id,
       status: 'running',
+      engine: result.running.engine,
       vnc_ws_port: result.running.wsPort,
       display: `:${result.running.display}`,
-      cdp_url: `/api/profiles/${id}/cdp`,
+      cdp_url: status.cdp_url,
+      automation_url: status.automation_url,
+      automation_protocol: status.automation_protocol,
     });
   });
 
@@ -274,16 +289,37 @@ export function createApp(mgr: BrowserManager): Hono {
     } catch (err) {
       log.debug(`Could not read CHROMIUM_VERSION: ${String(err)}`);
     }
+    let camoufoxVersion: string | null = null;
+    try {
+      camoufoxVersion = (await getCamoufoxBinaryStatus()).version;
+    } catch (err) {
+      log.debug(`Could not read Camoufox version: ${String(err)}`);
+    }
+
     return c.json({
       running_count: mgr.running.size,
+      // Unchanged key: the dashboard and the healthcheck read it as-is.
       binary_version: binaryVersion,
+      camoufox_version: camoufoxVersion,
       profiles_total: db.listProfiles().length,
     });
   });
 
   // ── Chromium binary ───────────────────────────────────────────────────────
 
+  // Shape unchanged: existing clients and the dashboard read the Chromium
+  // status straight off this object.
   app.get('/api/binary', async (c) => c.json(await getBinaryStatus()));
+
+  /** Per-engine binary status. Chromium's is repeated here so a caller can read both. */
+  app.get('/api/binary/engines', async (c) =>
+    c.json({
+      chromium: await getBinaryStatus(),
+      camoufox: await getCamoufoxBinaryStatus(),
+    })
+  );
+
+  app.get('/api/binary/camoufox', async (c) => c.json(await getCamoufoxBinaryStatus()));
 
   app.post('/api/binary/update', async (c) => {
     const status = await getBinaryStatus();
@@ -331,10 +367,59 @@ export function createApp(mgr: BrowserManager): Hono {
     if (c.req.header('upgrade')?.toLowerCase() === 'websocket') return next();
 
     const id = c.req.param('id');
-    if (!mgr.running.has(id)) return c.json({ detail: 'Profile not running' }, 404);
+    const running = mgr.running.get(id);
+    if (!running) return c.json({ detail: 'Profile not running' }, 404);
+    if (running.protocol !== 'cdp') {
+      return c.json(
+        {
+          detail:
+            `Profile runs ${running.engine}, which has no CDP endpoint. ` +
+            `Connect to /api/profiles/${id}/pw with playwright firefox.connect().`,
+        },
+        409
+      );
+    }
     return c.json({
       cdp_url: `/api/profiles/${id}/cdp`,
+      automation_url: `/api/profiles/${id}/cdp`,
+      automation_protocol: 'cdp',
       usage: `playwright.chromium.connect_over_cdp('http://<host>/api/profiles/${id}/cdp')`,
+    });
+  });
+
+  /**
+   * Playwright-protocol discovery for Camoufox. Mirrors the CDP route above,
+   * including the upgrade hand-off — Hono shares one route table between HTTP
+   * and WebSocket, so without the next() the WS route in index.ts is shadowed
+   * and automation never connects.
+   */
+  app.get('/api/profiles/:id/pw', async (c, next) => {
+    if (c.req.header('upgrade')?.toLowerCase() === 'websocket') return next();
+
+    const id = c.req.param('id');
+    const running = mgr.running.get(id);
+    if (!running) return c.json({ detail: 'Profile not running' }, 404);
+    if (running.protocol !== 'playwright-firefox') {
+      return c.json(
+        {
+          detail:
+            `Profile runs ${running.engine} over CDP. ` +
+            `Connect to /api/profiles/${id}/cdp instead.`,
+        },
+        409
+      );
+    }
+    return c.json({
+      automation_url: `/api/profiles/${id}/pw`,
+      automation_protocol: 'playwright-firefox',
+      usage:
+        `const browser = await firefox.connect('ws://<host>/api/profiles/${id}/pw');\n` +
+        `const context = browser.contexts()[0];`,
+      note:
+        'The connecting playwright-core must match this server\'s major.minor ' +
+        'version. A mismatch is NOT rejected at the handshake — Playwright\'s 428 ' +
+        'guard reads a user-agent this proxy does not forward — so it surfaces ' +
+        'later as "timeout: expected float, got undefined" on goto/waitForSelector.',
     });
   });
 
@@ -342,6 +427,7 @@ export function createApp(mgr: BrowserManager): Hono {
     const id = c.req.param('id') as string;
     const running = mgr.running.get(id);
     if (!running) return c.json({ detail: 'Profile not running' }, 404);
+    if (running.cdpPort === null) return c.json({ detail: NO_CDP }, 409);
 
     try {
       const res = await fetch(`http://127.0.0.1:${running.cdpPort}/json/version`, {
@@ -367,6 +453,7 @@ export function createApp(mgr: BrowserManager): Hono {
     const id = c.req.param('id') as string;
     const running = mgr.running.get(id);
     if (!running) return c.json({ detail: 'Profile not running' }, 404);
+    if (running.cdpPort === null) return c.json({ detail: NO_CDP }, 409);
 
     try {
       const res = await fetch(`http://127.0.0.1:${running.cdpPort}/json/list`, {
@@ -402,7 +489,13 @@ export function createApp(mgr: BrowserManager): Hono {
   app.get('/api/profiles/:id/cdp/alive', async (c) => {
     const running = mgr.running.get(c.req.param('id'));
     if (!running) return c.json({ alive: false }, 404);
-    return c.json({ alive: await probeCdp(running.cdpPort) });
+    // Chromium gets the real DevTools probe; Camoufox has no HTTP surface, so
+    // the port check is the strongest cheap liveness signal available.
+    const alive =
+      running.cdpPort !== null
+        ? await probeCdp(running.cdpPort)
+        : await probeAutomationPort(running.automationPort);
+    return c.json({ alive });
   });
 
   return app;

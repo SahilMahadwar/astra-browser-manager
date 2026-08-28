@@ -13,6 +13,8 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import {
   api,
+  type CamoufoxConfig,
+  type Engine,
   type Profile,
   type ProfileCreateData,
   type ProxyTestResult,
@@ -84,6 +86,8 @@ const GPU_PRESETS: Record<string, { vendor: string; renderer: string }> = {
 function toFormData(profile: Profile): ProfileCreateData {
   return {
     name: profile.name,
+    engine: profile.engine,
+    engine_config: profile.engine_config ?? {},
     fingerprint_seed: profile.fingerprint_seed,
     proxy: profile.proxy,
     timezone: profile.timezone,
@@ -124,6 +128,8 @@ export function ProfileForm({
 
   const [form, setForm] = useState<ProfileCreateData>({
     name: "",
+    engine: "chromium",
+    engine_config: {},
     platform: "windows",
     screen_width: 1920,
     screen_height: 1080,
@@ -194,6 +200,21 @@ export function ProfileForm({
     value: ProfileCreateData[K],
   ) => {
     setForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const engine: Engine = form.engine ?? "chromium";
+  const isChromium = engine === "chromium";
+  const cfg: CamoufoxConfig = form.engine_config ?? {};
+
+  /** Patch one Camoufox setting without disturbing the rest of the document. */
+  const setCfg = <K extends keyof CamoufoxConfig>(
+    key: K,
+    value: CamoufoxConfig[K],
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      engine_config: { ...(prev.engine_config ?? {}), [key]: value },
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -412,6 +433,29 @@ export function ProfileForm({
                 required
               />
             </div>
+            <div className="col-span-2">
+              <label className="label">Browser Engine</label>
+              <select
+                className="input"
+                value={engine}
+                // Immutable after creation: the user-data directory is written
+                // in the engine's own format (Chromium's Default/ tree vs a
+                // Firefox profile), so switching would point the browser at a
+                // directory it cannot read. Clone the profile instead.
+                disabled={isEdit}
+                onChange={(e) => set("engine", e.target.value as Engine)}
+              >
+                <option value="chromium">CloakBrowser (Chromium)</option>
+                <option value="camoufox">Camoufox (Firefox)</option>
+              </select>
+              <p className="text-xs text-gray-500 mt-1">
+                {isChromium
+                  ? "Automated over CDP: chromium.connectOverCDP()."
+                  : "Firefox-based. Automated over the Playwright protocol (firefox.connect) — it has no CDP endpoint."}
+                {isEdit && " The engine cannot be changed after creation."}
+              </p>
+            </div>
+            {isChromium && (
             <div>
               <label className="label">Platform</label>
               <select
@@ -424,6 +468,8 @@ export function ProfileForm({
                 <option value="linux">Linux</option>
               </select>
             </div>
+            )}
+            {isChromium && (
             <div>
               <label className="label">Fingerprint Seed</label>
               <div className="flex gap-2">
@@ -551,8 +597,140 @@ export function ProfileForm({
                 </button>
               </div>
             </div>
+            )}
           </div>
         </section>
+
+        {/* Camoufox — engine-specific, and deliberately not shared with the
+            Chromium fingerprint fields above: the two engines spoof different
+            surfaces, so one control cannot mean the same thing for both. */}
+        {!isChromium && (
+        <section>
+          <h3 className="font-display text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">
+            Camoufox Fingerprint
+          </h3>
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="label">Spoofed OS</label>
+                <select
+                  className="input"
+                  value={cfg.os ?? ""}
+                  onChange={(e) =>
+                    setCfg("os", (e.target.value || null) as CamoufoxConfig["os"])
+                  }
+                >
+                  <option value="">Auto (random)</option>
+                  <option value="windows">Windows</option>
+                  <option value="macos">macOS</option>
+                  <option value="linux">Linux</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">
+                  Drives user agent, fonts and GPU together.
+                </p>
+              </div>
+              <div>
+                <label className="label">WebGL Vendor / Renderer</label>
+                <input
+                  className="input mb-2"
+                  value={cfg.webgl_vendor ?? ""}
+                  onChange={(e) => setCfg("webgl_vendor", e.target.value || null)}
+                  placeholder="Auto"
+                />
+                <input
+                  className="input"
+                  value={cfg.webgl_renderer ?? ""}
+                  onChange={(e) => setCfg("webgl_renderer", e.target.value || null)}
+                  placeholder="Auto"
+                />
+              </div>
+            </div>
+
+            <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+              <input
+                type="checkbox"
+                checked={cfg.fingerprint_preset ?? true}
+                onChange={(e) => setCfg("fingerprint_preset", e.target.checked)}
+              />
+              Use a bundled real-device fingerprint preset
+            </label>
+
+            <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+              <input
+                type="checkbox"
+                checked={Boolean(cfg.humanize)}
+                onChange={(e) => setCfg("humanize", e.target.checked)}
+              />
+              Humanize cursor movement
+            </label>
+
+            <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+              <input
+                type="checkbox"
+                checked={Boolean(cfg.geoip)}
+                onChange={(e) => setCfg("geoip", e.target.checked)}
+              />
+              Derive timezone, locale and WebRTC IP from the proxy exit IP
+            </label>
+
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Boolean(cfg.block_images)}
+                  onChange={(e) => setCfg("block_images", e.target.checked)}
+                />
+                Block images
+              </label>
+              <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Boolean(cfg.block_webrtc)}
+                  onChange={(e) => setCfg("block_webrtc", e.target.checked)}
+                />
+                Block WebRTC
+              </label>
+              <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Boolean(cfg.block_webgl)}
+                  onChange={(e) => setCfg("block_webgl", e.target.checked)}
+                />
+                Block WebGL
+              </label>
+              <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Boolean(cfg.enable_cache)}
+                  onChange={(e) => setCfg("enable_cache", e.target.checked)}
+                />
+                Enable cache
+              </label>
+              <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Boolean(cfg.exclude_default_addons)}
+                  onChange={(e) => setCfg("exclude_default_addons", e.target.checked)}
+                />
+                Drop bundled uBlock Origin
+              </label>
+              <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Boolean(cfg.main_world_eval)}
+                  onChange={(e) => setCfg("main_world_eval", e.target.checked)}
+                />
+                Allow main-world eval
+              </label>
+            </div>
+            <p className="text-xs text-gray-500">
+              Main-world eval lets automation mutate the DOM with the{" "}
+              <code className="font-mono">mw:</code> prefix, but is detectable by the
+              page. Leave it off unless a script needs it.
+            </p>
+          </div>
+        </section>
+        )}
 
         {/* Network */}
         <section>
@@ -634,6 +812,9 @@ export function ProfileForm({
                 />
               </div>
             </div>
+            {/* Camoufox has its own geoip switch, which additionally spoofs the
+                WebRTC IP — see the Camoufox Fingerprint section. */}
+            {isChromium && (
             <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
               <input
                 type="checkbox"
@@ -643,10 +824,12 @@ export function ProfileForm({
               />
               Auto-detect timezone/locale from proxy IP (GeoIP)
             </label>
+            )}
           </div>
         </section>
 
         {/* Hardware */}
+        {isChromium && (
         <section>
           <h3 className="font-display text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">
             Hardware
@@ -754,6 +937,7 @@ export function ProfileForm({
             </div>
           </div>
         </section>
+        )}
 
         {/* Behavior */}
         <section>
@@ -761,6 +945,7 @@ export function ProfileForm({
             Behavior
           </h3>
           <div className="space-y-3">
+            {isChromium && (<>
             <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
               <input
                 type="checkbox"
@@ -783,6 +968,7 @@ export function ProfileForm({
                 </select>
               </div>
             )}
+            </>)}
             <label className="flex items-center gap-2 text-sm text-ink-muted cursor-pointer">
               <input
                 type="checkbox"
@@ -897,6 +1083,7 @@ export function ProfileForm({
         </section>
 
         {/* Launch Args */}
+        {isChromium && (
         <section>
           <h3 className="font-display text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">
             Launch Args
@@ -954,6 +1141,7 @@ export function ProfileForm({
             </button>
           </div>
         </section>
+        )}
 
         {/* Notes */}
         <section>

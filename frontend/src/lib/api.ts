@@ -2,9 +2,33 @@
  * API client for AstraBrowser Manager backend.
  */
 
+export type Engine = "chromium" | "camoufox";
+export type AutomationProtocol = "cdp" | "playwright-firefox";
+
+/** Camoufox-only settings. Chromium keeps its config in the flat fields below. */
+export interface CamoufoxConfig {
+  os?: "windows" | "macos" | "linux" | null;
+  humanize?: boolean | number;
+  geoip?: boolean | string;
+  block_images?: boolean;
+  block_webrtc?: boolean;
+  block_webgl?: boolean;
+  enable_cache?: boolean;
+  disable_coop?: boolean;
+  main_world_eval?: boolean;
+  fingerprint_preset?: boolean;
+  webgl_vendor?: string | null;
+  webgl_renderer?: string | null;
+  fonts?: string[];
+  exclude_default_addons?: boolean;
+  config?: Record<string, unknown>;
+}
+
 export interface Profile {
   id: string;
   name: string;
+  engine: Engine;
+  engine_config: CamoufoxConfig;
   fingerprint_seed: number;
   proxy: string | null;
   timezone: string | null;
@@ -31,11 +55,16 @@ export interface Profile {
   tags: { tag: string; color: string | null }[];
   status: "running" | "stopped";
   vnc_ws_port: number | null;
+  /** Chromium only. Null for Camoufox, which has no CDP — read automation_url. */
   cdp_url: string | null;
+  automation_url: string | null;
+  automation_protocol: AutomationProtocol | null;
 }
 
 export interface ProfileCreateData {
   name: string;
+  engine?: Engine;
+  engine_config?: CamoufoxConfig;
   fingerprint_seed?: number | null;
   proxy?: string | null;
   timezone?: string | null;
@@ -62,14 +91,18 @@ export interface ProfileCreateData {
 export interface LaunchResult {
   profile_id: string;
   status: string;
+  engine: Engine;
   vnc_ws_port: number;
   display: string;
   cdp_url: string | null;
+  automation_url: string | null;
+  automation_protocol: AutomationProtocol | null;
 }
 
 export interface SystemStatus {
   running_count: number;
   binary_version: string;
+  camoufox_version: string | null;
   profiles_total: number;
 }
 
@@ -111,6 +144,17 @@ export interface BinaryStatus {
     version: string | null;
     error: string | null;
   };
+}
+
+/** State of the Camoufox build — see server/src/camoufox-binary.ts. */
+export interface CamoufoxBinaryStatus {
+  version: string | null;
+  installed: boolean;
+  platform: string;
+  install_dir: string;
+  binary_path: string | null;
+  latest_version: string | null;
+  update_available: boolean;
 }
 
 export interface ProxyTestResult {
@@ -222,6 +266,9 @@ export const api = {
 
   getBinary: () => request<BinaryStatus>("/api/binary"),
 
+  getCamoufoxBinary: () =>
+    request<CamoufoxBinaryStatus>("/api/binary/camoufox"),
+
   /**
    * Starts the download and returns immediately — the archive is ~70MB. Poll
    * `getBinary()` for the outcome.
@@ -246,7 +293,10 @@ export const api = {
   cdpAlive: (id: string) =>
     request<{ alive: boolean }>(`/api/profiles/${id}/cdp/alive`),
 
-  /** Open tabs for a running profile. */
+  /**
+   * Open tabs for a running profile. Chromium only — Firefox has no /json/list,
+   * so callers must check automation_protocol before using this.
+   */
   cdpTargets: (id: string) =>
     request<CdpTarget[]>(`/api/profiles/${id}/cdp/json/list`),
 

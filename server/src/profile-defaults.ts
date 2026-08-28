@@ -2,7 +2,11 @@
  * First-launch profile bootstrap: bookmarks and default search engine.
  * Ported from _init_profile_defaults() in backend/browser_manager.py.
  *
- * Both files are only written when absent, so user edits survive relaunches.
+ * Files are only written when absent, so user edits survive relaunches.
+ *
+ * The Chromium and Camoufox bootstraps share nothing but that rule. Chromium
+ * reads JSON out of `Default/`; Firefox reads `user.js` and keeps bookmarks in
+ * places.sqlite, which is why the Camoufox side sets prefs only.
  */
 
 import { mkdirSync, existsSync, writeFileSync } from 'node:fs';
@@ -111,4 +115,47 @@ export function initProfileDefaults(userDataDir: string): void {
     writeFileSync(prefsPath, JSON.stringify(prefs, null, 2));
     log.info(`Set DuckDuckGo as default search for ${path.basename(userDataDir)}`);
   }
+}
+
+/**
+ * Camoufox (Firefox) equivalent of the above.
+ *
+ * `user.js` is applied over prefs.js on every start, which is exactly what we
+ * want for a default we are willing to re-assert — but it also means anything
+ * written here overrides a user's later change in the UI. It is therefore kept
+ * to the search default, and written once, on first launch only.
+ *
+ * Bookmarks are deliberately skipped: Firefox stores them in places.sqlite, and
+ * seeding that would mean a sqlite dependency for a convenience. They can be
+ * added through the BrowserContext after launch if they are ever wanted.
+ */
+export function initCamoufoxProfileDefaults(userDataDir: string): void {
+  mkdirSync(userDataDir, { recursive: true });
+
+  const userJsPath = path.join(userDataDir, 'user.js');
+  if (existsSync(userJsPath)) return;
+
+  const prefs: Array<[string, string | boolean | number]> = [
+    // DuckDuckGo as the default search engine, matching the Chromium profiles.
+    ['browser.urlbar.placeholderName', 'DuckDuckGo'],
+    ['browser.search.defaultenginename', 'DuckDuckGo'],
+    ['browser.search.order.1', 'DuckDuckGo'],
+    // Skip the first-run and "what's new" tabs — they would be the first thing
+    // in the VNC view and they phone home to Mozilla on a profile whose whole
+    // point is not to.
+    ['browser.startup.homepage_override.mstone', 'ignore'],
+    ['startup.homepage_welcome_url', ''],
+    ['startup.homepage_welcome_url.additional', ''],
+    ['browser.aboutwelcome.enabled', false],
+    ['datareporting.policy.dataSubmissionEnabled', false],
+    ['datareporting.healthreport.uploadEnabled', false],
+    ['browser.shell.checkDefaultBrowser', false],
+  ];
+
+  const body = prefs
+    .map(([key, value]) => `user_pref(${JSON.stringify(key)}, ${JSON.stringify(value)});`)
+    .join('\n');
+
+  writeFileSync(userJsPath, `${body}\n`);
+  log.info(`Created Camoufox profile defaults for ${path.basename(userDataDir)}`);
 }

@@ -29,11 +29,15 @@ export const AUTH_EXEMPT = new Set([
  * nowhere to hang a header. A query parameter is the one channel every CDP
  * client can carry.
  *
+ * Camoufox's endpoint (/pw) needs this just as much: Playwright's
+ * `firefox.connect()` takes no headers option at all, so a query parameter is
+ * the ONLY channel a Camoufox client has.
+ *
  * Deliberately narrow: tokens in URLs leak into access logs, referrers and
- * error traces in a way headers do not, so this covers the CDP subtree only —
- * not /api/profiles itself, and not /mcp.
+ * error traces in a way headers do not, so this covers the two automation
+ * subtrees only — not /api/profiles itself, and not /mcp.
  */
-const QUERY_TOKEN_PATH = /^\/api\/profiles\/[^/]+\/cdp(\/|$)/;
+const QUERY_TOKEN_PATH = /^\/api\/profiles\/[^/]+\/(cdp|pw)(\/|$)/;
 
 export function allowsQueryToken(path: string): boolean {
   return QUERY_TOKEN_PATH.test(path);

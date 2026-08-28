@@ -7,6 +7,8 @@ function row(overrides: Partial<ProfileRow> = {}): ProfileRow {
   return {
     id: 'id-1',
     name: 'Test',
+    engine: 'chromium',
+    engine_config: {},
     fingerprint_seed: 12345,
     proxy: null,
     timezone: null,

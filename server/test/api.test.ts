@@ -132,7 +132,9 @@ describe('launch / stop / status', () => {
   it('409s a launch of an already-running profile', async () => {
     const p = createProfile({ name: 'Running' });
     mgr.running.set(p.id, {
-      profileId: p.id, context: {} as never, display: 100, wsPort: 6100, cdpPort: 5100,
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 5100, protocol: 'cdp', automationUrl: 'http://127.0.0.1:5100',
+      cdpPort: 5100, session: {} as never,
     });
     const res = await app.request(`/api/profiles/${p.id}/launch`, { method: 'POST' });
     expect(res.status).toBe(409);
@@ -147,21 +149,28 @@ describe('launch / stop / status', () => {
   it('reports running status with ports once launched', async () => {
     const p = createProfile({ name: 'Running' });
     mgr.running.set(p.id, {
-      profileId: p.id, context: {} as never, display: 100, wsPort: 6100, cdpPort: 5100,
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 5100, protocol: 'cdp', automationUrl: 'http://127.0.0.1:5100',
+      cdpPort: 5100, session: {} as never,
     });
     const b = await body(await app.request(`/api/profiles/${p.id}/status`));
     expect(b).toEqual({
       status: 'running',
+      engine: 'chromium',
       vnc_ws_port: 6100,
       display: ':100',
       cdp_url: `/api/profiles/${p.id}/cdp`,
+      automation_url: `/api/profiles/${p.id}/cdp`,
+      automation_protocol: 'cdp',
     });
   });
 
   it('surfaces running state in the list endpoint', async () => {
     const p = createProfile({ name: 'Running' });
     mgr.running.set(p.id, {
-      profileId: p.id, context: {} as never, display: 100, wsPort: 6100, cdpPort: 5100,
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 5100, protocol: 'cdp', automationUrl: 'http://127.0.0.1:5100',
+      cdpPort: 5100, session: {} as never,
     });
     const [first] = await body(await app.request('/api/profiles'));
     expect(first.status).toBe('running');
@@ -241,7 +250,9 @@ describe('CDP discovery', () => {
   it('returns usage info when running', async () => {
     const p = createProfile({ name: 'R' });
     mgr.running.set(p.id, {
-      profileId: p.id, context: {} as never, display: 100, wsPort: 6100, cdpPort: 5100,
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 5100, protocol: 'cdp', automationUrl: 'http://127.0.0.1:5100',
+      cdpPort: 5100, session: {} as never,
     });
     const b = await body(await app.request(`/api/profiles/${p.id}/cdp`));
     expect(b.cdp_url).toBe(`/api/profiles/${p.id}/cdp`);
@@ -250,7 +261,9 @@ describe('CDP discovery', () => {
   it('502s json/version when Chrome is unreachable', async () => {
     const p = createProfile({ name: 'R' });
     mgr.running.set(p.id, {
-      profileId: p.id, context: {} as never, display: 100, wsPort: 6100, cdpPort: 59998,
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 59998, protocol: 'cdp', automationUrl: 'http://127.0.0.1:59998',
+      cdpPort: 59998, session: {} as never,
     });
     const res = await app.request(`/api/profiles/${p.id}/cdp/json/version`);
     expect(res.status).toBe(502);
@@ -259,7 +272,9 @@ describe('CDP discovery', () => {
   it('routes every json/list spelling Playwright probes', async () => {
     const p = createProfile({ name: 'R' });
     mgr.running.set(p.id, {
-      profileId: p.id, context: {} as never, display: 100, wsPort: 6100, cdpPort: 59998,
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 59998, protocol: 'cdp', automationUrl: 'http://127.0.0.1:59998',
+      cdpPort: 59998, session: {} as never,
     });
     for (const suffix of ['/cdp/json', '/cdp/json/', '/cdp/json/list', '/cdp/json/list/']) {
       const res = await app.request(`/api/profiles/${p.id}${suffix}`);
@@ -538,7 +553,12 @@ describe('force stop', () => {
     // Stand in for a launched profile whose browser has since died.
     mgr.running.set(created.id, {
       profileId: created.id,
+      engine: 'chromium',
       context: {} as never,
+      automationPort: 5100,
+      protocol: 'cdp',
+      automationUrl: 'http://127.0.0.1:5100',
+      session: {} as never,
       display: 100,
       wsPort: 6100,
       cdpPort: 5100,
@@ -591,5 +611,99 @@ describe('proxy test', () => {
     const b = await body(res);
     expect(b.ok).toBe(false);
     expect(b.error).toMatch(/scheme/i);
+  });
+});
+
+describe('automation endpoints across engines', () => {
+  /** Stand in for a launched Camoufox session. */
+  function runCamoufox(id: string, port = 5101) {
+    mgr.running.set(id, {
+      profileId: id,
+      engine: 'camoufox',
+      context: {} as never,
+      display: 100,
+      wsPort: 6100,
+      automationPort: port,
+      protocol: 'playwright-firefox',
+      automationUrl: `ws://127.0.0.1:${port}/pw/${id}`,
+      cdpPort: null,
+      session: {} as never,
+    });
+  }
+
+  it('reports a playwright endpoint and no cdp_url for camoufox', async () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    runCamoufox(p.id);
+    const b = await body(await app.request(`/api/profiles/${p.id}/status`));
+    expect(b).toEqual({
+      status: 'running',
+      engine: 'camoufox',
+      vnc_ws_port: 6100,
+      display: ':100',
+      // Null on purpose: handing an existing CDP client a /cdp path for a
+      // browser with no CDP fails far less clearly than a null does.
+      cdp_url: null,
+      automation_url: `/api/profiles/${p.id}/pw`,
+      automation_protocol: 'playwright-firefox',
+    });
+  });
+
+  it('describes the pw endpoint with a firefox.connect snippet', async () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    runCamoufox(p.id);
+    const b = await body(await app.request(`/api/profiles/${p.id}/pw`));
+    expect(b.automation_protocol).toBe('playwright-firefox');
+    expect(b.usage).toContain('firefox.connect');
+    expect(b.usage).toContain('browser.contexts()[0]');
+  });
+
+  it('409s the pw endpoint for a chromium profile', async () => {
+    const p = createProfile({ name: 'Chrome' });
+    mgr.running.set(p.id, {
+      profileId: p.id, engine: 'chromium', context: {} as never, display: 100, wsPort: 6100,
+      automationPort: 5100, protocol: 'cdp', automationUrl: 'http://127.0.0.1:5100',
+      cdpPort: 5100, session: {} as never,
+    });
+    const res = await app.request(`/api/profiles/${p.id}/pw`);
+    expect(res.status).toBe(409);
+    expect((await body(res)).detail).toContain('/cdp');
+  });
+
+  it('409s the cdp endpoints for a camoufox profile', async () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    runCamoufox(p.id);
+    for (const suffix of ['/cdp', '/cdp/json/version', '/cdp/json/list']) {
+      const res = await app.request(`/api/profiles/${p.id}${suffix}`);
+      expect(res.status, suffix).toBe(409);
+    }
+  });
+
+  it('404s the pw endpoint when the profile is not running', async () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    expect((await app.request(`/api/profiles/${p.id}/pw`)).status).toBe(404);
+  });
+
+  it('surfaces the engine in the profile list', async () => {
+    createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    createProfile({ name: 'Chrome' });
+    const list = await body(await app.request('/api/profiles'));
+    const byName = Object.fromEntries(list.map((x: any) => [x.name, x]));
+    expect(byName.Fox.engine).toBe('camoufox');
+    expect(byName.Chrome.engine).toBe('chromium');
+  });
+
+  it('creates a camoufox profile through the API with its config', async () => {
+    const res = await app.request('/api/profiles', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Fox', engine: 'camoufox',
+        engine_config: { os: 'macos', humanize: true },
+      }),
+    });
+    expect(res.status).toBe(201);
+    const b = await body(res);
+    expect(b.engine).toBe('camoufox');
+    expect(b.engine_config).toEqual({ os: 'macos', humanize: true });
   });
 });

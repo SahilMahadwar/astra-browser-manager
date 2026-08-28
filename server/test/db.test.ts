@@ -1,6 +1,7 @@
 /** Ported from backend/tests/test_database.py. */
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { DatabaseSync } from 'node:sqlite';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -220,5 +221,54 @@ describe('deleteProfile', () => {
     deleteProfile(p.id);
     const revived = createProfile({ name: 'New' });
     expect(revived.tags).toEqual([]);
+  });
+});
+
+describe('engine columns', () => {
+  it('defaults an unspecified profile to chromium with empty config', () => {
+    // Every row that predates multi-engine support is a Chromium profile, and
+    // the migration defaults exist so those rows keep meaning exactly that.
+    const p = createProfile({ name: 'Legacy' });
+    expect(p.engine).toBe('chromium');
+    expect(p.engine_config).toEqual({});
+  });
+
+  it('round-trips a camoufox profile and its config', () => {
+    const p = createProfile({
+      name: 'Fox',
+      engine: 'camoufox',
+      engine_config: { os: 'macos', humanize: 1.5, config: { 'webrtc:ipv4': '9.9.9.9' } },
+    } as never);
+    const read = getProfile(p.id)!;
+    expect(read.engine).toBe('camoufox');
+    expect(read.engine_config).toEqual({
+      os: 'macos',
+      humanize: 1.5,
+      config: { 'webrtc:ipv4': '9.9.9.9' },
+    });
+  });
+
+  it('updates engine_config as a whole document', () => {
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    updateProfile(p.id, { engine_config: { os: 'linux' } });
+    expect(getProfile(p.id)!.engine_config).toEqual({ os: 'linux' });
+  });
+
+  it('does not let an update change the engine', () => {
+    // The user-data dir is written in the engine's own format, so switching
+    // engines would point a browser at a directory it cannot read.
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    updateProfile(p.id, { engine: 'chromium' } as never);
+    expect(getProfile(p.id)!.engine).toBe('camoufox');
+  });
+
+  it('reads a corrupt engine_config as empty rather than throwing', () => {
+    // A hand-edited or newer-format value must not take the whole listing down.
+    const p = createProfile({ name: 'Fox', engine: 'camoufox' } as never);
+    const raw = new DatabaseSync(path.join(dir, 'profiles.db'));
+    raw.prepare('UPDATE profiles SET engine_config = ? WHERE id = ?').run('{not json', p.id);
+    raw.close();
+    expect(getProfile(p.id)!.engine_config).toEqual({});
+    expect(() => listProfiles()).not.toThrow();
   });
 });

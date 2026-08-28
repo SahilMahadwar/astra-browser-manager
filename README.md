@@ -44,13 +44,34 @@ Each profile here generates a completely different device identity. To the websi
 
 ## Browser Engines
 
-| Engine                                                                     | Status          |
-| -------------------------------------------------------------------------- | --------------- |
-| [CloakBrowser](https://github.com/CloakHQ/CloakBrowser) (stealth Chromium) | Supported today |
-| [Camoufox](https://github.com/daijro/camoufox) (stealth Firefox)           | Coming soon     |
-| Additional stealth engines                                                 | Coming soon     |
+| Engine                                                                    | Status          | Automation protocol                              |
+| ------------------------------------------------------------------------- | --------------- | ------------------------------------------------ |
+| [CloakBrowser](https://github.com/CloakHQ/CloakBrowser) (stealth Chromium) | Supported       | CDP — `chromium.connectOverCDP()`                |
+| [Camoufox](https://github.com/daijro/camoufox) (stealth Firefox)           | Supported       | Playwright protocol — `firefox.connect()`        |
+| Additional stealth engines                                                 | Coming soon     |                                                  |
 
-The goal is one manager for every stealth browser — pick the engine per profile, keep the same UI, proxies, and automation API.
+Pick the engine per profile. The UI, proxies, VNC view, screenshots and profile
+persistence are identical across both.
+
+The **automation protocol is the one place they genuinely differ**, and it is not a
+choice we made: Firefox removed its CDP implementation in version 141, so Camoufox has
+no CDP endpoint to expose. Camoufox profiles are driven over Playwright's own protocol
+instead, and `browser.contexts()[0]` is the profile's persistent context:
+
+```js
+// chromium profile
+const browser = await chromium.connectOverCDP(profile.automation_url);
+// camoufox profile
+const browser = await firefox.connect(profile.automation_url);
+const context = browser.contexts()[0];
+```
+
+Read `automation_protocol` off the profile and branch on it. `cdp_url` still works
+exactly as before for Chromium profiles, and is `null` for Camoufox.
+
+**Writing Camoufox scripts:** see [docs/CAMOUFOX.md](docs/CAMOUFOX.md) — client
+setup, connecting remotely, the one gotcha that silently breaks scrapers ported
+from Chromium, worked examples, and what to use instead of Stagehand.
 
 ## Features
 
@@ -279,6 +300,10 @@ await page.goto("https://example.com");
 
 The CDP URL is available in the toolbar (code icon) when a profile is running. The same browser session is accessible both visually through VNC and programmatically through the API.
 
+Every HTTP and WebSocket endpoint — profile CRUD, launch/stop, export/import,
+screenshots, clipboard, proxy testing, and the CDP discovery routes — is documented in
+the [API reference](docs/API.md).
+
 ## MCP Server
 
 The manager also speaks [MCP](https://modelcontextprotocol.io), so an AI agent can manage profiles as tools instead of you writing a client per endpoint. The endpoint is `POST /mcp` on the same port as the UI, using the Streamable HTTP transport.
@@ -354,6 +379,49 @@ ssh -L 8080:localhost:8080 your-server
 ```
 
 Then open `http://localhost:8080`.
+
+## Deploy to Railway
+
+Everything the outside world needs — UI, API, MCP, and both the VNC and CDP
+WebSockets — is multiplexed onto the single HTTP port, so one Railway service with one
+domain exposes the whole manager. No code changes are needed.
+
+Two ways to create the service, both from the dashboard (the `railway` CLI is only for
+deploying a local directory):
+
+- **Connect this repo** — *New Project → Deploy from GitHub repo*. Railway detects the
+  root `Dockerfile` automatically and applies [`railway.json`](railway.json). Builds
+  take ~15 minutes and rerun on every push to `main`.
+- **Deploy the prebuilt image** — enter
+  `ghcr.io/sahilmahadwar/astra-browser-manager:latest` as the image. No build time, but
+  `railway.json` does not apply, so set the healthcheck and drain values by hand.
+
+Attach a **volume mounted at `/data`** (profiles, cookies, sessions, and the SQLite
+database live there; without it everything is lost on redeploy). Replicas must stay at
+1 — Railway forbids replicas on a service with a volume, and the manager keeps its
+sessions in process anyway.
+
+Then set these variables:
+
+| Variable | Value | Why |
+| --- | --- | --- |
+| `AUTH_TOKEN` | a long random secret | **Required.** The service gets a public URL, and without this every route is open. |
+| `RAILWAY_SHM_SIZE_BYTES` | `1073741824` | Railway's equivalent of `--shm-size=1g`. Its default is 64 MB, on which Chromium crashes on image-heavy pages. |
+| `RAILWAY_DEPLOYMENT_DRAINING_SECONDS` | `30` | Railway's SIGTERM→SIGKILL grace defaults to `0`, which kills the server mid-shutdown while it is still closing browsers and the database. Skip if you use `railway.json`, which sets `drainingSeconds`. |
+| `PUBLIC_BASE_URL` | `https://<your>.up.railway.app` | Makes the CDP and MCP URLs handed to agents deterministic. |
+| `CLOAKBROWSER_AUTO_UPDATE` | `false` | An in-place binary update writes ~700 MB to ephemeral storage, not the volume, so it is re-downloaded after every restart. Take browser updates by rebuilding instead. |
+
+Disable **serverless / app sleeping** — a manager with auto-launch profiles never idles
+cleanly, and cold starts return 502s.
+
+Chromium's sandbox is already disabled in the browser's own defaults, which matters
+because Railway grants no `SYS_ADMIN` and no seccomp overrides. Long-lived WebSockets
+are safe: Railway exempts them from its idle and duration limits, and both proxies ping
+the client leg every 20 seconds regardless.
+
+After deploying, confirm `curl -fsS https://<domain>/api/status` returns 200, that
+`/api/profiles` returns 401, and that `df -h /dev/shm` in the Railway shell reports
+~1 GB rather than 64 MB.
 
 ## Authentication
 

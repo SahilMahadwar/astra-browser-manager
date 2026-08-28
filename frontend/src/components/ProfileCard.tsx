@@ -43,6 +43,13 @@ export function ProfileCard({ profile, onOpen, onLaunch, onStop }: ProfileCardPr
   const platform = profile.platform as keyof typeof PLATFORM_ICONS;
   const PlatformIcon = PLATFORM_ICONS[platform] ?? Monitor;
   const platformLabel = PLATFORM_LABELS[platform] ?? profile.platform;
+  const isCamoufox = profile.engine === "camoufox";
+  // The spoofed OS lives in engine_config for Camoufox, not in the platform
+  // column, which that engine ignores entirely.
+  const camoufoxOs = profile.engine_config?.os;
+  const subtitle = isCamoufox
+    ? `Camoufox · ${camoufoxOs ? (PLATFORM_LABELS[camoufoxOs] ?? camoufoxOs) : "Auto"}`
+    : platformLabel;
 
   return (
     <div
@@ -84,7 +91,7 @@ export function ProfileCard({ profile, onOpen, onLaunch, onStop }: ProfileCardPr
             <div className="font-display font-semibold text-[15px] tracking-[-0.2px] truncate">
               {profile.name}
             </div>
-            <div className="text-xs text-ink-faint mt-px">{platformLabel}</div>
+            <div className="text-xs text-ink-faint mt-px">{subtitle}</div>
           </div>
           {running && (
             <div className="flex items-center gap-1.5 flex-shrink-0">
