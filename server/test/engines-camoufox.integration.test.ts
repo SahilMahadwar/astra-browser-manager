@@ -2,15 +2,26 @@
  * End-to-end exercise of the Camoufox driver.
  *
  * Substitutes Playwright's stock Firefox for the Camoufox binary via
- * CAMOUFOX_BINARY_PATH. That leaves Camoufox's own fingerprint injection
- * unverified — only the real binary can prove that — but it does cover
- * everything this repo actually owns: option assembly, the undocumented
- * launchServer options, the endpoint we hand out, and the guarantee that an
- * external client attaches to the SAME persistent context the manager holds
- * rather than a fresh one.
+ * CAMOUFOX_BINARY_PATH, covering what this repo owns: the driver's option
+ * assembly, the endpoint it hands out, and the guarantee that an external client
+ * attaches to the SAME persistent context the manager holds rather than a fresh
+ * one. Camoufox's own fingerprint injection stays unverified here — only the
+ * real binary can prove that.
  *
- * Skipped when no Firefox is installed, so a checkout without browsers still
- * runs the suite. Install one with `npx playwright-core install firefox`.
+ * REQUIRES BOTH a Firefox binary AND an installed Camoufox, and skips otherwise.
+ * The Camoufox requirement is not obvious and is easy to "fix" by deleting:
+ * CAMOUFOX_BINARY_PATH only swaps the executable, and it is applied *after*
+ * camoufox-js's launchOptions() has already run. launchOptions() calls
+ * installedVerStr(), which reads `version.json` out of the managed install to
+ * get the Firefox major version for fingerprint generation — so it throws on a
+ * machine with no Camoufox, whatever binary you point at.
+ *
+ * That is why CI skips this file. The playwright-core behaviour it used to be
+ * the only cover for now lives in `playwright-launchserver.test.ts`, which needs
+ * no Camoufox install and therefore does run in CI.
+ *
+ *   npx playwright-core install firefox      # the substitute binary
+ *   npx camoufox-js fetch                    # ~630MB, only for this file
  */
 
 import { existsSync, mkdtempSync } from 'node:fs';
@@ -19,6 +30,7 @@ import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { firefox } from 'playwright-core';
 
+import { installDir } from '../src/camoufox-binary.js';
 import { camoufoxDriver } from '../src/engines/camoufox.js';
 import type { EngineSession } from '../src/engines/types.js';
 import type { ProfileRow } from '../src/schemas.js';
@@ -32,8 +44,18 @@ function firefoxBinary(): string | null {
   }
 }
 
+/**
+ * `version.json` is the exact file camoufox-js's installedVerStr() reads, so
+ * this is the precise precondition rather than a guess at one. installDir()
+ * honours CAMOUFOX_INSTALL_DIR, which also makes the skip testable:
+ * `CAMOUFOX_INSTALL_DIR=/nonexistent npm test` reproduces a clean CI runner.
+ */
+function camoufoxInstalled(): boolean {
+  return existsSync(path.join(installDir(), 'version.json'));
+}
+
 const binary = firefoxBinary();
-const describeIfBrowser = binary ? describe : describe.skip;
+const describeIfBrowser = binary && camoufoxInstalled() ? describe : describe.skip;
 
 function profileRow(userDataDir: string): ProfileRow {
   return {

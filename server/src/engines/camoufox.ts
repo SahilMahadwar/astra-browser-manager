@@ -179,8 +179,14 @@ export const camoufoxDriver: EngineDriver = {
     } as never)) as Record<string, unknown>;
 
     // Mirrors CLOAKBROWSER_BINARY_PATH on the Chromium side: lets an operator
-    // point at their own build, and lets the driver be exercised against a
-    // stock Playwright Firefox without a 630MB Camoufox download.
+    // point at their own build.
+    //
+    // It swaps the executable ONLY, and it does not remove the need for an
+    // installed Camoufox. launchOptions() above has already called
+    // installedVerStr(), which reads `version.json` out of the managed install
+    // to get the Firefox major version it generates the fingerprint against — so
+    // without an install it throws before ever reaching this line, whatever
+    // binary you point at.
     const executableOverride = process.env.CAMOUFOX_BINARY_PATH;
     if (executableOverride) opts.executablePath = executableOverride;
 

@@ -81,6 +81,15 @@ pip install "playwright~=1.60.0"
 You do **not** need to run `playwright install` — no browser is downloaded
 locally. The browser lives in the container; you are only connecting to it.
 
+> **Operator note on `CAMOUFOX_BINARY_PATH`.** The server accepts this to point
+> at your own Camoufox build, mirroring `CLOAKBROWSER_BINARY_PATH` on the
+> Chromium side. It swaps the **executable only** — it does not replace the
+> managed install. camoufox-js still reads `version.json` from
+> `CAMOUFOX_INSTALL_DIR` to get the Firefox major version it generates the
+> fingerprint against, and throws without it. So a custom binary still needs
+> `npx camoufox-js fetch` (or an install dir containing that metadata) alongside
+> it. The Docker image satisfies this already.
+
 > **A mismatched client connects successfully and then misbehaves.**
 >
 > Playwright normally rejects a mismatched client at the handshake with
