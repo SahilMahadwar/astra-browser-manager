@@ -397,9 +397,22 @@ deploying a local directory):
   `railway.json` does not apply, so set the healthcheck and drain values by hand.
 
 Attach a **volume mounted at `/data`** (profiles, cookies, sessions, and the SQLite
-database live there; without it everything is lost on redeploy). Replicas must stay at
-1 — Railway forbids replicas on a service with a volume, and the manager keeps its
-sessions in process anyway.
+database live there; without it everything is lost on redeploy). Any other mount path
+works too — the entrypoint picks up Railway's `RAILWAY_VOLUME_MOUNT_PATH` automatically.
+If no volume is mounted, the deploy logs print a `WARNING: … is not a mounted volume`
+at boot; a correctly attached volume logs `Data dir: /data` with no warning.
+Replicas must stay at 1 — Railway forbids replicas on a service with a volume, and the
+manager keeps its sessions in process anyway.
+
+- **Size it for the profiles.** Each profile directory grows with its browser cache,
+  typically tens to a few hundred MB. The 0.5 GB free-tier volume holds only a few;
+  5 GB (Hobby) is a sensible minimum, and Pro volumes can be resized live.
+- **Redeploys have a short gap.** Railway will not mount one volume on two deployments
+  at once, so the old container stops before the new one starts.
+- **Enable volume backups** in the volume's settings — the volume is the only copy of
+  every logged-in session.
+- **Do not add a `VOLUME` line to the Dockerfile.** Railway's build rejects it; the
+  image deliberately has none.
 
 Then set these variables:
 

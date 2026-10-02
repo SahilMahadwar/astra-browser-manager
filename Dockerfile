@@ -119,7 +119,11 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
   CMD node -e "fetch('http://localhost:8080/api/status').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
-VOLUME /data
+# No VOLUME instruction, on purpose: Railway's build validator rejects any
+# Dockerfile that declares one ("docker VOLUME ... is not supported"). Persistence
+# comes from the mount the operator supplies instead — `-v ...:/data` in compose
+# and the README, a Railway volume in production. entrypoint.sh warns at boot
+# when the data dir is not a mount, since that is the case where profiles vanish.
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

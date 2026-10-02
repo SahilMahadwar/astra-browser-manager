@@ -15,7 +15,9 @@
  */
 
 import { execFileSync } from 'node:child_process';
+import path from 'node:path';
 
+import { getDataDir } from './db.js';
 import { logger } from './logger.js';
 
 const log = logger('browser');
@@ -82,7 +84,8 @@ export function logFontStatus(): void {
     log.warn(
       `Incomplete Windows font set — missing: ${missing.join(', ')}. ` +
         `Windows-platform profiles will enumerate Linux fonts. Copy the ` +
-        `missing files from a licensed Windows machine into /data/fonts and ` +
+        `missing files from a licensed Windows machine into ` +
+        `${path.join(getDataDir(), 'fonts')} and ` +
         `restart.`
     );
   } catch {
