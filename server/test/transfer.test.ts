@@ -114,4 +114,11 @@ describe('slugify', () => {
   it('caps the length', () => {
     expect(slugify('a'.repeat(100)).length).toBeLessThanOrEqual(40);
   });
+
+  it('does not end with a hyphen when truncation lands on a separator', () => {
+    expect(slugify('Work account for Europe and the UK team - backup')).toBe(
+      'work-account-for-europe-and-the-uk-team',
+    );
+    expect(slugify('a'.repeat(39) + ' b')).toBe('a'.repeat(39));
+  });
 });

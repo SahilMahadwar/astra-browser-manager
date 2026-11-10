@@ -50,7 +50,8 @@ export function slugify(name: string): string {
   const slug = name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 40);
+    // Truncate before trimming: trimming first lets a hyphen at the cut point survive.
+    .slice(0, 40)
+    .replace(/^-+|-+$/g, '');
   return slug || 'profile';
 }
