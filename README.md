@@ -300,9 +300,105 @@ await page.goto("https://example.com");
 
 The CDP URL is available in the toolbar (code icon) when a profile is running. The same browser session is accessible both visually through VNC and programmatically through the API.
 
-Every HTTP and WebSocket endpoint — profile CRUD, launch/stop, export/import,
-screenshots, clipboard, proxy testing, and the CDP discovery routes — is documented in
-the [API reference](docs/API.md).
+Every endpoint is listed under [API Endpoints](#api-endpoints) below, and documented in
+full in the [API reference](docs/API.md).
+
+## API Endpoints
+
+Everything is served from one port (`http://<host>:8080`). When `AUTH_TOKEN` is set, every
+endpoint needs `Authorization: Bearer <token>` or the session cookie from
+`POST /api/auth/login`, except those marked **open**. Request bodies, responses and error
+codes are in the [API reference](docs/API.md).
+
+**[Authentication](docs/API.md#authentication)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/auth/status` | Whether auth is required and whether this caller is authenticated. **Open.** |
+| `POST` | `/api/auth/login` | Exchange the token for the `auth_token` session cookie. **Open.** |
+| `POST` | `/api/auth/logout` | Clear the session cookie. |
+
+**[Profiles](docs/API.md#profiles)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/profiles` | Every profile with its live status, newest first. |
+| `POST` | `/api/profiles` | Create a profile (only `name` is required). Does not launch it. |
+| `GET` | `/api/profiles/:id` | One profile. |
+| `PUT` | `/api/profiles/:id` | Partial update; only keys present are written. Applies on next launch. |
+| `DELETE` | `/api/profiles/:id` | Stop the browser, then permanently delete the profile and its user data. |
+
+**[Export & import](docs/API.md#export--import)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/profiles/export` | All profiles as a downloadable JSON envelope. |
+| `GET` | `/api/profiles/:id/export` | One profile as a downloadable JSON envelope. |
+| `POST` | `/api/profiles/import` | Create profiles from an export envelope or a bare array. |
+
+**[Launch & stop](docs/API.md#launch--stop)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/api/profiles/:id/launch` | Start the profile's display and browser; returns its automation URL. |
+| `POST` | `/api/profiles/:id/stop` | Graceful stop; flushes cookies and keeps the user-data directory. |
+| `POST` | `/api/profiles/:id/force-stop` | Tear down a wedged session without waiting on the browser. |
+| `GET` | `/api/profiles/:id/status` | Liveness only; cheaper than fetching the profile. |
+
+**[Automation](docs/API.md#automation) (HTTP)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/profiles/:id/cdp` | Chromium only. CDP descriptor; upgrades to the CDP WebSocket. |
+| `GET` | `/api/profiles/:id/pw` | Camoufox only. Playwright descriptor; upgrades to the Playwright WebSocket. |
+| `GET` | `/api/profiles/:id/cdp/json/version` | Chrome's `/json/version` with rewritten WebSocket URL. Also with a trailing slash. |
+| `GET` | `/api/profiles/:id/cdp/json/list` | Page target list with rewritten WebSocket URLs. Also `/cdp/json`, `/cdp/json/`, `/cdp/json/list/`. |
+| `GET` | `/api/profiles/:id/cdp/alive` | Liveness for both engines, despite the path. |
+
+**[WebSocket](docs/API.md#websocket-endpoints)**
+
+| Path | Description |
+| --- | --- |
+| `/api/profiles/:id/vnc` | Live view stream (noVNC). Header or cookie auth only. |
+| `/api/profiles/:id/cdp` | Browser-level CDP (Chromium). Also accepts `?token=`. |
+| `/api/profiles/:id/cdp/devtools/*` | Per-page CDP target (Chromium). Also accepts `?token=`. |
+| `/api/profiles/:id/pw` | Playwright protocol (Camoufox). Also accepts `?token=`. |
+
+**[Screenshots](docs/API.md#screenshots) & [clipboard](docs/API.md#clipboard)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/profiles/:id/screenshot` | JPEG of the running browser, or the cached thumbnail. |
+| `POST` | `/api/profiles/:id/clipboard` | Set the profile's clipboard, ready to paste. |
+| `GET` | `/api/profiles/:id/clipboard` | Read the profile's clipboard. |
+
+**[Proxy testing](docs/API.md#proxy-testing)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/api/proxy/test` | Send a real request through a proxy and report the exit IP. |
+
+**[System & binary](docs/API.md#system--binary)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/api/status` | Health check. **Open** (used by the Docker healthcheck). |
+| `GET` | `/api/binary` | Chromium build and update state. |
+| `GET` | `/api/binary/camoufox` | Camoufox build, install path and latest version. |
+| `GET` | `/api/binary/engines` | Both engines' binary status at once. |
+| `POST` | `/api/binary/update` | Chromium only. Start a background binary update (`202`). |
+
+**[MCP](docs/API.md#mcp)**
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `POST` | `/mcp` | MCP server over Streamable HTTP. Bearer header only; `?token=` is rejected. |
+
+Tools: `list_profiles`, `get_profile`, `get_profile_status`, `get_cdp_url`,
+`create_profile`, `update_profile`, `delete_profile`, `launch_profile`, `stop_profile`,
+`force_stop_profile`, `take_screenshot`, `test_proxy`. See [MCP Server](#mcp-server).
+
+Any other path serves the web UI.
 
 ## MCP Server
 
