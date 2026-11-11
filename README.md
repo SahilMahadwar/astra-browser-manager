@@ -247,6 +247,11 @@ npm run dev
 docker compose up --build
 ```
 
+## Contributing
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for building
+from source, running the checks, and opening issues and pull requests.
+
 ## Updating
 
 Running the prebuilt image:
