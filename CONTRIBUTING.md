@@ -30,16 +30,20 @@ session data persist in `~/.astrabrowser-manager` on the host.
 
 ## Local development
 
-Requires Node 22.5 or newer (the backend uses the built-in `node:sqlite`).
+Requires Node 22.5 or newer (the backend uses the built-in `node:sqlite`). Run
+the backend and frontend in two separate terminals, both from the repository
+root — `npm run dev` keeps running until you stop it.
 
 ```bash
-# Backend, on :8080
+# Terminal 1 — backend, on :8080
 cd server
 npm install
 CLOAKBROWSER_DATA_DIR=/tmp/abm-dev PORT=8080 npm run dev
+```
 
-# Frontend, on :5173 — proxies /api to :8080
-cd ../frontend
+```bash
+# Terminal 2 — frontend, on :5173 (proxies /api to :8080)
+cd frontend
 npm install
 npm run dev
 ```
@@ -68,6 +72,10 @@ npm ci
 npm run build
 npm test
 ```
+
+`--with-deps` also installs the system libraries Firefox needs, so on Linux it
+needs root or `sudo`. If they are already present, `npx playwright-core install
+firefox` installs just the browser.
 
 If your change touches a `package-lock.json`, use npm 11.10 or newer. Lockfiles
 written by older npm versions make `npm ci` fail in CI and in the image build.
