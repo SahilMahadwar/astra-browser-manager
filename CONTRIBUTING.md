@@ -32,14 +32,18 @@ session data persist in `~/.astrabrowser-manager` on the host.
 
 Requires Node 22.5 or newer (the backend uses the built-in `node:sqlite`).
 
+Run the backend and frontend in two terminals; each `npm run dev` keeps running.
+
 ```bash
-# Backend, on :8080
+# Terminal 1 — backend, on :8080
 cd server
 npm install
 CLOAKBROWSER_DATA_DIR=/tmp/abm-dev PORT=8080 npm run dev
+```
 
-# Frontend, on :5173 — proxies /api to :8080
-cd ../frontend
+```bash
+# Terminal 2 — frontend, on :5173, proxies /api to :8080
+cd frontend
 npm install
 npm run dev
 ```
